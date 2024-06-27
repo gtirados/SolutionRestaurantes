@@ -1,0 +1,6 @@
+Línea 27: la clase MSComctlLib.ListView del control lvCliente no era una clase de control cargada.
+Línea 48: la clase MSComctlLib.ListView del control ListView1 no era una clase de control cargada.
+Línea 698: la clase MSComctlLib.ListView del control lvPlatos no era una clase de control cargada.
+Línea 817: la clase MSDataListLib.DataCombo del control DatDireccion no era una clase de control cargada.
+Línea 864: la clase MSDataListLib.DataCombo del control datZona no era una clase de control cargada.
+Línea 944: la clase MSComctlLib.ImageList del control ilPedido no era una clase de control cargada.

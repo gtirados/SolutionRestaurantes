@@ -1,0 +1,26 @@
+Línea 96: la clase MSMask.MaskEdBox del control txtfecha no era una clase de control cargada.
+Línea 500: la clase ComctlLib.ProgressBar del control ProgBar no era una clase de control cargada.
+Línea 512: la clase Crystal.CrystalReport del control Reportes no era una clase de control cargada.
+Línea 522: la clase MSMask.MaskEdBox del control txtCampo2 no era una clase de control cargada.
+Línea 561: la clase MSMask.MaskEdBox del control txtCampo1 no era una clase de control cargada.
+Línea 103: el nombre de la propiedad _ExtentX de txtfecha no es válido.
+Línea 104: el nombre de la propiedad _ExtentY de txtfecha no es válido.
+Línea 105: el nombre de la propiedad _Version de txtfecha no es válido.
+Línea 115: el nombre de la propiedad PromptChar de txtfecha no es válido.
+Línea 507: el nombre de la propiedad _ExtentX de ProgBar no es válido.
+Línea 508: el nombre de la propiedad _ExtentY de ProgBar no es válido.
+Línea 509: el nombre de la propiedad _Version de ProgBar no es válido.
+Línea 515: el nombre de la propiedad _ExtentX de Reportes no es válido.
+Línea 516: el nombre de la propiedad _ExtentY de Reportes no es válido.
+Línea 517: el nombre de la propiedad _Version de Reportes no es válido.
+Línea 518: el nombre de la propiedad WindowControlBox de Reportes no es válido.
+Línea 519: el nombre de la propiedad WindowMaxButton de Reportes no es válido.
+Línea 520: el nombre de la propiedad WindowMinButton de Reportes no es válido.
+Línea 529: el nombre de la propiedad _ExtentX de txtCampo2 no es válido.
+Línea 530: el nombre de la propiedad _ExtentY de txtCampo2 no es válido.
+Línea 531: el nombre de la propiedad _Version de txtCampo2 no es válido.
+Línea 541: el nombre de la propiedad PromptChar de txtCampo2 no es válido.
+Línea 568: el nombre de la propiedad _ExtentX de txtCampo1 no es válido.
+Línea 569: el nombre de la propiedad _ExtentY de txtCampo1 no es válido.
+Línea 570: el nombre de la propiedad _Version de txtCampo1 no es válido.
+Línea 580: el nombre de la propiedad PromptChar de txtCampo1 no es válido.

@@ -1,0 +1,6 @@
+[SERVER]
+SERVIDOR=laptop-hp
+DB=BDATOS
+USR=sa
+PWD=anteromariano
+CR=02

@@ -1,0 +1,93 @@
+Línea 20: la clase MSComDlg.CommonDialog del control cdlfoto no era una clase de control cargada.
+Línea 54: la clase MSComctlLib.ListView del control ListView1 no era una clase de control cargada.
+Línea 171: la clase MSFlexGridLib.MSFlexGrid del control grdarticulos no era una clase de control cargada.
+Línea 399: la clase MSFlexGridLib.MSFlexGrid del control ListExiste no era una clase de control cargada.
+Línea 458: la clase TabDlg.SSTab del control SSTab1 no era una clase de control cargada.
+Línea 500: la clase ComctlLib.ProgressBar del control pgb_Progress no era una clase de control cargada.
+Línea 555: la clase MSFlexGridLib.MSFlexGrid del control gridrel no era una clase de control cargada.
+Línea 624: la clase MSFlexGridLib.MSFlexGrid del control gridp no era una clase de control cargada.
+Línea 1910: la clase MSFlexGridLib.MSFlexGrid del control grid_unid no era una clase de control cargada.
+Línea 23: el nombre de la propiedad _ExtentX de cdlfoto no es válido.
+Línea 24: el nombre de la propiedad _ExtentY de cdlfoto no es válido.
+Línea 25: el nombre de la propiedad _Version de cdlfoto no es válido.
+Línea 61: el nombre de la propiedad _ExtentX de ListView1 no es válido.
+Línea 62: el nombre de la propiedad _ExtentY de ListView1 no es válido.
+Línea 63: el nombre de la propiedad View de ListView1 no es válido.
+Línea 64: el nombre de la propiedad LabelEdit de ListView1 no es válido.
+Línea 65: el nombre de la propiedad LabelWrap de ListView1 no es válido.
+Línea 66: el nombre de la propiedad HideSelection de ListView1 no es válido.
+Línea 67: el nombre de la propiedad FullRowSelect de ListView1 no es válido.
+Línea 68: el nombre de la propiedad GridLines de ListView1 no es válido.
+Línea 69: el nombre de la propiedad TextBackground de ListView1 no es válido.
+Línea 70: el nombre de la propiedad _Version de ListView1 no es válido.
+Línea 84: el nombre de la propiedad NumItems de ListView1 no es válido.
+Línea 177: el nombre de la propiedad _ExtentX de grdarticulos no es válido.
+Línea 178: el nombre de la propiedad _ExtentY de grdarticulos no es válido.
+Línea 179: el nombre de la propiedad _Version de grdarticulos no es válido.
+Línea 180: el nombre de la propiedad BackColorBkg de grdarticulos no es válido.
+Línea 181: el nombre de la propiedad SelectionMode de grdarticulos no es válido.
+Línea 405: el nombre de la propiedad _ExtentX de ListExiste no es válido.
+Línea 406: el nombre de la propiedad _ExtentY de ListExiste no es válido.
+Línea 407: el nombre de la propiedad _Version de ListExiste no es válido.
+Línea 408: el nombre de la propiedad Cols de ListExiste no es válido.
+Línea 409: el nombre de la propiedad BackColorFixed de ListExiste no es válido.
+Línea 410: el nombre de la propiedad ForeColorFixed de ListExiste no es válido.
+Línea 411: el nombre de la propiedad BackColorBkg de ListExiste no es válido.
+Línea 412: el nombre de la propiedad GridColorFixed de ListExiste no es válido.
+Línea 413: el nombre de la propiedad GridLinesFixed de ListExiste no es válido.
+Línea 414: el nombre de la propiedad ScrollBars de ListExiste no es válido.
+Línea 415: el nombre de la propiedad SelectionMode de ListExiste no es válido.
+Línea 464: el nombre de la propiedad _ExtentX de SSTab1 no es válido.
+Línea 465: el nombre de la propiedad _ExtentY de SSTab1 no es válido.
+Línea 466: el nombre de la propiedad _Version de SSTab1 no es válido.
+Línea 467: el nombre de la propiedad Style de SSTab1 no es válido.
+Línea 468: el nombre de la propiedad TabHeight de SSTab1 no es válido.
+Línea 479: el nombre de la propiedad TabCaption(0) de SSTab1 no es válido.
+Línea 480: el nombre de la propiedad TabPicture(0) de SSTab1 no es válido.
+Línea 481: el nombre de la propiedad Tab(0).ControlEnabled de SSTab1 no es válido.
+Línea 482: el nombre de la propiedad Tab(0).Control(0) de SSTab1 no es válido.
+Línea 483: el nombre de la propiedad Tab(0).Control(0).Enabled de SSTab1 no es válido.
+Línea 484: el nombre de la propiedad Tab(0).Control(1) de SSTab1 no es válido.
+Línea 485: el nombre de la propiedad Tab(0).Control(1).Enabled de SSTab1 no es válido.
+Línea 486: el nombre de la propiedad Tab(0).ControlCount de SSTab1 no es válido.
+Línea 487: el nombre de la propiedad TabCaption(1) de SSTab1 no es válido.
+Línea 488: el nombre de la propiedad TabPicture(1) de SSTab1 no es válido.
+Línea 489: el nombre de la propiedad Tab(1).ControlEnabled de SSTab1 no es válido.
+Línea 490: el nombre de la propiedad Tab(1).Control(0) de SSTab1 no es válido.
+Línea 491: el nombre de la propiedad Tab(1).Control(1) de SSTab1 no es válido.
+Línea 492: el nombre de la propiedad Tab(1).Control(2) de SSTab1 no es válido.
+Línea 493: el nombre de la propiedad Tab(1).ControlCount de SSTab1 no es válido.
+Línea 494: el nombre de la propiedad TabCaption(2) de SSTab1 no es válido.
+Línea 495: el nombre de la propiedad TabPicture(2) de SSTab1 no es válido.
+Línea 496: el nombre de la propiedad Tab(2).ControlEnabled de SSTab1 no es válido.
+Línea 497: el nombre de la propiedad Tab(2).Control(0) de SSTab1 no es válido.
+Línea 498: el nombre de la propiedad Tab(2).Control(1) de SSTab1 no es válido.
+Línea 499: el nombre de la propiedad Tab(2).ControlCount de SSTab1 no es válido.
+Línea 507: el nombre de la propiedad _ExtentX de pgb_Progress no es válido.
+Línea 508: el nombre de la propiedad _ExtentY de pgb_Progress no es válido.
+Línea 509: el nombre de la propiedad _Version de pgb_Progress no es válido.
+Línea 561: el nombre de la propiedad _ExtentX de gridrel no es válido.
+Línea 562: el nombre de la propiedad _ExtentY de gridrel no es válido.
+Línea 563: el nombre de la propiedad _Version de gridrel no es válido.
+Línea 564: el nombre de la propiedad BackColorFixed de gridrel no es válido.
+Línea 565: el nombre de la propiedad ForeColorFixed de gridrel no es válido.
+Línea 566: el nombre de la propiedad BackColorBkg de gridrel no es válido.
+Línea 567: el nombre de la propiedad GridColorFixed de gridrel no es válido.
+Línea 568: el nombre de la propiedad GridLinesFixed de gridrel no es válido.
+Línea 630: el nombre de la propiedad _ExtentX de gridp no es válido.
+Línea 631: el nombre de la propiedad _ExtentY de gridp no es válido.
+Línea 632: el nombre de la propiedad _Version de gridp no es válido.
+Línea 633: el nombre de la propiedad Cols de gridp no es válido.
+Línea 1917: el nombre de la propiedad _ExtentX de grid_unid no es válido.
+Línea 1918: el nombre de la propiedad _ExtentY de grid_unid no es válido.
+Línea 1919: el nombre de la propiedad _Version de grid_unid no es válido.
+Línea 1920: el nombre de la propiedad Rows de grid_unid no es válido.
+Línea 1921: el nombre de la propiedad Cols de grid_unid no es válido.
+Línea 1922: el nombre de la propiedad BackColorFixed de grid_unid no es válido.
+Línea 1923: el nombre de la propiedad ForeColorFixed de grid_unid no es válido.
+Línea 1924: el nombre de la propiedad BackColorBkg de grid_unid no es válido.
+Línea 1925: el nombre de la propiedad GridColorFixed de grid_unid no es válido.
+Línea 1927: el nombre de la propiedad FocusRect de grid_unid no es válido.
+Línea 1928: el nombre de la propiedad HighLight de grid_unid no es válido.
+Línea 1929: el nombre de la propiedad GridLinesFixed de grid_unid no es válido.
+Línea 1930: el nombre de la propiedad AllowUserResizing de grid_unid no es válido.

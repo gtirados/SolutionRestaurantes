@@ -1,0 +1,49 @@
+Línea 37: la clase MSDataListLib.DataCombo del control DatFamilia no era una clase de control cargada.
+Línea 58: la clase MSComCtl2.DTPicker del control dtpDesde no era una clase de control cargada.
+Línea 70: la clase MSComCtl2.DTPicker del control dtpHasta no era una clase de control cargada.
+Línea 137: la clase MSComCtl2.UpDown del control udSegundos no era una clase de control cargada.
+Línea 189: la clase MSComctlLib.ListView del control lvPorDespachar no era una clase de control cargada.
+Línea 243: la clase MSComctlLib.ListView del control lvTotales no era una clase de control cargada.
+Línea 43: el nombre de la propiedad _ExtentX de DatFamilia no es válido.
+Línea 44: el nombre de la propiedad _ExtentY de DatFamilia no es válido.
+Línea 45: el nombre de la propiedad _Version de DatFamilia no es válido.
+Línea 46: el nombre de la propiedad Style de DatFamilia no es válido.
+Línea 47: el nombre de la propiedad Text de DatFamilia no es válido.
+Línea 64: el nombre de la propiedad _ExtentX de dtpDesde no es válido.
+Línea 65: el nombre de la propiedad _ExtentY de dtpDesde no es válido.
+Línea 66: el nombre de la propiedad _Version de dtpDesde no es válido.
+Línea 67: el nombre de la propiedad Format de dtpDesde no es válido.
+Línea 68: el nombre de la propiedad CurrentDate de dtpDesde no es válido.
+Línea 76: el nombre de la propiedad _ExtentX de dtpHasta no es válido.
+Línea 77: el nombre de la propiedad _ExtentY de dtpHasta no es válido.
+Línea 78: el nombre de la propiedad _Version de dtpHasta no es válido.
+Línea 79: el nombre de la propiedad Format de dtpHasta no es válido.
+Línea 80: el nombre de la propiedad CurrentDate de dtpHasta no es válido.
+Línea 143: el nombre de la propiedad _ExtentX de udSegundos no es válido.
+Línea 144: el nombre de la propiedad _ExtentY de udSegundos no es válido.
+Línea 145: el nombre de la propiedad _Version de udSegundos no es válido.
+Línea 146: el nombre de la propiedad Value de udSegundos no es válido.
+Línea 147: el nombre de la propiedad BuddyControl de udSegundos no es válido.
+Línea 148: el nombre de la propiedad BuddyDispid de udSegundos no es válido.
+Línea 149: el nombre de la propiedad OrigLeft de udSegundos no es válido.
+Línea 150: el nombre de la propiedad OrigTop de udSegundos no es válido.
+Línea 151: el nombre de la propiedad OrigRight de udSegundos no es válido.
+Línea 152: el nombre de la propiedad OrigBottom de udSegundos no es válido.
+Línea 153: el nombre de la propiedad Max de udSegundos no es válido.
+Línea 154: el nombre de la propiedad Min de udSegundos no es válido.
+Línea 195: el nombre de la propiedad _ExtentX de lvPorDespachar no es válido.
+Línea 196: el nombre de la propiedad _ExtentY de lvPorDespachar no es válido.
+Línea 197: el nombre de la propiedad View de lvPorDespachar no es válido.
+Línea 198: el nombre de la propiedad LabelEdit de lvPorDespachar no es válido.
+Línea 199: el nombre de la propiedad LabelWrap de lvPorDespachar no es válido.
+Línea 200: el nombre de la propiedad HideSelection de lvPorDespachar no es válido.
+Línea 201: el nombre de la propiedad _Version de lvPorDespachar no es válido.
+Línea 215: el nombre de la propiedad NumItems de lvPorDespachar no es válido.
+Línea 249: el nombre de la propiedad _ExtentX de lvTotales no es válido.
+Línea 250: el nombre de la propiedad _ExtentY de lvTotales no es válido.
+Línea 251: el nombre de la propiedad View de lvTotales no es válido.
+Línea 252: el nombre de la propiedad LabelEdit de lvTotales no es válido.
+Línea 253: el nombre de la propiedad LabelWrap de lvTotales no es válido.
+Línea 254: el nombre de la propiedad HideSelection de lvTotales no es válido.
+Línea 255: el nombre de la propiedad _Version de lvTotales no es válido.
+Línea 269: el nombre de la propiedad NumItems de lvTotales no es válido.

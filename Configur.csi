@@ -1,0 +1,12 @@
+[History]
+1=#P0#=mb	#P1#=cmdUpdate_Click	#P2#=Config/frmUSUARIOS/cmdUpdate_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200614231841	#P7#=0	#P8#=59	.
+2=#P0#=mb	#P1#=CmdModificar_Click	#P2#=Config/frmGeneral/CmdModificar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200102230329	#P7#=0	#P8#=35	.
+3=#P0#=mb	#P1#=Form_Activate	#P2#=Config/frmGeneral/Form_Activate	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20200102230315	#P7#=0	#P8#=13	.
+4=#P0#=mb	#P1#=TxtTit_KeyPress	#P2#=Config/frmUSUARIOS/TxtTit_KeyPress	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20160519231333	#P7#=0	#P8#=1	.
+5=#P0#=mb	#P1#=cmdAdd_Click	#P2#=Config/frmUSUARIOS/cmdAdd_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20160512181718	#P7#=0	#P8#=15	.
+6=#P0#=mb	#P1#=Form_Activate	#P2#=Config/frmUSUARIOS/Form_Activate	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20160512181638	#P7#=0	#P8#=42	.
+7=#P0#=mb	#P1#=SubmenuTit1_Click	#P2#=Config/MDIForm1/SubmenuTit1_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20150316223545	#P7#=0	#P8#=51	.
+8=#P0#=mb	#P1#=cmdcerrar_Click	#P2#=Config/frmGeneral/cmdcerrar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20150126201412	#P7#=0	#P8#=13	.
+9=#P0#=mb	#P1#=menuAyudaSistema_Click	#P2#=Config/MDIForm1/menuAyudaSistema_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20150126122916	#P7#=0	#P8#=0	.
+10=#P0#=mb	#P1#=Form_Activate	#P2#=Config/FrmParGen/Form_Activate	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20130506191559	#P7#=0	#P8#=1	.
+11=#P0#=mb	#P1#=Form_Load	#P2#=Config/FrmParGen/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20130506191415	#P7#=0	#P8#=26	.

@@ -1,0 +1,41 @@
+Línea 16: la clase ComctlLib.Toolbar del control Toolbar1 no era una clase de control cargada.
+Línea 717: la clase ComctlLib.ProgressBar del control ProBar no era una clase de control cargada.
+Línea 780: la clase Crystal.CrystalReport del control Reportes no era una clase de control cargada.
+Línea 791: la clase Crystal.CrystalReport del control TablasC no era una clase de control cargada.
+Línea 800: la clase ComctlLib.StatusBar del control StatusBar1 no era una clase de control cargada.
+Línea 873: la clase ComctlLib.ImageList del control ImageList1 no era una clase de control cargada.
+Línea 23: el nombre de la propiedad _ExtentX de Toolbar1 no es válido.
+Línea 24: el nombre de la propiedad _ExtentY de Toolbar1 no es válido.
+Línea 25: el nombre de la propiedad ButtonWidth de Toolbar1 no es válido.
+Línea 26: el nombre de la propiedad ButtonHeight de Toolbar1 no es válido.
+Línea 27: el nombre de la propiedad AllowCustomize de Toolbar1 no es válido.
+Línea 29: el nombre de la propiedad ImageList de Toolbar1 no es válido.
+Línea 30: el nombre de la propiedad _Version de Toolbar1 no es válido.
+Línea 377: el nombre de la propiedad Buttons de Toolbar1 no es válido.
+Línea 724: el nombre de la propiedad _ExtentX de ProBar no es válido.
+Línea 725: el nombre de la propiedad _ExtentY de ProBar no es válido.
+Línea 726: el nombre de la propiedad _Version de ProBar no es válido.
+Línea 783: el nombre de la propiedad _ExtentX de Reportes no es válido.
+Línea 784: el nombre de la propiedad _ExtentY de Reportes no es válido.
+Línea 785: el nombre de la propiedad _Version de Reportes no es válido.
+Línea 786: el nombre de la propiedad WindowControlBox de Reportes no es válido.
+Línea 787: el nombre de la propiedad WindowMaxButton de Reportes no es válido.
+Línea 788: el nombre de la propiedad WindowMinButton de Reportes no es válido.
+Línea 789: el nombre de la propiedad PrintFileLinesPerPage de Reportes no es válido.
+Línea 794: el nombre de la propiedad _ExtentX de TablasC no es válido.
+Línea 795: el nombre de la propiedad _ExtentY de TablasC no es válido.
+Línea 796: el nombre de la propiedad _Version de TablasC no es válido.
+Línea 797: el nombre de la propiedad ReportFileName de TablasC no es válido.
+Línea 798: el nombre de la propiedad PrintFileLinesPerPage de TablasC no es válido.
+Línea 807: el nombre de la propiedad _ExtentX de StatusBar1 no es válido.
+Línea 808: el nombre de la propiedad _ExtentY de StatusBar1 no es válido.
+Línea 809: el nombre de la propiedad SimpleText de StatusBar1 no es válido.
+Línea 810: el nombre de la propiedad _Version de StatusBar1 no es válido.
+Línea 862: el nombre de la propiedad Panels de StatusBar1 no es válido.
+Línea 876: el nombre de la propiedad _ExtentX de ImageList1 no es válido.
+Línea 877: el nombre de la propiedad _ExtentY de ImageList1 no es válido.
+Línea 879: el nombre de la propiedad ImageWidth de ImageList1 no es válido.
+Línea 880: el nombre de la propiedad ImageHeight de ImageList1 no es válido.
+Línea 881: el nombre de la propiedad MaskColor de ImageList1 no es válido.
+Línea 882: el nombre de la propiedad _Version de ImageList1 no es válido.
+Línea 1201: el nombre de la propiedad Images de ImageList1 no es válido.

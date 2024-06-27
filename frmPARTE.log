@@ -1,0 +1,32 @@
+Línea 84: la clase MSMask.MaskEdBox del control t_fecha no era una clase de control cargada.
+Línea 180: la clase ComctlLib.ListView del control ListView1 no era una clase de control cargada.
+Línea 216: la clase MSFlexGridLib.MSFlexGrid del control grid_lec no era una clase de control cargada.
+Línea 344: la clase ComctlLib.ProgressBar del control pb no era una clase de control cargada.
+Línea 464: la clase Crystal.CrystalReport del control Reportes no era una clase de control cargada.
+Línea 91: el nombre de la propiedad _ExtentX de t_fecha no es válido.
+Línea 92: el nombre de la propiedad _ExtentY de t_fecha no es válido.
+Línea 93: el nombre de la propiedad _Version de t_fecha no es válido.
+Línea 103: el nombre de la propiedad PromptChar de t_fecha no es válido.
+Línea 187: el nombre de la propiedad _ExtentX de ListView1 no es válido.
+Línea 188: el nombre de la propiedad _ExtentY de ListView1 no es válido.
+Línea 189: el nombre de la propiedad View de ListView1 no es válido.
+Línea 190: el nombre de la propiedad Arrange de ListView1 no es válido.
+Línea 191: el nombre de la propiedad LabelEdit de ListView1 no es válido.
+Línea 192: el nombre de la propiedad LabelWrap de ListView1 no es válido.
+Línea 193: el nombre de la propiedad HideSelection de ListView1 no es válido.
+Línea 194: el nombre de la propiedad _Version de ListView1 no es válido.
+Línea 198: el nombre de la propiedad NumItems de ListView1 no es válido.
+Línea 222: el nombre de la propiedad _ExtentX de grid_lec no es válido.
+Línea 223: el nombre de la propiedad _ExtentY de grid_lec no es válido.
+Línea 224: el nombre de la propiedad _Version de grid_lec no es válido.
+Línea 225: el nombre de la propiedad Rows de grid_lec no es válido.
+Línea 226: el nombre de la propiedad FixedRows de grid_lec no es válido.
+Línea 351: el nombre de la propiedad _ExtentX de pb no es válido.
+Línea 352: el nombre de la propiedad _ExtentY de pb no es válido.
+Línea 353: el nombre de la propiedad _Version de pb no es válido.
+Línea 467: el nombre de la propiedad _ExtentX de Reportes no es válido.
+Línea 468: el nombre de la propiedad _ExtentY de Reportes no es válido.
+Línea 469: el nombre de la propiedad _Version de Reportes no es válido.
+Línea 470: el nombre de la propiedad WindowControlBox de Reportes no es válido.
+Línea 471: el nombre de la propiedad WindowMaxButton de Reportes no es válido.
+Línea 472: el nombre de la propiedad WindowMinButton de Reportes no es válido.

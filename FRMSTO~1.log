@@ -1,0 +1,15 @@
+Línea 24: la clase ComctlLib.ListView del control ListView1 no era una clase de control cargada.
+Línea 113: la clase MSMask.MaskEdBox del control txtfecha no era una clase de control cargada.
+Línea 31: el nombre de la propiedad _ExtentX de ListView1 no es válido.
+Línea 32: el nombre de la propiedad _ExtentY de ListView1 no es válido.
+Línea 33: el nombre de la propiedad View de ListView1 no es válido.
+Línea 34: el nombre de la propiedad Arrange de ListView1 no es válido.
+Línea 35: el nombre de la propiedad LabelEdit de ListView1 no es válido.
+Línea 36: el nombre de la propiedad LabelWrap de ListView1 no es válido.
+Línea 37: el nombre de la propiedad HideSelection de ListView1 no es válido.
+Línea 38: el nombre de la propiedad _Version de ListView1 no es válido.
+Línea 43: el nombre de la propiedad NumItems de ListView1 no es válido.
+Línea 120: el nombre de la propiedad _ExtentX de txtfecha no es válido.
+Línea 121: el nombre de la propiedad _ExtentY de txtfecha no es válido.
+Línea 122: el nombre de la propiedad _Version de txtfecha no es válido.
+Línea 132: el nombre de la propiedad PromptChar de txtfecha no es válido.

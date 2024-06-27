@@ -1,0 +1,3 @@
+Línea 52: la clase RichTextLib.RichTextBox del control TEXTOVAR no era una clase de control cargada.
+Línea 76: la clase MSFlexGridLib.MSFlexGrid del control gridigv no era una clase de control cargada.
+Línea 89: la clase MSMask.MaskEdBox del control txtfecha no era una clase de control cargada.
