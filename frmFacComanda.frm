@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
-Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDATLST.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDatLst.Ocx"
 Begin VB.Form frmFacComanda 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Facturar Comanda"
@@ -312,6 +312,13 @@ Begin VB.Form frmFacComanda
       TabIndex        =   3
       Top             =   5760
       Width           =   9735
+      Begin VB.CheckBox chkServicio 
+         Height          =   255
+         Left            =   7320
+         TabIndex        =   42
+         Top             =   360
+         Width           =   255
+      End
       Begin VB.CommandButton cmdFormasPago 
          Caption         =   "Forma de Pago"
          Height          =   720
@@ -337,6 +344,35 @@ Begin VB.Form frmFacComanda
          Top             =   720
          Visible         =   0   'False
          Width           =   1095
+      End
+      Begin VB.Label lblServicio 
+         Alignment       =   1  'Right Justify
+         BackColor       =   &H8000000C&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FF0000&
+         Height          =   315
+         Left            =   7680
+         TabIndex        =   44
+         Top             =   360
+         Width           =   1935
+      End
+      Begin VB.Label Label3 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "SERVICIO:"
+         Height          =   195
+         Left            =   6240
+         TabIndex        =   43
+         Top             =   360
+         Width           =   960
       End
       Begin VB.Label lblporcigv 
          Caption         =   "Label3"
@@ -368,12 +404,23 @@ Begin VB.Form frmFacComanda
          Width           =   735
       End
       Begin VB.Label lblICBPER 
+         Alignment       =   1  'Right Justify
          BackColor       =   &H8000000C&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FF0000&
          Height          =   315
          Left            =   7680
          TabIndex        =   37
          Top             =   1440
-         Width           =   1695
+         Width           =   1935
       End
       Begin VB.Label label 
          Alignment       =   1  'Right Justify
@@ -397,20 +444,42 @@ Begin VB.Form frmFacComanda
          Width           =   1290
       End
       Begin VB.Label lblvvta 
+         Alignment       =   1  'Right Justify
          BackColor       =   &H8000000C&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FF0000&
          Height          =   315
          Left            =   7680
          TabIndex        =   30
          Top             =   720
-         Width           =   1695
+         Width           =   1935
       End
       Begin VB.Label lblIGV 
+         Alignment       =   1  'Right Justify
          BackColor       =   &H8000000C&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FF0000&
          Height          =   315
          Left            =   7680
          TabIndex        =   29
          Top             =   1080
-         Width           =   1695
+         Width           =   1935
       End
       Begin VB.Label lblDscto 
          Appearance      =   0  'Flat
@@ -424,14 +493,24 @@ Begin VB.Form frmFacComanda
          Width           =   1455
       End
       Begin VB.Label lblImporte 
+         Alignment       =   1  'Right Justify
          Appearance      =   0  'Flat
          BackColor       =   &H8000000C&
-         ForeColor       =   &H80000008&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FF0000&
          Height          =   285
          Left            =   7680
          TabIndex        =   7
          Top             =   1800
-         Width           =   1695
+         Width           =   1935
       End
       Begin VB.Label lblvuelto 
          Appearance      =   0  'Flat
@@ -458,7 +537,7 @@ Begin VB.Form frmFacComanda
          AutoSize        =   -1  'True
          Caption         =   "TOTAL A PAGAR:"
          Height          =   195
-         Left            =   6120
+         Left            =   5985
          TabIndex        =   4
          Top             =   1800
          Width           =   1470
@@ -493,6 +572,8 @@ Public xMostrador As Boolean
 Public gDESCUENTO As Double 'VARIABLE PARA ALMACENAR EL DESCUENTO PARA LAS COMANDAS
 Public gPAGO As Double 'VARIABLE PARA ALMACENAR EL PAGO PARA LAS COMANDAS
 Private ORStd As ADODB.Recordset 'VARIABLE PARA SABER SI EL TIPO DE DOCUMENTO ES EDITABLE
+Private vIgv As Integer
+Private vICBPER As Double
 
 
 Private Sub ConfigurarLVDetalle()
@@ -558,7 +639,7 @@ End Sub
 
 
 
-Private Sub cboMoneda_KeyPress(index As Integer, KeyAscii As Integer)
+Private Sub cboMoneda_KeyPress(Index As Integer, KeyAscii As Integer)
 If LK_TIPO_CAMBIO = 0 Then
     MsgBox "ingresar tipo de cambio"
 End If
@@ -598,343 +679,367 @@ CalcularImporte
 
 End Sub
 
+Private Sub chkServicio_Click()
+CalcularImporte
+End Sub
+
 Private Sub cmdAceptar_Click()
-'ImprimirDocumentoVenta "01", "Factura", True, "1", 27427495, "126.5", "caleta", "123", "tirado" ' Me.DatTiposDoctos.BoundText, Me.DatTiposDoctos.Text, Me.chkConsumo.Value, Me.lblserie.Caption, Me.txtNro.Text, Me.lblImporte.Caption, Me.txtDireccion.Text, Me.txtRuc.Text, Me.txtcli.Text
-'Exit Sub
+    'ImprimirDocumentoVenta "01", "Factura", True, "1", 27427495, "126.5", "caleta", "123", "tirado" ' Me.DatTiposDoctos.BoundText, Me.DatTiposDoctos.Text, Me.chkConsumo.Value, Me.lblserie.Caption, Me.txtNro.Text, Me.lblImporte.Caption, Me.txtDireccion.Text, Me.txtRuc.Text, Me.txtcli.Text
+    'Exit Sub
 
-If Me.DatTiposDoctos.BoundText = "" Then ' .ListIndex = -1 Then
-    MsgBox "Debe elegir el Tipo de documento.", vbCritical, Pub_Titulo
-    Me.DatTiposDoctos.SetFocus
+    If Me.DatTiposDoctos.BoundText = "" Then ' .ListIndex = -1 Then
+        MsgBox "Debe elegir el Tipo de documento.", vbCritical, Pub_Titulo
+        Me.DatTiposDoctos.SetFocus
 
-    Exit Sub
+        Exit Sub
 
-End If
+    End If
 
-If Me.cmdformaspago.Enabled And oRSfp.RecordCount = 0 Then
-    MsgBox "Debe ingresar pagos", vbCritical, Pub_Titulo
+    If Me.cmdformaspago.Enabled And oRSfp.RecordCount = 0 Then
+        MsgBox "Debe ingresar pagos", vbCritical, Pub_Titulo
 
-    Exit Sub
+        Exit Sub
 
-End If
+    End If
     
-'    If oRSfp.RecordCount <> 0 Then
-'        oRSfp.MoveFirst
-'        oRSfp.Filter = "IDFORMAPAGO=4"
-'        If oRSfp.RecordCount <> 0 And Len(Trim(Me.txtRuc.Tag)) = 0 Then
-'            MsgBox "Debe elegir el cliente.", vbCritical, Pub_Titulo
-'            oRSfp.Filter = ""
-'        oRSfp.MoveFirst
-'        Exit Sub
-'        End If
-'    End If
+    '    If oRSfp.RecordCount <> 0 Then
+    '        oRSfp.MoveFirst
+    '        oRSfp.Filter = "IDFORMAPAGO=4"
+    '        If oRSfp.RecordCount <> 0 And Len(Trim(Me.txtRuc.Tag)) = 0 Then
+    '            MsgBox "Debe elegir el cliente.", vbCritical, Pub_Titulo
+    '            oRSfp.Filter = ""
+    '        oRSfp.MoveFirst
+    '        Exit Sub
+    '        End If
+    '    End If
 
-Dim xPAGOS         As Double
+    Dim xPAGOS         As Double
 
-Dim xCONTINUA      As Boolean
+    Dim xCONTINUA      As Boolean
 
-Dim xARCENCONTRADO As Boolean
+    Dim xARCENCONTRADO As Boolean
 
-xCONTINUA = False
-xARCENCONTRADO = False
-xPAGOS = 0
+    xCONTINUA = False
+    xARCENCONTRADO = False
+    xPAGOS = 0
 
-oRSfp.MoveFirst
+    oRSfp.MoveFirst
 
-Do While Not oRSfp.EOF
-    xPAGOS = xPAGOS + oRSfp!monto
-    oRSfp.MoveNext
-Loop
+    Do While Not oRSfp.EOF
+        xPAGOS = xPAGOS + oRSfp!monto
+        oRSfp.MoveNext
+    Loop
     
-If Me.cmdformaspago.Enabled And xPAGOS < val(Me.lblImporte.Caption) Then
-    MsgBox "Falta importe por pagar", vbCritical, Pub_Titulo
-
-    Exit Sub
-
-End If
-
-On Error GoTo Graba
-
-'If Me.cboTipoDocto.ListIndex = 0 Then 'F
-If Me.DatTiposDoctos.BoundText = "01" Then 'F
-    If Me.lvDetalle.ListItems.count > par_llave!par_fac_lines And Me.chkConsumo.Value = 0 Then
-        MsgBox "Numero Máximo de Lineas alcanzado"
+    If Me.cmdformaspago.Enabled And xPAGOS < val(Me.lblImporte.Caption) Then
+        MsgBox "Falta importe por pagar", vbCritical, Pub_Titulo
 
         Exit Sub
 
     End If
 
-'ElseIf Me.cboTipoDocto.ListIndex = 1 Then 'B
-ElseIf Me.DatTiposDoctos.BoundText = "03" Then 'B
+    On Error GoTo Graba
 
-    If Me.lvDetalle.ListItems.count > par_llave!par_BOL_lines And Me.chkConsumo.Value = 0 Then
-        MsgBox "Numero Máximo de Lineas alcanzado"
-
-        Exit Sub
-
-    End If
-End If
-
-Dim f As Integer
-
-Dim sOri, sMod As Integer
-
-If Me.lvDetalle.ListItems.count = 0 Then
-    MsgBox "No hay ningun plato para procesar"
-
-    Exit Sub
-
-End If
-
-If Me.DatTiposDoctos.BoundText = "01" Then
-    If Len(Trim(Me.txtRuc.Text)) = 0 Then
-        MsgBox "Debe ingresar el Ruc para poder generar la Factura", vbInformation, "Error"
-
-        Exit Sub
-
-    End If
-End If
-
-'valida la uit
-LimpiaParametros oCmdEjec
-oCmdEjec.CommandText = "SP_VALIDA_UIT"
-
-Dim ORSuit As ADODB.Recordset
-
-Set ORSuit = oCmdEjec.Execute(, Me.lblImporte.Caption)
-
-If Not ORSuit.EOF Then
-    If ORSuit!Dato = 1 Then
-        If Len(Trim(Me.txtRS.Text)) = 0 Or (Len(Trim(Me.txtDni.Text)) = 0 And Len(Trim(Me.txtRuc.Text)) = 0) Then
-            MsgBox "El Importe sobrepasa media UIT, debe ingresar el cliente.", vbCritical, Pub_Titulo
+    'If Me.cboTipoDocto.ListIndex = 0 Then 'F
+    If Me.DatTiposDoctos.BoundText = "01" Then 'F
+        If Me.lvDetalle.ListItems.count > par_llave!par_fac_lines And Me.chkConsumo.Value = 0 Then
+            MsgBox "Numero Máximo de Lineas alcanzado"
 
             Exit Sub
 
         End If
+
+        'ElseIf Me.cboTipoDocto.ListIndex = 1 Then 'B
+    ElseIf Me.DatTiposDoctos.BoundText = "03" Then 'B
+
+        If Me.lvDetalle.ListItems.count > par_llave!par_BOL_lines And Me.chkConsumo.Value = 0 Then
+            MsgBox "Numero Máximo de Lineas alcanzado"
+
+            Exit Sub
+
+        End If
+
     End If
-End If
-    
-If Len(Trim(Me.txtDni.Text)) <> 0 Then
-    If Len(Trim(Me.txtDni.Text)) < 8 Then
-        MsgBox "El DNI debe tener 8 dígitos.", vbInformation, Pub_Titulo
+
+    Dim f As Integer
+
+    Dim sOri, sMod As Integer
+
+    If Me.lvDetalle.ListItems.count = 0 Then
+        MsgBox "No hay ningun plato para procesar"
 
         Exit Sub
 
     End If
-End If
 
-'Armando Xml
-Dim CP As Double
+    If Me.DatTiposDoctos.BoundText = "01" Then
+        If Len(Trim(Me.txtRuc.Text)) = 0 Then
+            MsgBox "Debe ingresar el Ruc para poder generar la Factura", vbInformation, "Error"
 
-Dim pr, st As Currency
+            Exit Sub
 
-Dim vXml, un, cam As String
+        End If
 
-vXml = "<r>"
+    End If
 
-For f = 1 To Me.lvDetalle.ListItems.count
+    'valida la uit
+    LimpiaParametros oCmdEjec
+    oCmdEjec.CommandText = "SP_VALIDA_UIT"
 
-    CP = Me.lvDetalle.ListItems(f).SubItems(1)
-'    Me.dgrdData.Row = f
-'    'Codigo de Plato
-'    Me.dgrdData.COL = 1
-'    CP = CInt(Trim(Me.dgrdData.Text))
-'Cantidad a facturar
-    st = Me.lvDetalle.ListItems(f).SubItems(6)
-'    Me.dgrdData.COL = 5
-'    st = CInt(Trim(Me.dgrdData.Text))
-'Precio
-'Me.dgrdData.COL = 6
-'pr = CDec(Trim(Me.dgrdData.Text))
-    pr = Me.lvDetalle.ListItems(f).SubItems(4)
-'Unidad de medida
-'Me.dgrdData.COL = 10
-'un = Trim(Me.dgrdData.Text)
-    un = Trim(Me.lvDetalle.ListItems(f).SubItems(11))
-'SECUENCIA
-'Me.dgrdData.COL = 7
-'    sc = Trim(Me.dgrdData.Text)
-    sc = Me.lvDetalle.ListItems(f).SubItems(8)
-    cam = Me.lvDetalle.ListItems(f).SubItems(13)
-    
-    vXml = vXml & "<d "
-    vXml = vXml & "cp=""" & Trim(str(CP)) & """ "
-    vXml = vXml & "st=""" & Trim(str(st)) & """ "
-    vXml = vXml & "pr=""" & Trim(str(pr)) & """ "
-    vXml = vXml & "un=""" & Trim(un) & """ "
-    vXml = vXml & "sc=""" & Trim(sc) & """ "
-    vXml = vXml & "cam=""" & Trim(cam) & """ "
-    vXml = vXml & "/>"
-Next
+    Dim ORSuit As ADODB.Recordset
 
-vXml = vXml & "</r>"
- 
-'obteniendo datos de tipo de pago tabla sub_transa
-'Dim alltipdoc As String
-'Dim allcp As String
-'oRsTipPag.Filter = "sut_secuencia=" & Me.dcboPago.BoundText
-'alltipdoc = oRsTipPag!sut_tipdoc
-'allcp = oRsTipPag!sut_cp
-    
-'recorriendo las formas de pago
-Dim xFP      As String
+    Set ORSuit = oCmdEjec.Execute(, Me.lblImporte.Caption)
 
-Dim xPAGACON As Double, xVUELTO As Double
-    
-If oRSfp.RecordCount <> 0 Then
-    oRSfp.MoveFirst
-    xPAGACON = oRSfp!pagacon
-    xVUELTO = oRSfp!VUELTO
-    xFP = "<r>"
+    If Not ORSuit.EOF Then
+        If ORSuit!Dato = 1 Then
+            If Len(Trim(Me.txtRS.Text)) = 0 Or (Len(Trim(Me.txtDni.Text)) = 0 And Len(Trim(Me.txtRuc.Text)) = 0) Then
+                MsgBox "El Importe sobrepasa media UIT, debe ingresar el cliente.", vbCritical, Pub_Titulo
 
-    Do While Not oRSfp.EOF
-        xFP = xFP & "<d "
-        xFP = xFP & "idfp=""" & Trim(str(oRSfp!idformapago)) & """ "
-        xFP = xFP & "fp=""" & Trim(oRSfp!formaPAGO) & """ "
-        xFP = xFP & "mon=""" & "S" & """ "
-        xFP = xFP & "monto=""" & Trim(str(oRSfp!monto)) & """ "
-        xFP = xFP & "ref=""" & Trim(oRSfp!referencia) & """ "
-        xFP = xFP & "dcre=""" & Trim(oRSfp!diascredito) & """ "
-        xFP = xFP & "/>"
-        oRSfp.MoveNext
-    Loop
+                Exit Sub
 
-    xFP = xFP & "</r>"
-End If
-
-With oCmdEjec
-        
-'PARCHE - SE TENDRIA QUE HACER MEJOR EN EL SP PARA UNA MEJOR CONSISTENCIA DE DATOS
-    If vAcepta Then
-        MsgBox "Ya se facturo.", vbInformation, Pub_Titulo
-
-        Exit Sub
-
-    Else
-'VALIDANDO SI EL ARCHIVO DEL REPORTE EXISTE
-        LimpiaParametros oCmdEjec
-        oCmdEjec.CommandText = "SP_ARCHIVO_PRINT"
-        oCmdEjec.CommandType = adCmdStoredProc
-    
-        Dim ORSd        As ADODB.Recordset
-
-        Dim RutaReporte As String
-
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODIGO", adChar, adParamInput, 2, Me.DatTiposDoctos.BoundText)
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@COMSUMO", adBoolean, adParamInput, , Me.chkConsumo.Value)
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODCIA", adChar, adParamInput, 2, Me.DatEmpresas.BoundText)
-    
-        Set ORSd = oCmdEjec.Execute
-        RutaReporte = PUB_RUTA_REPORTE & ORSd!ReportE
-    
-        If ORSd!ReportE = "" Then
-            If MsgBox("El Archivo no existe." & vbCrLf & "¿Desea continuar sin imprimir?.", vbQuestion + vbYesNo, Pub_Titulo) = vbYes Then
-                xCONTINUA = True
             End If
+
+        End If
+
+    End If
+    
+    If Len(Trim(Me.txtDni.Text)) <> 0 Then
+        If Len(Trim(Me.txtDni.Text)) < 8 Then
+            MsgBox "El DNI debe tener 8 dígitos.", vbInformation, Pub_Titulo
+
+            Exit Sub
+
+        End If
+
+    End If
+
+    'Armando Xml
+    Dim CP As Double
+
+    Dim pr, st As Currency
+
+    Dim vXml, un, cam As String
+
+    vXml = "<r>"
+
+    For f = 1 To Me.lvDetalle.ListItems.count
+
+        CP = Me.lvDetalle.ListItems(f).SubItems(1)
+        '    Me.dgrdData.Row = f
+        '    'Codigo de Plato
+        '    Me.dgrdData.COL = 1
+        '    CP = CInt(Trim(Me.dgrdData.Text))
+        'Cantidad a facturar
+        st = Me.lvDetalle.ListItems(f).SubItems(6)
+        '    Me.dgrdData.COL = 5
+        '    st = CInt(Trim(Me.dgrdData.Text))
+        'Precio
+        'Me.dgrdData.COL = 6
+        'pr = CDec(Trim(Me.dgrdData.Text))
+        pr = Me.lvDetalle.ListItems(f).SubItems(4)
+        'Unidad de medida
+        'Me.dgrdData.COL = 10
+        'un = Trim(Me.dgrdData.Text)
+        un = Trim(Me.lvDetalle.ListItems(f).SubItems(11))
+        'SECUENCIA
+        'Me.dgrdData.COL = 7
+        '    sc = Trim(Me.dgrdData.Text)
+        sc = Me.lvDetalle.ListItems(f).SubItems(8)
+        cam = Me.lvDetalle.ListItems(f).SubItems(13)
+    
+        vXml = vXml & "<d "
+        vXml = vXml & "cp=""" & Trim(str(CP)) & """ "
+        vXml = vXml & "st=""" & Trim(str(st)) & """ "
+        vXml = vXml & "pr=""" & Trim(str(pr)) & """ "
+        vXml = vXml & "un=""" & Trim(un) & """ "
+        vXml = vXml & "sc=""" & Trim(sc) & """ "
+        vXml = vXml & "cam=""" & Trim(cam) & """ "
+        vXml = vXml & "/>"
+    Next
+
+    vXml = vXml & "</r>"
+ 
+    'obteniendo datos de tipo de pago tabla sub_transa
+    'Dim alltipdoc As String
+    'Dim allcp As String
+    'oRsTipPag.Filter = "sut_secuencia=" & Me.dcboPago.BoundText
+    'alltipdoc = oRsTipPag!sut_tipdoc
+    'allcp = oRsTipPag!sut_cp
+    
+    'recorriendo las formas de pago
+    Dim xFP      As String
+
+    Dim xPAGACON As Double, xVUELTO As Double
+    
+    If oRSfp.RecordCount <> 0 Then
+        oRSfp.MoveFirst
+        xPAGACON = oRSfp!pagacon
+        xVUELTO = oRSfp!VUELTO
+        xFP = "<r>"
+
+        Do While Not oRSfp.EOF
+            xFP = xFP & "<d "
+            xFP = xFP & "idfp=""" & Trim(str(oRSfp!idformapago)) & """ "
+            xFP = xFP & "fp=""" & Trim(oRSfp!formaPAGO) & """ "
+            xFP = xFP & "mon=""" & "S" & """ "
+            xFP = xFP & "monto=""" & Trim(str(oRSfp!monto)) & """ "
+            xFP = xFP & "ref=""" & Trim(oRSfp!referencia) & """ "
+            xFP = xFP & "dcre=""" & Trim(oRSfp!diascredito) & """ "
+            xFP = xFP & "/>"
+            oRSfp.MoveNext
+        Loop
+
+        xFP = xFP & "</r>"
+
+    End If
+
+    With oCmdEjec
+        
+        'PARCHE - SE TENDRIA QUE HACER MEJOR EN EL SP PARA UNA MEJOR CONSISTENCIA DE DATOS
+        If vAcepta Then
+            MsgBox "Ya se facturo.", vbInformation, Pub_Titulo
+
+            Exit Sub
 
         Else
-            FileName = dir(RutaReporte)
+            'VALIDANDO SI EL ARCHIVO DEL REPORTE EXISTE
+            LimpiaParametros oCmdEjec
+            oCmdEjec.CommandText = "SP_ARCHIVO_PRINT"
+            oCmdEjec.CommandType = adCmdStoredProc
+    
+            Dim ORSd        As ADODB.Recordset
 
-            If FileName = "" Then
+            Dim RutaReporte As String
+
+            oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODIGO", adChar, adParamInput, 2, Me.DatTiposDoctos.BoundText)
+            oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@COMSUMO", adBoolean, adParamInput, , Me.chkConsumo.Value)
+            oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODCIA", adChar, adParamInput, 2, Me.DatEmpresas.BoundText)
+    
+            Set ORSd = oCmdEjec.Execute
+            RutaReporte = PUB_RUTA_REPORTE & ORSd!ReportE
+    
+            If ORSd!ReportE = "" Then
                 If MsgBox("El Archivo no existe." & vbCrLf & "¿Desea continuar sin imprimir?.", vbQuestion + vbYesNo, Pub_Titulo) = vbYes Then
                     xCONTINUA = True
-                Else
-
-                    Exit Sub
 
                 End If
 
             Else
-                xCONTINUA = True
-                xARCENCONTRADO = True
-'ImprimirDocumentoVenta Me.DatTiposDoctos.BoundText, Me.DatTiposDoctos.Text, Me.chkConsumo.Value, "009", 2, 100, "33", "43", "343"
-            End If
-        End If
+                FileName = dir(RutaReporte)
 
-        If xCONTINUA Then
-            LimpiaParametros oCmdEjec
-            oCmdEjec.CommandText = "SpFacturarComanda"
-            .Parameters.Append .CreateParameter("@codcia", adChar, adParamInput, 2, Me.DatEmpresas.BoundText)
-            .Parameters.Append .CreateParameter("@fecha", adDBTimeStamp, adParamInput, , LK_FECHA_DIA)
-            .Parameters.Append .CreateParameter("@usuario", adVarChar, adParamInput, 20, LK_CODUSU)
-            .Parameters.Append .CreateParameter("@SerCom", adChar, adParamInput, 3, vSerCom)
-            .Parameters.Append .CreateParameter("@nroCom", adInteger, adParamInput, , vNroCom)
-            .Parameters.Append .CreateParameter("@SerDoc", adChar, adParamInput, 3, Me.lblSerie.Caption)
-            .Parameters.Append .CreateParameter("@NroDoc", adDouble, adParamInput, , CDbl(Me.txtNro.Text))
-            .Parameters.Append .CreateParameter("@Fbg", adChar, adParamInput, 1, Left(Me.DatTiposDoctos.Text, 1)) ' Me.cboTipoDocto.Text)
-            .Parameters.Append .CreateParameter("@XmlDet", adVarChar, adParamInput, 4000, Trim(vXml))
+                If FileName = "" Then
+                    If MsgBox("El Archivo no existe." & vbCrLf & "¿Desea continuar sin imprimir?.", vbQuestion + vbYesNo, Pub_Titulo) = vbYes Then
+                        xCONTINUA = True
+                    Else
 
-            If Me.DatTiposDoctos.BoundText = "01" Then
-                .Parameters.Append .CreateParameter("@codcli", adVarChar, adParamInput, 10, Me.txtRuc.Tag)
-            Else
-                .Parameters.Append .CreateParameter("@codcli", adVarChar, adParamInput, 10, IIf(Len(Trim(Me.txtRuc.Tag)) = 0, 1, Me.txtRuc.Tag))
-            End If
+                        Exit Sub
 
-            .Parameters.Append .CreateParameter("@codMozo", adInteger, adParamInput, , vCodMoz)
-            .Parameters.Append .CreateParameter("@totalfac", adDouble, adParamInput, , Me.lblImporte.Caption)
-            If oRSfp.RecordCount <> 0 Then oRSfp.MoveFirst
-            '.Parameters.Append .CreateParameter("@sec", adInteger, adParamInput, , Me.dcboPago.BoundText)
-            .Parameters.Append .CreateParameter("@sec", adInteger, adParamInput, , oRSfp!idformapago)
-            .Parameters.Append .CreateParameter("@moneda", adChar, adParamInput, 1, "S")
-            .Parameters.Append .CreateParameter("@diascre", adInteger, adParamInput, , 0)
-            .Parameters.Append .CreateParameter("@farjabas", adTinyInt, adParamInput, , IIf(Me.chkConsumo.Value = 1, 1, 0))
-'.Parameters.Append .CreateParameter("@dscto", adDouble, adParamInput, , IIf(Len(Trim(Me.lblDscto.Caption)) = 0, 0, Me.lblDscto.Caption))
-            .Parameters.Append .CreateParameter("@dscto", adDouble, adParamInput, , gDESCUENTO)
-            .Parameters.Append .CreateParameter("@CODIGODOCTO", adChar, adParamInput, 2, Me.DatTiposDoctos.BoundText)
-            .Parameters.Append .CreateParameter("@Xmlpag", adVarChar, adParamInput, 4000, xFP)
-            .Parameters.Append .CreateParameter("@PAGACON", adDouble, adParamInput, , xPAGACON)
-            .Parameters.Append .CreateParameter("@VUELTO", adDouble, adParamInput, , xVUELTO)
-                
-            .Parameters.Append .CreateParameter("@VALORVTA", adDouble, adParamInput, , Me.lblvvta.Caption)
-            .Parameters.Append .CreateParameter("@VIGV", adDouble, adParamInput, , Me.lblIgv.Caption)
-            .Parameters.Append .CreateParameter("@GRATUITO", adBoolean, adParamInput, , Me.chkGratuito.Value)
-            .Parameters.Append .CreateParameter("@CIAPEDIDO", adChar, adParamInput, 2, LK_CODCIA)
-            .Parameters.Append .CreateParameter("@ALL_ICBPER", adDouble, adParamInput, , IIf(Len(Trim(Me.lblicbper.Caption)) = 0, 0, Me.lblicbper.Caption))
-            .Parameters.Append .CreateParameter("@MaxNumOper", adInteger, adParamOutput, , 0)
-            .Parameters.Append .CreateParameter("@AUTONUMFAC", adInteger, adParamOutput, , 0)
-        
-            .Execute
-
-            If Not IsNull(oCmdEjec.Parameters("@MaxNumOper").Value) Then
-                vOper = oCmdEjec.Parameters("@MaxNumOper").Value
-            End If
-
-            Me.txtNro.Text = oCmdEjec.Parameters("@AUTONUMFAC").Value
-                
-            If vAcepta = False Then
-
-                vAcepta = True
-'MsgBox "Datos Almacenados correctamente", vbInformation, Pub_Titulo
-
-'Imprimir Left(Me.DatTiposDoctos.Text, 1), Me.chkConsumo.Value
-                CreaCodigoQR "6", Me.DatTiposDoctos.BoundText, Me.lblSerie.Caption, Me.txtNro.Text, LK_FECHA_DIA, CStr(Me.lblIgv.Caption), Me.lblImporte.Caption, Me.txtRuc.Text, Me.txtDni.Text
-                If xARCENCONTRADO Then
-                    ImprimirDocumentoVenta Me.DatTiposDoctos.BoundText, Me.DatTiposDoctos.Text, Me.chkConsumo.Value, Me.lblSerie.Caption, Me.txtNro.Text, Me.lblImporte.Caption, Me.lblvvta.Caption, Me.lblIgv.Caption, Me.txtDireccion.Text, Me.txtRuc.Text, Me.txtRS.Text, Me.txtDni.Text, Me.DatEmpresas.BoundText, IIf(Len(Trim(Me.lblicbper.Caption)) = 0, 0, Me.lblicbper.Caption), Me.chkprom.Value
-                End If
-                    
-'If Me.DatTiposDoctos.BoundText = "01" Or Me.DatTiposDoctos.BoundText = "03" Then
-               ' If Me.DatTiposDoctos.BoundText = "01" Then
-                    If LK_PASA_BOLETAS = "A" And (Me.DatTiposDoctos.BoundText = "01" Or Me.DatTiposDoctos.BoundText = "03") Then
-                    CrearArchivoPlano Left(Me.DatTiposDoctos.Text, 1), Me.lblSerie.Caption, Me.txtNro.Text
-                    ElseIf Me.DatTiposDoctos.BoundText = "01" Then
-                    CrearArchivoPlano Left(Me.DatTiposDoctos.Text, 1), Me.lblSerie.Caption, Me.txtNro.Text
                     End If
-               ' End If
 
-                Unload Me
-            Else
-                MsgBox "Ya se facturo"
+                Else
+                    xCONTINUA = True
+                    xARCENCONTRADO = True
+
+                    'ImprimirDocumentoVenta Me.DatTiposDoctos.BoundText, Me.DatTiposDoctos.Text, Me.chkConsumo.Value, "009", 2, 100, "33", "43", "343"
+                End If
+
+            End If
+
+            If xCONTINUA Then
+                LimpiaParametros oCmdEjec
+                oCmdEjec.CommandText = "SpFacturarComanda"
+                .Parameters.Append .CreateParameter("@codcia", adChar, adParamInput, 2, Me.DatEmpresas.BoundText)
+                .Parameters.Append .CreateParameter("@fecha", adDBTimeStamp, adParamInput, , LK_FECHA_DIA)
+                .Parameters.Append .CreateParameter("@usuario", adVarChar, adParamInput, 20, LK_CODUSU)
+                .Parameters.Append .CreateParameter("@SerCom", adChar, adParamInput, 3, vSerCom)
+                .Parameters.Append .CreateParameter("@nroCom", adInteger, adParamInput, , vNroCom)
+                .Parameters.Append .CreateParameter("@SerDoc", adChar, adParamInput, 3, Me.lblSerie.Caption)
+                .Parameters.Append .CreateParameter("@NroDoc", adDouble, adParamInput, , CDbl(Me.txtNro.Text))
+                .Parameters.Append .CreateParameter("@Fbg", adChar, adParamInput, 1, Left(Me.DatTiposDoctos.Text, 1)) ' Me.cboTipoDocto.Text)
+                .Parameters.Append .CreateParameter("@XmlDet", adVarChar, adParamInput, 4000, Trim(vXml))
+
+                If Me.DatTiposDoctos.BoundText = "01" Then
+                    .Parameters.Append .CreateParameter("@codcli", adVarChar, adParamInput, 10, Me.txtRuc.Tag)
+                Else
+                    .Parameters.Append .CreateParameter("@codcli", adVarChar, adParamInput, 10, IIf(Len(Trim(Me.txtRuc.Tag)) = 0, 1, Me.txtRuc.Tag))
+
+                End If
+
+                .Parameters.Append .CreateParameter("@codMozo", adInteger, adParamInput, , vCodMoz)
+                .Parameters.Append .CreateParameter("@totalfac", adDouble, adParamInput, , Me.lblImporte.Caption)
+
+                If oRSfp.RecordCount <> 0 Then oRSfp.MoveFirst
+                '.Parameters.Append .CreateParameter("@sec", adInteger, adParamInput, , Me.dcboPago.BoundText)
+                .Parameters.Append .CreateParameter("@sec", adInteger, adParamInput, , oRSfp!idformapago)
+                .Parameters.Append .CreateParameter("@moneda", adChar, adParamInput, 1, "S")
+                .Parameters.Append .CreateParameter("@diascre", adInteger, adParamInput, , 0)
+                .Parameters.Append .CreateParameter("@farjabas", adTinyInt, adParamInput, , IIf(Me.chkConsumo.Value = 1, 1, 0))
+                '.Parameters.Append .CreateParameter("@dscto", adDouble, adParamInput, , IIf(Len(Trim(Me.lblDscto.Caption)) = 0, 0, Me.lblDscto.Caption))
+                .Parameters.Append .CreateParameter("@dscto", adDouble, adParamInput, , gDESCUENTO)
+                .Parameters.Append .CreateParameter("@CODIGODOCTO", adChar, adParamInput, 2, Me.DatTiposDoctos.BoundText)
+                .Parameters.Append .CreateParameter("@Xmlpag", adVarChar, adParamInput, 4000, xFP)
+                .Parameters.Append .CreateParameter("@PAGACON", adDouble, adParamInput, , xPAGACON)
+                .Parameters.Append .CreateParameter("@VUELTO", adDouble, adParamInput, , xVUELTO)
+                
+                .Parameters.Append .CreateParameter("@VALORVTA", adDouble, adParamInput, , Me.lblvvta.Caption)
+                .Parameters.Append .CreateParameter("@VIGV", adDouble, adParamInput, , Me.lblIgv.Caption)
+                .Parameters.Append .CreateParameter("@GRATUITO", adBoolean, adParamInput, , Me.chkGratuito.Value)
+                .Parameters.Append .CreateParameter("@CIAPEDIDO", adChar, adParamInput, 2, LK_CODCIA)
+                .Parameters.Append .CreateParameter("@ALL_ICBPER", adDouble, adParamInput, , IIf(Len(Trim(Me.lblicbper.Caption)) = 0, 0, Me.lblicbper.Caption))
+                .Parameters.Append .CreateParameter("@SERVICIO", adDouble, adParamInput, , Me.lblServicio.Caption)
+                .Parameters.Append .CreateParameter("@MaxNumOper", adInteger, adParamOutput, , 0)
+                .Parameters.Append .CreateParameter("@AUTONUMFAC", adInteger, adParamOutput, , 0)
+        
+                .Execute
+
+                If Not IsNull(oCmdEjec.Parameters("@MaxNumOper").Value) Then
+                    vOper = oCmdEjec.Parameters("@MaxNumOper").Value
+
+                End If
+
+                Me.txtNro.Text = oCmdEjec.Parameters("@AUTONUMFAC").Value
+                
+                If vAcepta = False Then
+
+                    vAcepta = True
+                    'MsgBox "Datos Almacenados correctamente", vbInformation, Pub_Titulo
+
+                    'Imprimir Left(Me.DatTiposDoctos.Text, 1), Me.chkConsumo.Value
+                    CreaCodigoQR "6", Me.DatTiposDoctos.BoundText, Me.lblSerie.Caption, Me.txtNro.Text, LK_FECHA_DIA, CStr(Me.lblIgv.Caption), Me.lblImporte.Caption, Me.txtRuc.Text, Me.txtDni.Text
+
+                    If xARCENCONTRADO Then
+                        ImprimirDocumentoVenta Me.DatTiposDoctos.BoundText, Me.DatTiposDoctos.Text, Me.chkConsumo.Value, Me.lblSerie.Caption, Me.txtNro.Text, Me.lblImporte.Caption, Me.lblvvta.Caption, Me.lblIgv.Caption, Me.txtDireccion.Text, Me.txtRuc.Text, Me.txtRS.Text, Me.txtDni.Text, Me.DatEmpresas.BoundText, IIf(Len(Trim(Me.lblicbper.Caption)) = 0, 0, Me.lblicbper.Caption), Me.chkprom.Value
+
+                    End If
+                    
+                    'If Me.DatTiposDoctos.BoundText = "01" Or Me.DatTiposDoctos.BoundText = "03" Then
+                    ' If Me.DatTiposDoctos.BoundText = "01" Then
+                    If LK_PASA_BOLETAS = "A" And (Me.DatTiposDoctos.BoundText = "01" Or Me.DatTiposDoctos.BoundText = "03") Then
+                        CrearArchivoPlano Left(Me.DatTiposDoctos.Text, 1), Me.lblSerie.Caption, Me.txtNro.Text
+                    ElseIf Me.DatTiposDoctos.BoundText = "01" Then
+                        CrearArchivoPlano Left(Me.DatTiposDoctos.Text, 1), Me.lblSerie.Caption, Me.txtNro.Text
+
+                    End If
+
+                    ' End If
+
+                    Unload Me
+                Else
+                    MsgBox "Ya se facturo"
+
+                End If
+
             End If
 
         End If
-    End If
 
-'FIN DEL PARCHE
-End With
+        'FIN DEL PARCHE
+    End With
    
-Exit Sub
+    Exit Sub
 
 Graba:
-MsgBox Err.Description, vbCritical, "Error"
+    MsgBox Err.Description, vbCritical, "Error"
+
 End Sub
 
 Private Sub cmdCancelar_Click()
@@ -1386,6 +1491,7 @@ If KeyCode = vbKeyEscape Then Unload Me
 End Sub
 
 Private Sub Form_Load()
+
     Set oRSfp = Nothing
     vAcepta = False
     vBuscar = False
@@ -1394,8 +1500,7 @@ Private Sub Form_Load()
     ConfiguraLV
     ConfigurarLVDetalle
 
-
-     LimpiaParametros oCmdEjec
+    LimpiaParametros oCmdEjec
     oCmdEjec.CommandText = "SP_CIAS_FACTURACION"
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODCIA", adChar, adParamInput, 2, LK_CODCIA)
     Set ORStd = oCmdEjec.Execute
@@ -1409,8 +1514,6 @@ Private Sub Form_Load()
     
     CargarDocumentos
     cargarSeries
-    
-   
 
     LimpiaParametros oCmdEjec
    
@@ -1424,12 +1527,14 @@ Private Sub Form_Load()
     Else
     
         oCmdEjec.CommandText = "SpCargarComanda"
+
     End If
 
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@Fac", adBoolean, adParamInput, , 1)
 
     Set oRsPago = oCmdEjec.Execute '(, Array(LK_CODCIA, vMesa, LK_FECHA_DIA))
-
+    
+    vICBPER = 0
 
     Do While Not oRsPago.EOF
 
@@ -1442,25 +1547,21 @@ Private Sub Form_Load()
         itemX.SubItems(5) = oRsPago!CantTotal
         itemX.SubItems(6) = oRsPago!faltante
         itemX.SubItems(7) = FormatNumber(oRsPago!Importe, 2)
-        itemX.SubItems(8) = oRsPago!SEC
+        itemX.SubItems(8) = oRsPago!Sec
         itemX.SubItems(9) = oRsPago!aPRO
         itemX.SubItems(10) = oRsPago!aten
         itemX.SubItems(11) = oRsPago!uni
         itemX.SubItems(12) = oRsPago!PED_numsec
         itemX.SubItems(14) = oRsPago!icbper
         itemX.SubItems(15) = oRsPago!combo_icbper
-                Me.lblpICBPER.Caption = oRsPago!gen_icbper
+        Me.lblpICBPER.Caption = oRsPago!gen_icbper
+        vICBPER = vICBPER + oRsPago!icbper
        
         oRsPago.MoveNext
    
     Loop
 
-  
-
     Me.lblImporte.Caption = Format(vTOTAL, "########0.#0") 'FormatNumber(vTOTAL, 2)
-   
-    
-
    
     Me.lblVuelto.Caption = "0.00"
     Me.chkConsumo.Value = 0
@@ -1468,6 +1569,7 @@ Private Sub Form_Load()
     If LK_CODUSU = "MOZOB" Then
         Me.DatTiposDoctos.BoundText = "01"
         Me.DatTiposDoctos.Locked = True
+
         'cboTipoDocto.ListIndex = 1
         'cboTipoDocto.Locked = True
     End If
@@ -1517,7 +1619,7 @@ Private Sub Form_Load()
        
     End If
 
-Me.DatEmpresas.BoundText = LK_CODCIA
+    Me.DatEmpresas.BoundText = LK_CODCIA
     '    If xMostrador Then Me.DatTiposDoctos.BoundText = "01" ' Me.cboTipoDocto.ListIndex = 1
 
 End Sub
@@ -1854,52 +1956,91 @@ Private Sub CrearArchivoPlano(cTipoDocto As String, cSerie As String, cNumero As
 End Sub
 
 Private Sub CalcularImporte()
-'1combo
-'2 combo
-'3 combo
+    '1combo
+    '2 combo
+    '3 combo
 
-Dim vp1  As Currency, vp2 As Currency, vp3 As Currency
+    Dim vp1    As Currency, vp2 As Currency, vp3 As Currency
 
-Dim vDol As Currency
+    Dim vDol   As Currency
 
-'If Me.cboMoneda1.ListIndex = 0 Then 'soles
-'    vp1 = val(Me.txtMoney1.Text)
-'ElseIf Me.cboMoneda1.ListIndex = 1 Then 'dolares
-'    vp1 = LK_TIPO_CAMBIO * val(Me.txtMoney1.Text)
-'    'vp1 = vDol - val(Me.lblImporte.Caption)
-'End If
+    'If Me.cboMoneda1.ListIndex = 0 Then 'soles
+    '    vp1 = val(Me.txtMoney1.Text)
+    'ElseIf Me.cboMoneda1.ListIndex = 1 Then 'dolares
+    '    vp1 = LK_TIPO_CAMBIO * val(Me.txtMoney1.Text)
+    '    'vp1 = vDol - val(Me.lblImporte.Caption)
+    'End If
 
-Dim Item As Object
-Dim icbper As Double
-vp1 = 0
-icbper = 0
+'    Dim Item   As Object
+'
+'    Dim icbper As Double
+'
+'    vp1 = 0
+'    icbper = 0
 
-For Each Item In Me.lvDetalle.ListItems
+'    For Each Item In Me.lvDetalle.ListItems
+'
+'        vp1 = vp1 + Item.SubItems(7)
+'
+'        If Item.SubItems(14) = 1 Then
+'            icbper = icbper + (Item.SubItems(6) * Me.lblpICBPER.Caption)
+'
+'        End If
+'
+'        If Item.SubItems(15) > 0 Then
+'            icbper = icbper + Item.SubItems(15)
+'
+'        End If
+'
+'    Next
 
-    vp1 = vp1 + Item.SubItems(7)
-    If Item.SubItems(14) = 1 Then
-        icbper = icbper + (Item.SubItems(6) * Me.lblpICBPER.Caption)
+    'If Me.cboMoneda1.ListIndex = 1 Then 'dolares
+    If LK_MONEDA = "D" Then
+        vp1 = LK_TIPO_CAMBIO * vp1
+
+        'vp1 = vDol - val(Me.lblImporte.Caption)
+    End If
+
+    'vp1 = vp1 - val(Me.lblDscto.Caption)
+    'Me.lblICBPER.Caption = FormatNumber(icbper, 2)
+
+    'If Me.txtMoney1.Text <> 0 Then
+    'Me.lblImporte.Caption = vp1
+    'Me.lblvuelto.Caption = val(Me.lblImporte.Caption) - vp1
+    'End If
+
+    Dim vServicio As Double
+
+    Dim xServicio As Integer
+
+    LimpiaParametros oCmdEjec
+    oCmdEjec.CommandText = "USP_PARAMETRO_SERVICIO"
+    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CIAPEDIDO", adChar, adParamInput, 2, LK_CODCIA)
+    
+    Dim orsT As ADODB.Recordset
+
+    Set orsT = oCmdEjec.Execute
+    
+    If Not orsT.EOF Then
+        vServicio = orsT!servicio
+        xServicio = vServicio * 100
+
     End If
     
-    If Item.SubItems(15) > 0 Then
-         icbper = icbper + Item.SubItems(15)
+    If Me.chkServicio.Value Then
+        Me.lblvvta.Caption = FormatNumber(Round((val(Me.lblImporte.Caption) - val(Me.lblicbper.Caption)) / val(((vIgv + xServicio) / 100) + 1), 2), 2)
+        Me.lblServicio.Caption = FormatNumber(Round(val(Me.lblvvta.Caption) * vServicio, 2), 2)
+        Me.lblIgv.Caption = FormatNumber(Round(val(Me.lblImporte.Caption) - val(Me.lblvvta.Caption) - val(Me.lblicbper.Caption) - val(Me.lblServicio.Caption), 2), 2)
+        Me.lblImporte.Caption = FormatNumber(val(Me.lblvvta.Caption) + val(Me.lblIgv.Caption) + val(Me.lblServicio.Caption) + val(lblicbper.Caption), 2)
+    Else
+        vServicio = 0
+        xServicio = 0
+        Me.lblvvta.Caption = FormatNumber(Round((val(Me.lblImporte.Caption) - val(Me.lblicbper.Caption)) / val(((vIgv + xServicio) / 100) + 1), 2), 2)
+        Me.lblServicio.Caption = FormatNumber(Round(val(Me.lblvvta.Caption) * vServicio, 2), 2)
+        Me.lblIgv.Caption = FormatNumber(Round(val(Me.lblImporte.Caption) - val(Me.lblvvta.Caption) - val(Me.lblicbper.Caption) - val(Me.lblServicio.Caption), 2), 2)
+        Me.lblImporte.Caption = FormatNumber(val(Me.lblvvta.Caption) + val(Me.lblIgv.Caption) + val(Me.lblServicio.Caption) + val(lblicbper.Caption), 2)
+
     End If
-    
-Next
-
-'If Me.cboMoneda1.ListIndex = 1 Then 'dolares
-If LK_MONEDA = "D" Then
-    vp1 = LK_TIPO_CAMBIO * vp1
-'vp1 = vDol - val(Me.lblImporte.Caption)
-End If
-
-vp1 = vp1 - val(Me.lblDscto.Caption)
-Me.lblicbper.Caption = FormatNumber(icbper, 2)
-
-'If Me.txtMoney1.Text <> 0 Then
-    Me.lblImporte.Caption = vp1
-    Me.lblVuelto.Caption = val(Me.lblImporte.Caption) - vp1
-'End If
 
 End Sub
 
@@ -1919,7 +2060,7 @@ Private Sub lvDetalle_KeyDown(KeyCode As Integer, Shift As Integer)
 
     If KeyCode = vbKeyDelete Then
         If Not Me.lvDetalle.SelectedItem Is Nothing Then
-            Me.lvDetalle.ListItems.Remove Me.lvDetalle.SelectedItem.index
+            Me.lvDetalle.ListItems.Remove Me.lvDetalle.SelectedItem.Index
             CalcularImporte
             sumatoria
       
@@ -1950,32 +2091,34 @@ Private Sub lvDetalle_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub sumatoria()
-Dim vIgv As Integer
- LimpiaParametros oCmdEjec
-            oCmdEjec.CommandText = "USP_EMPRESA_IGV"
-            Dim orsIGV As ADODB.Recordset
-            Set orsIGV = oCmdEjec.Execute(, Me.DatEmpresas.BoundText)
 
-            Dim Item As Object
+    LimpiaParametros oCmdEjec
+    oCmdEjec.CommandText = "USP_EMPRESA_IGV"
+
+    Dim orsIGV As ADODB.Recordset
+
+    Set orsIGV = oCmdEjec.Execute(, Me.DatEmpresas.BoundText)
+
+    Dim Item As Object
         
-            If Not orsIGV.EOF Then
-            vIgv = orsIGV.Fields(0).Value
-            Me.lblporcigv.Caption = vIgv & "%"
-            End If
+    If Not orsIGV.EOF Then
+        vIgv = orsIGV.Fields(0).Value
+        Me.lblporcigv.Caption = vIgv & "%"
+        'vICBPER = orsIGV!icbper
+    End If
 
     Dim vimp As Double
 
     For i = 1 To Me.lvDetalle.ListItems.count
         vimp = vimp + Me.lvDetalle.ListItems(i).SubItems(7)
-       
     Next
-
+    Me.lblServicio.Caption = "0.00"
+    Me.lblImporte.Caption = Format(vTOTAL + vICBPER, "########0.#0") ' Format(val(Me.lblvvta.Caption) + val(Me.lblIgv.Caption) + val(Me.lblicbper.Caption), "########0.#0")
     'Me.lblImporte.Caption = Format(vimp, "########0.#0") 'FormatNumber(vimp, 2)
-     Me.lblvvta.Caption = Round(vimp / ((vIgv / 100) + 1), 2)
-        Me.lblIgv.Caption = vimp - Me.lblvvta.Caption
-        Me.lblImporte.Caption = Format(val(vimp) + val(Me.lblicbper.Caption), "########0.#0")
-        
-
+    Me.lblvvta.Caption = Round((vimp) / ((vIgv / 100) + 1), 2)
+    Me.lblIgv.Caption = Round(Me.lblvvta.Caption * (vIgv / 100), 2)
+    
+    Me.lblicbper.Caption = FormatNumber(vICBPER, 2)
     
 End Sub
 

@@ -24,7 +24,7 @@ Public Sub Conectar()
         'oConec.ConnectionTimeout = 500
         oConec.ConnectionString = xParametros.CadenaConexion
         oConec.Open
-        'oConec.Open "Provider=SQLOLEDB;data Source=25.133.64.192;Initial Catalog=BDATOS;User Id=sa;Password=anteromariano"
+        
     Else
 
         If oConec.State = 0 Then
@@ -32,7 +32,7 @@ Public Sub Conectar()
             oConec.CommandTimeout = 500
             oConec.ConnectionString = xParametros.CadenaConexion
             oConec.Open
-            'oConec.Open "Provider=SQLOLEDB;data Source=25.133.64.192;Initial Catalog=BDATOS;User Id=sa;Password=anteromariano"
+            
         End If
     End If
    

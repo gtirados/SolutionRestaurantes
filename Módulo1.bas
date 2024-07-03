@@ -145,7 +145,7 @@ Public che_movi As rdoResultset
 Public caa_LLAVE As rdoResultset
 
 Public zon_llave As rdoResultset
-Public x As rdoResultset
+Public X As rdoResultset
 Public SQ_OPER As Integer
 Public sq_keybuff As String
 Public archi As String
@@ -375,8 +375,6 @@ Public Sub CONEXION_GEN()
   wdsn = "dsn_datos"
   
   PUB_DSN = UCase(wdsn)
- wAcceso = "anteromariano"
- 
 
 
   ws_color = 3
@@ -386,7 +384,7 @@ Public Sub CONEXION_GEN()
   DoEvents
   NL = Chr(13) & Chr(10)
   Set EN = rdoEnvironments(0)
-  CONn$ = "dsn=" & wdsn & ";uid=sa;pwd=" & wAcceso & ";database=bdatos;"
+  CONn$ = "dsn=" & wdsn & ";uid=sa;pwd=" & claveAcceso & ";database=bdatos;"
   
   Pub_ConnAdo.Open CONn$
   
@@ -571,7 +569,7 @@ Public Sub CONEXION_GEN()
   Set far_llave = PSFAR_LLAVE.OpenResultset(rdOpenKeyset, rdConcurValues)
   Pro_Aumento 23
   
-  pub_cadena = "SELECT FAR_CODCLIE, FAR_NUMOPER , FAR_FECHA, FAR_FBG,FAR_NUMSER, FAR_NUMFAC, FAR_NUMFAC_C, FAR_NUMSER_C , FAR_NUMFAC, FAR_NUMSER, FAR_FBG, FAR_BRUTO, FAR_IMPTO, FAR_SUBTOTAL, FAR_FECHA_COMPRA , FAR_NUMDOC, FAR_MONEDA, FAR_CODCIA, FAR_TIPMOV , far_tipdoc, FAR_DIAS FROM facart WHERE FAR_TIPMOV = ? AND FAR_CODCIA = ? AND FAR_NUMSER_C = ? AND (FAR_FBG=? OR FAR_FBG=?) AND FAR_NUMFAC_C = ? AND far_estado <> 'E'  ORDER BY FAR_TIPMOV, FAR_CODCIA, FAR_NUMSER, FAR_FBG, FAR_NUMFAC, FAR_NUMSEC"
+  pub_cadena = "SELECT FAR_CODCLIE, FAR_NUMOPER , FAR_FECHA,FAR_NUMSER, FAR_NUMFAC, FAR_NUMFAC_C, FAR_NUMSER_C , FAR_FBG, FAR_BRUTO, FAR_IMPTO, FAR_SUBTOTAL, FAR_FECHA_COMPRA , FAR_NUMDOC, FAR_MONEDA, FAR_CODCIA, FAR_TIPMOV , far_tipdoc, FAR_DIAS FROM facart WHERE FAR_TIPMOV = ? AND FAR_CODCIA = ? AND FAR_NUMSER_C = ? AND (FAR_FBG=? OR FAR_FBG=?) AND FAR_NUMFAC_C = ? AND far_estado <> 'E'  ORDER BY FAR_TIPMOV, FAR_CODCIA, FAR_NUMSER, FAR_FBG, FAR_NUMFAC, FAR_NUMSEC"
   Set PSFAR_MENOR4 = CN.CreateQuery("", pub_cadena)
   PSFAR_MENOR4(0) = 0
   PSFAR_MENOR4(1) = ""
@@ -1391,8 +1389,8 @@ Dim sw_cuenta As Integer
 On Error GoTo CHECKERROR
 archi = "SELECT CLI_CODCLIE, CLI_CODCIA, CLI_CP, CLI_NOMBRE,CLI_CASA_DIREC,CLI_ZONA_NEW, CLI_CASA_NUM,TAB_NOMLARGO FROM CLIENTES,TABLAS WHERE  CLI_CP = '" & WCP & "' AND CLI_CODCIA = '" & LK_CODCIA & "' AND (TAB_CODCIA = '00') AND (CLI_ZONA_NEW = TAB_NUMTAB) AND TAB_TIPREG = 35 ORDER BY CLI_NOMBRE"
 Set PSX = CN.CreateQuery("", archi)
-Set x = PSX.OpenResultset(rdOpenForwardOnly)
-x.Requery
+Set X = PSX.OpenResultset(rdOpenForwardOnly)
+X.Requery
 fila = 0
 WLV1.ColumnHeaders.Add 1, , "Descripción", 3800
 WLV1.ColumnHeaders.Add 2, , "Cod.", 600
@@ -1406,28 +1404,28 @@ WLV1.Left = 300
 NUMCAMPO = 0
 VAR = "*" & Texto & "*"
 sw_cuenta = 0
-Do Until x.EOF Or sw_cuenta = 1000
+Do Until X.EOF Or sw_cuenta = 1000
 OJO = "S"
 If Not IsMissing(WBUS) Then
  If WBUS = "D" Then
-   chec1 = UCase(x!CLI_CASA_DIREC) Like UCase(VAR)
+   chec1 = UCase(X!CLI_CASA_DIREC) Like UCase(VAR)
  End If
 Else
- chec1 = UCase(x!CLI_NOMBRE) Like UCase(VAR)
+ chec1 = UCase(X!CLI_NOMBRE) Like UCase(VAR)
 End If
 If chec1 = False Then
    OJO = "N"
 End If
 If OJO = "S" Then
-   Set itmX = WLV1.ListItems.Add(, , Trim(CStr(x.rdoColumns(3))))
-   itmX.SubItems(1) = Trim(CStr(x.rdoColumns(0)))
-   itmX.SubItems(2) = Trim(CStr(x.rdoColumns(4))) + " # " + Trim(CStr(x.rdoColumns(6)))
-   itmX.SubItems(3) = Trim(CStr(x!tab_NOMLARGO))
+   Set itmX = WLV1.ListItems.Add(, , Trim(CStr(X.rdoColumns(3))))
+   itmX.SubItems(1) = Trim(CStr(X.rdoColumns(0)))
+   itmX.SubItems(2) = Trim(CStr(X.rdoColumns(4))) + " # " + Trim(CStr(X.rdoColumns(6)))
+   itmX.SubItems(3) = Trim(CStr(X!tab_NOMLARGO))
    NUMCAMPO = 1
    sw_cuenta = sw_cuenta + 1
    itmX.Tag = sw_cuenta
 End If
-    x.MoveNext
+    X.MoveNext
 Loop
 WLV1.ToolTipText = "Encontrados : " & itmX.Tag & "/" & sw_cuenta & " Muestra un Maximo de: " & 1000
 
@@ -1517,7 +1515,7 @@ End Sub
 
 Public Function ENTERO(Texto As String) As Boolean
 Dim LARGO As Integer
-Dim i, x As Integer
+Dim i, X As Integer
 Dim DIG As Integer
 LARGO = Len(Texto)
 i = LARGO
@@ -1525,7 +1523,7 @@ ENTERO = True
 Do Until i = 0
    DIG = Asc(Mid(Texto, i, 1))
    If (DIG > 47 And DIG < 58) Then
-       x = 0
+       X = 0
    Else
        ENTERO = False
        Exit Do

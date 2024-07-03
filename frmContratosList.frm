@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "msmask32.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmContratosList 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Listado de Contratos Programados"
@@ -248,7 +248,7 @@ Private Sub cmdBuscar_Click()
         End If
     End If
 
-    Dim orsDATA As ADODB.Recordset
+    Dim orsData As ADODB.Recordset
 
     Me.lvData.ListItems.Clear
 
@@ -262,22 +262,22 @@ Private Sub cmdBuscar_Click()
             .Parameters.Append .CreateParameter("@FECHAFIN", adDBTimeStamp, adParamInput, , IIf(Me.OptFechas.Value, Me.MasHasta.Text, vbNull))
             .Parameters.Append .CreateParameter("@SEARCH", adVarChar, adParamInput, 150, IIf(Me.OptCliente.Value, Me.txtCliente.Text, vbNull))
             .Parameters.Append .CreateParameter("@CODCIA", adChar, adParamInput, 2, LK_CODCIA)
-            Set orsDATA = .Execute
+            Set orsData = .Execute
         End With
         
         Dim itemX As Object
 
-        Do While Not orsDATA.EOF
-            Set itemX = Me.lvData.ListItems.Add(, , orsDATA!NROCONTRATO)
-            itemX.SubItems(1) = Trim(orsDATA!CLIENTE)
-            itemX.SubItems(2) = orsDATA!INICIOEVENTO
-            itemX.SubItems(3) = orsDATA!TERMINOEVENTO
-            itemX.SubItems(4) = orsDATA!EXCLUSIVO
-            itemX.SubItems(5) = orsDATA!Total
-            itemX.SubItems(6) = orsDATA!ACUENTA
-            itemX.SubItems(7) = orsDATA!SALDO
-            itemX.SubItems(8) = orsDATA!ESTADO
-            orsDATA.MoveNext
+        Do While Not orsData.EOF
+            Set itemX = Me.lvData.ListItems.Add(, , orsData!NROCONTRATO)
+            itemX.SubItems(1) = Trim(orsData!cliente)
+            itemX.SubItems(2) = orsData!INICIOEVENTO
+            itemX.SubItems(3) = orsData!TERMINOEVENTO
+            itemX.SubItems(4) = orsData!EXCLUSIVO
+            itemX.SubItems(5) = orsData!Total
+            itemX.SubItems(6) = orsData!ACUENTA
+            itemX.SubItems(7) = orsData!SALDO
+            itemX.SubItems(8) = orsData!ESTADO
+            orsData.MoveNext
         Loop
 
     End If
@@ -286,7 +286,7 @@ End Sub
 
 Private Sub Form_Load()
     vPasa = True
-    ConfigurarLv
+    ConfigurarLV
     Me.MasDesde.Text = "01/" & Right("00" & CStr(Month(Date)), 2) & "/" & CStr(Year(Date))
     Me.MasHasta.Text = DateAdd("m", 1, Me.MasDesde.Text) - 1
 
@@ -294,7 +294,7 @@ Private Sub Form_Load()
 
 End Sub
 
-Private Sub ConfigurarLv()
+Private Sub ConfigurarLV()
     With Me.lvData
     
         .ColumnHeaders.Add , , "NRO CONTRATO"
@@ -349,7 +349,7 @@ Private Sub Toolbar1_ButtonClick(ByVal Button As MSComctlLib.Button)
 
     On Error GoTo Menu
 
-    Select Case Button.Index
+    Select Case Button.index
 
         Case 1
             frmContratos.VNuevo = True
@@ -455,7 +455,7 @@ Private Sub VisualizarContrato(xIdContrato As Integer)
 
     Dim crParamDef  As CRAXDRT.ParameterFieldDefinition
 
-    Dim objCrystal  As New CRAXDRT.Application
+    Dim objCrystal  As New CRAXDRT.APPLICATION
 
     Dim RutaReporte As String
     Dim oUSER As String, oCLAVE As String, oLOCAL As String
@@ -474,8 +474,8 @@ Private Sub VisualizarContrato(xIdContrato As Integer)
     
     'RutaReporte = "d:\VISTACONTRATO.rpt"
     RutaReporte = Trim(orsC!RutaReporte) + "VISTACONTRATO.rpt"
-    oUSER = orsC!usuario
-    oCLAVE = orsC!Clave
+    oUSER = orsC!USUARIO
+    oCLAVE = orsC!clave
     oLOCAL = orsC!LOCAL
 
     If VReporte Is Nothing Then VReporte = New CRAXDRT.Report
@@ -519,12 +519,11 @@ Private Sub VisualizarContrato(xIdContrato As Integer)
     'SUB REPORTE
     Dim VReporteS As New CRAXDRT.Report
 
-    VReporte.Database.SetDataSource rsd, , 1  'lleno el objeto reporte
+    VReporte.DataBase.SetDataSource rsd, , 1  'lleno el objeto reporte
 
     Set VReporteS = VReporte.OpenSubreport("DETALLE")
     
-    VReporte.OpenSubreport("DETALLE").Database.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, oCLAVE
-    'VReporte.OpenSubreport("DETALLE").Database.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, "accesodenegado"
+    VReporte.OpenSubreport("DETALLE").DataBase.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, oCLAVE
     
     
     Set crParamDefs = VReporteS.ParameterFields

@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
-Object = "{79EB16A5-917F-4145-AB5F-D3AEA60612D8}#12.1#0"; "CODEJO~1.OCX"
+Object = "{79EB16A5-917F-4145-AB5F-D3AEA60612D8}#12.1#0"; "Codejock.Calendar.v12.1.1.ocx"
 Begin VB.Form frmProgramacionMain 
    BackColor       =   &H80000010&
    Caption         =   "Listado de Programaciones"
@@ -186,7 +186,7 @@ Private vF1         As Date
 
 Private vF2         As Date
 
-Private Sub ccDatos_ContextMenu(ByVal x As Single, ByVal y As Single)
+Private Sub ccDatos_ContextMenu(ByVal X As Single, ByVal Y As Single)
 
     Dim HitTest As CalendarHitTestInfo
 
@@ -254,7 +254,7 @@ Private Sub CargarContratos(vFechaIni As Date, vFechaFin As Date)
         ORSd.Filter = "IDPROGRAMACION=" & oRS!IDPROGRAMACION
         
         Do While Not ORSd.EOF
-            vSUBJECT = vSUBJECT & ORSd!Cantidad & " - " & ORSd!PRODUCTO & vbCrLf
+            vSUBJECT = vSUBJECT & ORSd!Cantidad & " - " & ORSd!producto & vbCrLf
             ORSd.MoveNext
         Loop
 
@@ -671,11 +671,11 @@ CargarContratos vF1, vF2
 
 End Sub
 
-Private Sub mnuTimeLine_Click(Index As Integer)
+Private Sub mnuTimeLine_Click(index As Integer)
  
  
  
- Me.ccDatos.DayView.TimeScale = mnuTimeLine(Index).HelpContextID
+ Me.ccDatos.DayView.TimeScale = mnuTimeLine(index).HelpContextID
 End Sub
 
 Private Sub mnuVer_Click()
@@ -691,7 +691,7 @@ Private Sub VisualizarContrato(xIdContrato As Integer)
 
     Dim crParamDef  As CRAXDRT.ParameterFieldDefinition
 
-    Dim objCrystal  As New CRAXDRT.Application
+    Dim objCrystal  As New CRAXDRT.APPLICATION
 
     Dim RutaReporte As String
 
@@ -710,8 +710,8 @@ Private Sub VisualizarContrato(xIdContrato As Integer)
     
     'RutaReporte = "d:\VISTACONTRATO.rpt"
     RutaReporte = Trim(orsC!RutaReporte) + "VISTACONTRATO.rpt"
-    oUSER = orsC!usuario
-    oCLAVE = orsC!Clave
+    oUSER = orsC!USUARIO
+    oCLAVE = orsC!clave
     oLOCAL = orsC!LOCAL
 
     If VReporte Is Nothing Then VReporte = New CRAXDRT.Report
@@ -760,15 +760,12 @@ Private Sub VisualizarContrato(xIdContrato As Integer)
     Dim VReporteS As New CRAXDRT.Report
     Dim VReporteA As New CRAXDRT.Report
 
-    VReporte.Database.SetDataSource rsd, , 1  'lleno el objeto reporte
+    VReporte.DataBase.SetDataSource rsd, , 1  'lleno el objeto reporte
 
     Set VReporteS = VReporte.OpenSubreport("DETALLE")
     Set VReporteA = VReporte.OpenSubreport("AMORTIZACIONES")
     
-    VReporte.OpenSubreport("DETALLE").Database.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, oCLAVE
-    'VReporte.OpenSubreport("DETALLE").Database.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, "accesodenegado"
-    
-    
+    VReporte.OpenSubreport("DETALLE").DataBase.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, oCLAVE
     
     Set crParamDefs = VReporteS.ParameterFields
 
@@ -785,8 +782,7 @@ Private Sub VisualizarContrato(xIdContrato As Integer)
 
     Next
     
-    'VReporte.OpenSubreport("AMORTIZACIONES").Database.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, "accesodenegado"
-    VReporte.OpenSubreport("AMORTIZACIONES").Database.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, oCLAVE
+    VReporte.OpenSubreport("AMORTIZACIONES").DataBase.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, oCLAVE
        
     'VReporteS.Database.SetDataSource RSS, , 1
  
