@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{00025600-0000-0000-C000-000000000046}#5.2#0"; "Crystl32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmComanda2 
    BackColor       =   &H8000000C&
    BorderStyle     =   0  'None
@@ -1128,7 +1128,7 @@ Public Sub CargarComanda(vCodCia As String, vCodMesa As String)
                 .SubItems(3) = Format(oRsComanda!Cantidad, "#####.#0")
                 .SubItems(4) = Format(oRsComanda!PRECIO, "#####.#0")
                 .SubItems(5) = Format(oRsComanda!Importe, "#####.#0")
-                .SubItems(6) = oRsComanda!SEC
+                .SubItems(6) = oRsComanda!Sec
                 .SubItems(7) = oRsComanda!aten
                 '.SubItems(7) = oRsComanda!NumFac
                 .SubItems(8) = oRsComanda.Fields!PED_NUMFAC
@@ -1860,39 +1860,39 @@ Private Sub cmdCantidad_Click()
 
             Dim stockReq As Double
  
-            Set oRsTemp = oCmdEjec.Execute
+            Set oRStemp = oCmdEjec.Execute
 
-            If Not oRsTemp.EOF Then
+            If Not oRStemp.EOF Then
  
                 ss = val(Me.lblTexto.Caption) - val(Me.lvPlatos.SelectedItem.SubItems(3))
 
                 If ss = 0 Then Exit Sub
                 If ss > 0 Then
     
-                    Do While Not oRsTemp.EOF
+                    Do While Not oRStemp.EOF
         
-                        stockReq = val(ss) * oRsTemp!ei
+                        stockReq = val(ss) * oRStemp!ei
         
-                        If oRsTemp!sa <= 0 Or stockReq > oRsTemp!sa Then
+                        If oRStemp!sa <= 0 Or stockReq > oRStemp!sa Then
                             vcero = True    'LINEA FALTANTE
 
                             If Len(vstrcero) = 0 Then
-                                vstrcero = Trim(oRsTemp!nm)
+                                vstrcero = Trim(oRStemp!nm)
                             Else
-                                vstrcero = vstrcero & vbCrLf & Trim(oRsTemp!nm)
+                                vstrcero = vstrcero & vbCrLf & Trim(oRStemp!nm)
                             End If
 
-                        ElseIf (val(oRsTemp!sa) - val(stockReq)) <= oRsTemp!sm Then
+                        ElseIf (val(oRStemp!sa) - val(stockReq)) <= oRStemp!sm Then
                             vmin = True    'LINEA FALTANTE
 
                             If Len(vstrmin) = 0 Then
-                                vstrmin = Trim(oRsTemp!nm)
+                                vstrmin = Trim(oRStemp!nm)
                             Else
-                                vstrmin = vstrmin & vbCrLf & Trim(oRsTemp!nm)
+                                vstrmin = vstrmin & vbCrLf & Trim(oRStemp!nm)
                             End If
                         End If
 
-                        oRsTemp.MoveNext
+                        oRStemp.MoveNext
        
                         'c = c + 1
         
@@ -2414,7 +2414,7 @@ Private Sub cmdPlato_Click(index As Integer)
         Me.lvPlatos.ListItems(c).Selected = False
     Next
 
-    Dim oRsTemp As ADODB.Recordset
+    Dim oRStemp As ADODB.Recordset
 
     'Varificando insumos del plato
     Dim msn     As String
@@ -2437,39 +2437,39 @@ Private Sub cmdPlato_Click(index As Integer)
     vmin = False
     vcero = False
 
-    Set oRsTemp = oCmdEjec.Execute
+    Set oRStemp = oCmdEjec.Execute
 
-    If Not oRsTemp.EOF Then
+    If Not oRStemp.EOF Then
 
-        Do While Not oRsTemp.EOF
+        Do While Not oRStemp.EOF
 
-            If oRsTemp!sa <= 0 Or (oRsTemp!sa - oRsTemp!ei) < 0 Then
+            If oRStemp!sa <= 0 Or (oRStemp!sa - oRStemp!ei) < 0 Then
                 vcero = True
 
                 'MsgBox "Algunos insumos del Plato no estan disponibles", vbCritical, NombreProyecto
                 If Len(vstrcero) = 0 Then
-                    vstrcero = Trim(oRsTemp!nm)
+                    vstrcero = Trim(oRStemp!nm)
                 Else
-                    vstrcero = vstrcero & vbCrLf & Trim(oRsTemp!nm)
+                    vstrcero = vstrcero & vbCrLf & Trim(oRStemp!nm)
                 End If
 
                 'Exit Sub
         
-            ElseIf (oRsTemp!sa - oRsTemp!ei) <= oRsTemp!sm Then
+            ElseIf (oRStemp!sa - oRStemp!ei) <= oRStemp!sm Then
                 vmin = True
 
                 'MsgBox "Algunos insumos del Plato estan el el Minimó permitido", vbInformation, NombreProyecto
                 If Len(vstrmin) = 0 Then
-                    vstrmin = Trim(oRsTemp!nm)
+                    vstrmin = Trim(oRStemp!nm)
                 Else
-                    vstrmin = vstrmin & vbCrLf & Trim(oRsTemp!nm)
+                    vstrmin = vstrmin & vbCrLf & Trim(oRStemp!nm)
                 End If
 
                 'Exit Do
             End If
 
             'c = c + 1
-            oRsTemp.MoveNext
+            oRStemp.MoveNext
         Loop
 
         'Else
@@ -2517,16 +2517,11 @@ Private Sub cmdPlato_Click(index As Integer)
                     'ItemP.Checked = True
                     oRsPlatos.Filter = ""
                     oRsPlatos.MoveFirst
-                    '        For i = 1 To frmDisMesas.imgMesa.count - 1
-                    '            If frmDisMesas.lblNomMesa(i).Tag = vMesa Then
-                    '                frmDisMesas.imgMesa(i).Picture = frmDisMesas.ilMesas.ListImages(4).Picture
-                    '                frmDisMesas.imgMesa(i).ToolTipText = "Mesa Ocupada"
-                    '                frmDisMesas.imgMesa(i).Tag = "O"
-                    '            End If
-                    '        Next
-                End With
 
+                End With
+                
                 vEstado = "O"
+                adicionarBolsa Me.cmdPlato(index).Tag, Me.lblSerie.Caption, Me.lblNumero.Caption, Me.lblCliente.Caption
             End If
         End If
 
@@ -2555,7 +2550,7 @@ Private Sub cmdPlato_Click(index As Integer)
 
             oRsPlatos.Filter = ""
             oRsPlatos.MoveFirst
-    
+            adicionarBolsa Me.cmdPlato(index).Tag, Me.lblSerie.Caption, Me.lblNumero.Caption, Me.lblCliente.Caption
         End If
     End If
 
@@ -3573,7 +3568,7 @@ Public Sub AgregarDesdeBuscador(xIDproducto As Double, _
         Me.lvPlatos.ListItems(c).Selected = False
     Next
 
-    Dim oRsTemp As ADODB.Recordset
+    Dim oRStemp As ADODB.Recordset
 
     'Varificando insumos del plato
     Dim msn     As String
@@ -3596,39 +3591,39 @@ Public Sub AgregarDesdeBuscador(xIDproducto As Double, _
     vmin = False
     vcero = False
 
-    Set oRsTemp = oCmdEjec.Execute
+    Set oRStemp = oCmdEjec.Execute
 
-    If Not oRsTemp.EOF Then
+    If Not oRStemp.EOF Then
 
-        Do While Not oRsTemp.EOF
+        Do While Not oRStemp.EOF
 
-            If oRsTemp!sa <= 0 Or (oRsTemp!sa - oRsTemp!ei) < 0 Then
+            If oRStemp!sa <= 0 Or (oRStemp!sa - oRStemp!ei) < 0 Then
                 vcero = True
 
                 'MsgBox "Algunos insumos del Plato no estan disponibles", vbCritical, NombreProyecto
                 If Len(vstrcero) = 0 Then
-                    vstrcero = Trim(oRsTemp!nm)
+                    vstrcero = Trim(oRStemp!nm)
                 Else
-                    vstrcero = vstrcero & vbCrLf & Trim(oRsTemp!nm)
+                    vstrcero = vstrcero & vbCrLf & Trim(oRStemp!nm)
                 End If
 
                 'Exit Sub
         
-            ElseIf (oRsTemp!sa - oRsTemp!ei) <= oRsTemp!sm Then
+            ElseIf (oRStemp!sa - oRStemp!ei) <= oRStemp!sm Then
                 vmin = True
 
                 'MsgBox "Algunos insumos del Plato estan el el Minimó permitido", vbInformation, NombreProyecto
                 If Len(vstrmin) = 0 Then
-                    vstrmin = Trim(oRsTemp!nm)
+                    vstrmin = Trim(oRStemp!nm)
                 Else
-                    vstrmin = vstrmin & vbCrLf & Trim(oRsTemp!nm)
+                    vstrmin = vstrmin & vbCrLf & Trim(oRStemp!nm)
                 End If
 
                 'Exit Do
             End If
 
             'c = c + 1
-            oRsTemp.MoveNext
+            oRStemp.MoveNext
         Loop
 
         'Else
@@ -3739,4 +3734,48 @@ Public Sub AgregarDesdeBuscador(xIDproducto As Double, _
     Next
 
     Me.lvPlatos.ListItems(Me.lvPlatos.ListItems.count).Selected = True
+End Sub
+
+
+Private Sub adicionarBolsa(cIDarticulo As Integer, cSerie As String, cNumero As Double, cCliente As String)
+
+    Dim oRSbolsa As ADODB.Recordset
+
+    LimpiaParametros oCmdEjec
+    oCmdEjec.CommandText = "[dbo].[USP_VALIDA_ARTICULO_BOLSA]"
+    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CodCia", adChar, adParamInput, 2, LK_CODCIA)
+    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODART", adBigInt, adParamInput, , cIDarticulo)
+                
+    Set oRSbolsa = oCmdEjec.Execute
+    VNuevo = False
+
+    Dim DD2 As Integer
+
+    If Not oRSbolsa.EOF Then
+        If oRSbolsa!AGREGA Then
+            If AgregaPlato(oRSbolsa!IDE, oRSbolsa!cant, oRSbolsa!PRE, (oRSbolsa!cant * oRSbolsa!PRE), "", cSerie, cNumero, cCliente, IIf(Len(Trim(Me.lblComensales.Caption)) = 0, 0, Me.lblComensales.Caption), DD2) Then
+
+                With Me.lvPlatos.ListItems.Add(, , oRSbolsa!PRD, Me.ilComanda.ListImages.Item(1).key, Me.ilComanda.ListImages.Item(1).key)
+                    .Tag = oRSbolsa!IDE
+                    .Checked = True
+                    .SubItems(2) = " "
+                    .SubItems(3) = FormatNumber(oRSbolsa!cant, 2)
+                    .SubItems(4) = FormatNumber(oRSbolsa!PRE, 2)
+                    .SubItems(5) = FormatNumber(val(.SubItems(3)) * val(.SubItems(4)), 2)
+                    .SubItems(6) = DD2
+                    .SubItems(7) = 0   'linea nueva
+                    .SubItems(8) = vMaxFac
+                    .SubItems(9) = 0
+                    VNuevo = False
+       
+
+                End With
+
+            End If
+
+        End If
+
+    End If
+
+    'AGREGA BOLSA SEGUN CONFIGURACION DEL ARTICULO - FIN
 End Sub

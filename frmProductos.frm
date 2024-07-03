@@ -1,15 +1,15 @@
 VERSION 5.00
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
-Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDATLST.OCX"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TabCtl32.Ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "ComDlg32.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDatLst.Ocx"
 Begin VB.Form frmProductos 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Información del Producto"
    ClientHeight    =   8175
    ClientLeft      =   45
    ClientTop       =   285
-   ClientWidth     =   11685
+   ClientWidth     =   11655
    BeginProperty Font 
       Name            =   "Verdana"
       Size            =   8.25
@@ -24,7 +24,7 @@ Begin VB.Form frmProductos
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   8175
-   ScaleWidth      =   11685
+   ScaleWidth      =   11655
    StartUpPosition =   2  'CenterScreen
    Begin MSComDlg.CommonDialog CommonDialog1 
       Left            =   4680
@@ -208,6 +208,22 @@ Begin VB.Form frmProductos
          TabIndex        =   23
          Top             =   600
          Width           =   9975
+         Begin VB.TextBox txtCodBolsa 
+            Height          =   285
+            Left            =   6000
+            TabIndex        =   80
+            Top             =   3600
+            Width           =   975
+         End
+         Begin VB.TextBox txtBolsas 
+            Height          =   285
+            Left            =   3120
+            MaxLength       =   2
+            TabIndex        =   79
+            Text            =   "0"
+            Top             =   3600
+            Width           =   975
+         End
          Begin VB.TextBox txtCosto 
             Height          =   285
             Left            =   3480
@@ -255,7 +271,7 @@ Begin VB.Form frmProductos
             EndProperty
             ForeColor       =   &H00800000&
             Height          =   255
-            Left            =   2520
+            Left            =   8160
             TabIndex        =   67
             Top             =   3600
             Width           =   1815
@@ -316,7 +332,7 @@ Begin VB.Form frmProductos
             Left            =   240
             TabIndex        =   57
             Top             =   3600
-            Width           =   2055
+            Width           =   1815
          End
          Begin VB.CheckBox chkSituacion 
             Caption         =   "Habilitado"
@@ -472,6 +488,28 @@ Begin VB.Form frmProductos
             Top             =   3000
             Visible         =   0   'False
             Width           =   1215
+         End
+         Begin VB.Label Label1 
+            AutoSize        =   -1  'True
+            BackStyle       =   0  'Transparent
+            Caption         =   "Código Bolsa:"
+            Height          =   195
+            Index           =   21
+            Left            =   4680
+            TabIndex        =   81
+            Top             =   3645
+            Width           =   1200
+         End
+         Begin VB.Label Label1 
+            AutoSize        =   -1  'True
+            BackStyle       =   0  'Transparent
+            Caption         =   "BOLSAS:"
+            Height          =   195
+            Index           =   20
+            Left            =   2160
+            TabIndex        =   78
+            Top             =   3645
+            Width           =   780
          End
          Begin VB.Label Label5 
             AutoSize        =   -1  'True
@@ -878,6 +916,7 @@ Private Sub cboforma_Click()
  
 End Sub
 
+
 Private Sub chkSituacion_Click()
 vSit = Me.chkSituacion.Value
 End Sub
@@ -958,6 +997,7 @@ Private Sub Almacena()
 
     If Not VNuevo Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@codigo", adDouble, adParamInput, , CDbl(Me.lblCodigo.Caption))
+
     End If
 
     Set oRSr = oCmdEjec.Execute
@@ -969,6 +1009,7 @@ Private Sub Almacena()
             Exit Sub
 
         End If
+
     End If
 
     LimpiaParametros oCmdEjec
@@ -988,84 +1029,98 @@ Private Sub Almacena()
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@stockmin", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@stockmin", adDouble, adParamInput, , CDbl(Me.txtMin.Text))
+
     End If
 
     If Len(Trim(Me.txtMax.Text)) = 0 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@stockmax", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@stockmax", adDouble, adParamInput, , CDec(Me.txtMax.Text))
+
     End If
     
     If Len(Trim(Me.txtpv1.Text)) = 0 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp1", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp1", adDouble, adParamInput, , CDec(Me.txtpv1.Text))
+
     End If
 
     If Len(Trim(Me.txtpv2.Text)) = 0 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp2", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp2", adDouble, adParamInput, , CDec(Me.txtpv2.Text))
+
     End If
 
     If Len(Trim(Me.txtpv3.Text)) = 0 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp3", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp3", adDouble, adParamInput, , CDec(Me.txtpv3.Text))
+
     End If
 
     If Len(Trim(Me.txtpv4.Text)) = 0 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp4", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp4", adDouble, adParamInput, , CDec(Me.txtpv4.Text))
+
     End If
         
     If Len(Trim(Me.txtpv5.Text)) = 0 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp5", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp5", adDouble, adParamInput, , CDec(Me.txtpv5.Text))
+
     End If
 
     If Len(Trim(Me.txtpv6.Text)) = 0 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp6", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp6", adDouble, adParamInput, , CDec(Me.txtpv6.Text))
+
     End If
     
     If Len(Trim(Me.txtpvd1.Text)) = 0 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp11", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp11", adDouble, adParamInput, , CDec(Me.txtpvd1.Text))
+
     End If
     
     If Len(Trim(Me.txtpvd2.Text)) = 0 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp22", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp22", adDouble, adParamInput, , CDec(Me.txtpvd2.Text))
+
     End If
     
     If Len(Trim(Me.txtpvd3.Text)) = 0 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp33", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp33", adDouble, adParamInput, , CDec(Me.txtpvd3.Text))
+
     End If
 
     If Len(Trim(Me.txtpvd4.Text)) = 0 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp44", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp44", adDouble, adParamInput, , CDec(Me.txtpvd4.Text))
+
     End If
 
     If Len(Trim(Me.txtpv5.Text)) = 0 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp55", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp55", adDouble, adParamInput, , CDec(Me.txtpv5.Text))
+
     End If
 
     If Len(Trim(Me.txtpvd6.Text)) = 0 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp66", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pp66", adDouble, adParamInput, , CDec(Me.txtpv6.Text))
+
     End If
 
     'proporcion
@@ -1073,39 +1128,41 @@ Private Sub Almacena()
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@propocion", adDouble, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@propocion", adDouble, adParamInput, , CDbl(Me.txtProporcion.Text))
+
     End If
   
     If Me.chkSituacion.Value = 1 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@sit", adInteger, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@sit", adInteger, adParamInput, , 1)
+
     End If
   
     If Me.chkPri.Value = 1 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pri", adInteger, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pri", adInteger, adParamInput, , 1)
+
     End If
   
     If Me.chkPrioritario2.Value = 1 Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pri2", adInteger, adParamInput, , 0)
     Else
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@pri2", adInteger, adParamInput, , 1)
+
     End If
     
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@xmlCompform", adBSTR, adParamInput, 20000, IIf(Len(Trim(vxmlCompform)) = 0, vbNullString, Trim(vxmlCompform)))
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@stock", adBoolean, adParamInput, , Me.chkStock.Value)
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@PORCION", adBoolean, adParamInput, , Me.chkPorcion.Value)
-     'agregado gts
+
+    'agregado gts
     If Len(Trim(Me.txtPorcion.Text)) = 0 Then
-    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@preporcion", adDouble, adParamInput, , 0)
+        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@preporcion", adDouble, adParamInput, , 0)
     Else
-    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@PREPORCION", adDouble, adParamInput, , CDec(Me.txtPorcion.Text))
+        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@PREPORCION", adDouble, adParamInput, , CDec(Me.txtPorcion.Text))
+
     End If
-    
-   
-    
-    
           
     Pub_ConnAdo.BeginTrans
     
@@ -1113,13 +1170,31 @@ Private Sub Almacena()
 
     If VNuevo Then
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@flagstock", adChar, adParamInput, 1, cTipo)
-     
         
         If Len(Trim(Me.txtCosto.Text)) = 0 Then
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@costo", adDouble, adParamInput, , 0)
+            oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@costo", adDouble, adParamInput, , 0)
         Else
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@costo", adDouble, adParamInput, , CDbl(Me.txtCosto.Text))
+            oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@costo", adDouble, adParamInput, , CDbl(Me.txtCosto.Text))
+
         End If
+
+        'BOLSAS
+        If Len(Trim(Me.txtBolsas.Text)) = 0 Then
+            oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@BOLSAS", adInteger, adParamInput, , 0)
+        Else
+            oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@BOLSAS", adInteger, adParamInput, , Me.txtBolsas.Text)
+
+        End If
+        
+        'COD ART BOLSAS
+        If Len(Trim(Me.txtCodBolsa.Text)) = 0 Then
+            oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODBOLSA", adInteger, adParamInput, , 0)
+        Else
+            oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODBOLSA", adInteger, adParamInput, , Me.txtCodBolsa.Text)
+
+        End If
+
+
         'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@COSTO", adCurrency, adParamInput, , Me.txtCosto.Text)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@MaxCod", adInteger, adParamOutput, , 0)
         
@@ -1149,7 +1224,21 @@ Private Sub Almacena()
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@codigo", adDouble, adParamInput, , CDbl(Me.lblCodigo.Caption))
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@TIPO", adChar, adParamInput, 1, cTipo)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@COSTO", adCurrency, adParamInput, , Me.txtCosto.Text)
-   
+
+        'BOLSAS
+        If Len(Trim(Me.txtBolsas.Text)) = 0 Then
+            oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@BOLSAS", adInteger, adParamInput, , 0)
+        Else
+            oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@BOLSAS", adInteger, adParamInput, , Me.txtBolsas.Text)
+
+        End If
+        'COD ART BOLSAS
+        If Len(Trim(Me.txtCodBolsa.Text)) = 0 Then
+            oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODBOLSA", adInteger, adParamInput, , 0)
+        Else
+            oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODBOLSA", adInteger, adParamInput, , Me.txtCodBolsa.Text)
+
+        End If
         oCmdEjec.CommandText = "SpModificaProducto"
         oCmdEjec.Execute
 
@@ -1166,6 +1255,7 @@ Private Sub Almacena()
             .SubItems(10) = 0
             .SubItems(11) = Me.dcboFam.BoundText
             .SubItems(12) = Me.dcboSubFam.BoundText
+
         End With
 
     End If
@@ -1193,6 +1283,7 @@ Private Sub Almacena()
             LimpiaParametros oCmdEjec
             oCmdEjec.CommandText = "SP_PRODUCTO_ACTUALIZAIMAGEN"
             oCmdEjec.Execute , Array(Me.lblCodigo, LK_CODCIA)
+
         End If
         
     End If
@@ -1206,6 +1297,7 @@ Private Sub Almacena()
 gSAVE:
     Pub_ConnAdo.RollbackTrans
     MsgBox Err.Description
+
 End Sub
 
 Private Sub cmdFam_Click()
@@ -1299,7 +1391,7 @@ End Sub
 Private Sub cmdQuitarC_Click()
 If Me.lvComposicion.ListItems.count > 0 Then
 If Not Me.lvComposicion.SelectedItem Is Nothing Then
-    Me.lvComposicion.ListItems.Remove Me.lvComposicion.SelectedItem.index
+    Me.lvComposicion.ListItems.Remove Me.lvComposicion.SelectedItem.Index
 End If
 End If
 End Sub
@@ -1307,7 +1399,7 @@ End Sub
 Private Sub cmdQuitarF_Click()
 If Me.lvFormulacion.ListItems.count > 0 Then
 If Not Me.lvFormulacion.SelectedItem Is Nothing Then
-    Me.lvFormulacion.ListItems.Remove Me.lvFormulacion.SelectedItem.index
+    Me.lvFormulacion.ListItems.Remove Me.lvFormulacion.SelectedItem.Index
 End If
 End If
 
@@ -1510,6 +1602,7 @@ Private Sub Form_Load()
         Me.chkPorcion.Value = IIf(CBool(oRS!Porcion), 1, 0)
         Me.txtPorcion.Text = oRS!preporcion
         Me.txtCosto.Text = oRS!costo
+        Me.txtBolsas.Text = oRS!BOLSAS
 
         If oRS!SIT = 0 Then
             Me.chkSituacion.Value = 1
@@ -1657,6 +1750,10 @@ Private Sub Form_Load()
 End Sub
 
 
+
+Private Sub txtBolsas_KeyPress(KeyAscii As Integer)
+If SoloNumeros(KeyAscii) Then KeyAscii = 0
+End Sub
 
 Private Sub txtCodAlt_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then Me.txtDescripcion.SetFocus

@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
-Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDATLST.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDatLst.Ocx"
 Begin VB.Form frmDeliveryEnviar 
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Generar Comprobante"
@@ -35,7 +35,7 @@ Begin VB.Form frmDeliveryEnviar
    End
    Begin MSComctlLib.ListView ListView1 
       Height          =   1215
-      Left            =   1680
+      Left            =   1440
       TabIndex        =   29
       Top             =   2280
       Visible         =   0   'False
@@ -232,6 +232,16 @@ Begin VB.Form frmDeliveryEnviar
          Top             =   240
          Width           =   810
       End
+   End
+   Begin VB.Label Label13 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "ICBPER"
+      Height          =   195
+      Left            =   5280
+      TabIndex        =   38
+      Top             =   3720
+      Width           =   660
    End
    Begin VB.Label lblicbper 
       BorderStyle     =   1  'Fixed Single
@@ -1079,7 +1089,7 @@ Private Sub cmdAceptar_Click()
     
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@codcia", adChar, adParamInput, 2, LK_CODCIA)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numser", adVarChar, adParamInput, 3, frmDeliveryApp.lblserie.Caption)
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numfac", adBigInt, adParamInput, , frmDeliveryApp.lblNumero.Caption)
+        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numfac", adBigInt, adParamInput, , frmDeliveryApp.lblnumero.Caption)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FECHA", adDBTimeStamp, adParamInput, , LK_FECHA_DIA)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@PAGO", adDouble, adParamInput, , Me.txtAbono.Text)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@DIRECCION", adVarChar, adParamInput, 150, Me.DatDireccion.Text)
@@ -1365,7 +1375,7 @@ Private Sub Form_Load()
     ConfiguraLV
     Me.txtCliente.Text = Trim(frmDeliveryApp.txtCliente.Text)
     Me.txtDireccion.Text = Trim(frmDeliveryApp.DatDireccion.Text)
-    Me.txtRuc.Text = Trim(frmDeliveryApp.lblRUC.Caption)
+    Me.txtRuc.Text = Trim(frmDeliveryApp.lblruc.Caption)
     Me.txtDni.Text = Trim(frmDeliveryApp.lblDNI.Caption)
     Me.lblcodclie.Caption = Trim(frmDeliveryApp.lblCliente.Caption)
     Me.lblicbper.Caption = Format(frmDeliveryApp.lblicbper.Caption, "#####0.#0")
@@ -1439,11 +1449,11 @@ Private Sub Form_Load()
     Me.lblMovilidad.Caption = Format(gMOVILIDAD, "#####0.00")
     
     If pINCMOV Then
-        Me.lblTotal2.Tag = gTOTAL + gMOVILIDAD - gDESCUENTO + Me.lblicbper.Caption
+        Me.lblTotal2.Tag = gTOTAL + gMOVILIDAD - gDESCUENTO ' + Me.lblicbper.Caption
         'Me.lblTotal2.Caption = "S/. " + Format(Me.lblTotal2.Tag, "#####0.00")
         Me.lblTotal2.Caption = Format(Me.lblTotal2.Tag, "#####0.#0")
     Else
-        Me.lblTotal2.Tag = gTOTAL - gDESCUENTO + Me.lblicbper.Caption
+        Me.lblTotal2.Tag = gTOTAL - gDESCUENTO ' + Me.lblicbper.Caption
         'Me.lblTotal2.Caption = "S/. " + Format(Me.lblTotal2.Tag, "#####0.00")
         Me.lblTotal2.Caption = Format(Me.lblTotal2.Tag, "#####0.#0")
    
@@ -1457,7 +1467,7 @@ Private Sub Form_Load()
 
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@codcia", adChar, adParamInput, 2, LK_CODCIA)
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numser", adVarChar, adParamInput, 3, frmDeliveryApp.lblserie.Caption)
-    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numfac", adBigInt, adParamInput, , frmDeliveryApp.lblNumero.Caption)
+    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numfac", adBigInt, adParamInput, , frmDeliveryApp.lblnumero.Caption)
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FECHA", adDBTimeStamp, adParamInput, , LK_FECHA_DIA)
     Set orsP = oCmdEjec.Execute
 

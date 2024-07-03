@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Object = "{79EB16A5-917F-4145-AB5F-D3AEA60612D8}#12.1#0"; "Codejock.Calendar.v12.1.1.ocx"
 Begin VB.Form frmContratosList2 
    BackColor       =   &H80000010&
@@ -62,7 +62,6 @@ Begin VB.Form frmContratosList2
       _StockProps     =   64
       ShowNoneButton  =   0   'False
       ShowWeekNumbers =   -1  'True
-      RowCount        =   2
       TextTodayButton =   "Hoy"
       VisualTheme     =   3
    End
@@ -213,7 +212,7 @@ Private Sub CargarContratos(vFechaIni As Date, vFechaFin As Date)
     If Me.ccDatos.ViewType = xtpCalendarMonthView Then
     End If
 
-    Dim ors As ADODB.Recordset
+    Dim oRS As ADODB.Recordset
     
     LimpiaParametros oCmdEjec
     oCmdEjec.CommandType = adCmdStoredProc
@@ -223,23 +222,23 @@ Private Sub CargarContratos(vFechaIni As Date, vFechaFin As Date)
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FECHAINI", adDBTimeStamp, adParamInput, , vFechaIni)
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FECHAFIN", adDBTimeStamp, adParamInput, , vFechaFin)
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODCIA", adChar, adParamInput, 2, LK_CODCIA)
-    Set ors = oCmdEjec.Execute
+    Set oRS = oCmdEjec.Execute
 
     Dim evento As CalendarEvent
     
-    Do While Not ors.EOF
+    Do While Not oRS.EOF
         Set evento = Me.ccDatos.DataProvider.CreateEvent
-        evento.StartTime = ors!INICIOEVENTO
-        evento.EndTime = ors!TERMINOEVENTO
-        evento.Subject = "CONTRATO nº " & ors!NROCONTRATO
-        evento.Body = Trim(ors!CLIENTE)
-        evento.ScheduleID = ors!NROCONTRATO
+        evento.StartTime = oRS!INICIOEVENTO
+        evento.EndTime = oRS!TERMINOEVENTO
+        evento.Subject = "CONTRATO nº " & oRS!NROCONTRATO
+        evento.Body = Trim(oRS!cliente)
+        evento.ScheduleID = oRS!NROCONTRATO
 
-        If ors!ESTADO = "ANULADO" Then
+        If oRS!ESTADO = "ANULADO" Then
             evento.label = 1
-        ElseIf ors!ESTADO = "VIGENTE" Then
+        ElseIf oRS!ESTADO = "VIGENTE" Then
             evento.label = 3
-        ElseIf ors!ESTADO = "FINALIZADO" Then
+        ElseIf oRS!ESTADO = "FINALIZADO" Then
             evento.label = 2
         Else
             evento.label = 4
@@ -250,7 +249,7 @@ Private Sub CargarContratos(vFechaIni As Date, vFechaFin As Date)
         'label 2 = azul
         'label 1 = rojo
         Me.ccDatos.DataProvider.AddEvent evento
-        ors.MoveNext
+        oRS.MoveNext
     Loop
 
     'End If
@@ -302,9 +301,9 @@ Private Sub ccDatos_EventChangedEx(ByVal pEvent As XtremeCalendarControl.Calenda
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@PASA", adBoolean, adParamOutput, , 0)
         oCmdEjec.Execute
 
-        Venc = oCmdEjec.Parameters("@PASA").Value
+        vENC = oCmdEjec.Parameters("@PASA").Value
 
-        If Venc Then
+        If vENC Then
             MsgBox "Hay Contratos que se cruzan con las fechas proporcionadas.", vbCritical, TituloSistema
             Me.ccDatos.SetFocus
 
@@ -683,11 +682,11 @@ Private Sub mnuNuevoContrato_Click()
     CargarContratos vF1, vF2
 End Sub
 
-Private Sub mnuTimeLine_Click(Index As Integer)
+Private Sub mnuTimeLine_Click(index As Integer)
  
  
  
- Me.ccDatos.DayView.TimeScale = mnuTimeLine(Index).HelpContextID
+ Me.ccDatos.DayView.TimeScale = mnuTimeLine(index).HelpContextID
 End Sub
 
 Private Sub mnuVer_Click()
@@ -703,7 +702,7 @@ Private Sub VisualizarContrato(xIdContrato As Integer)
 
     Dim crParamDef  As CRAXDRT.ParameterFieldDefinition
 
-    Dim objCrystal  As New CRAXDRT.Application
+    Dim objCrystal  As New CRAXDRT.APPLICATION
 
     Dim RutaReporte As String
 
@@ -722,8 +721,8 @@ Private Sub VisualizarContrato(xIdContrato As Integer)
     
     'RutaReporte = "d:\VISTACONTRATO.rpt"
     RutaReporte = Trim(orsC!RutaReporte) + "VISTACONTRATO.rpt"
-    oUSER = orsC!usuario
-    oCLAVE = orsC!Clave
+    oUSER = orsC!USUARIO
+    oCLAVE = orsC!clave
     oLOCAL = orsC!LOCAL
 
     If VReporte Is Nothing Then VReporte = New CRAXDRT.Report
@@ -772,13 +771,12 @@ Private Sub VisualizarContrato(xIdContrato As Integer)
     Dim VReporteS As New CRAXDRT.Report
     Dim VReporteA As New CRAXDRT.Report
 
-    VReporte.Database.SetDataSource rsd, , 1  'lleno el objeto reporte
+    VReporte.DataBase.SetDataSource rsd, , 1  'lleno el objeto reporte
 
     Set VReporteS = VReporte.OpenSubreport("DETALLE")
     Set VReporteA = VReporte.OpenSubreport("AMORTIZACIONES")
     
-    VReporte.OpenSubreport("DETALLE").Database.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, oCLAVE
-    'VReporte.OpenSubreport("DETALLE").Database.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, "accesodenegado"
+    VReporte.OpenSubreport("DETALLE").DataBase.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, oCLAVE
     
     
     
@@ -797,8 +795,7 @@ Private Sub VisualizarContrato(xIdContrato As Integer)
 
     Next
     
-    'VReporte.OpenSubreport("AMORTIZACIONES").Database.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, "accesodenegado"
-    VReporte.OpenSubreport("AMORTIZACIONES").Database.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, oCLAVE
+    VReporte.OpenSubreport("AMORTIZACIONES").DataBase.LogOnServer "p2sodbc.dll", "DSN_DATOS", "bdatos", oUSER, oCLAVE
        
     'VReporteS.Database.SetDataSource RSS, , 1
  
