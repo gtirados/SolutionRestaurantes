@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
-Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDatLst.Ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
+Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDATLST.OCX"
 Begin VB.Form frmFacComanda 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Facturar Comanda"
@@ -82,6 +82,7 @@ Begin VB.Form frmFacComanda
          Left            =   6480
          TabIndex        =   41
          Top             =   240
+         Visible         =   0   'False
          Width           =   2295
       End
       Begin MSDataListLib.DataCombo DatEmpresas 
@@ -160,7 +161,6 @@ Begin VB.Form frmFacComanda
          Left            =   6480
          TabIndex        =   19
          Top             =   600
-         Visible         =   0   'False
          Width           =   2655
       End
       Begin VB.TextBox txtNro 
@@ -639,7 +639,7 @@ End Sub
 
 
 
-Private Sub cboMoneda_KeyPress(Index As Integer, KeyAscii As Integer)
+Private Sub cboMoneda_KeyPress(index As Integer, KeyAscii As Integer)
 If LK_TIPO_CAMBIO = 0 Then
     MsgBox "ingresar tipo de cambio"
 End If
@@ -1547,7 +1547,7 @@ Private Sub Form_Load()
         itemX.SubItems(5) = oRsPago!CantTotal
         itemX.SubItems(6) = oRsPago!faltante
         itemX.SubItems(7) = FormatNumber(oRsPago!Importe, 2)
-        itemX.SubItems(8) = oRsPago!Sec
+        itemX.SubItems(8) = oRsPago!SEC
         itemX.SubItems(9) = oRsPago!aPRO
         itemX.SubItems(10) = oRsPago!aten
         itemX.SubItems(11) = oRsPago!uni
@@ -2060,7 +2060,7 @@ Private Sub lvDetalle_KeyDown(KeyCode As Integer, Shift As Integer)
 
     If KeyCode = vbKeyDelete Then
         If Not Me.lvDetalle.SelectedItem Is Nothing Then
-            Me.lvDetalle.ListItems.Remove Me.lvDetalle.SelectedItem.Index
+            Me.lvDetalle.ListItems.Remove Me.lvDetalle.SelectedItem.index
             CalcularImporte
             sumatoria
       
