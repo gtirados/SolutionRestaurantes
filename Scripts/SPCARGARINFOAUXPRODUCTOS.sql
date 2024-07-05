@@ -50,6 +50,7 @@ select top 1 @costo = ARM_COSPRO from ARTICULO where ARM_CODCIA = @CodCia and AR
             ISNULL(p.PRE_PORCION,0) AS 'preporcion',ISNULL(@costo,0) as 'COSTO',
             a.ART_CUENTA_CONTAB as 'ctacontab'
 			,COALESCE(a.ART_BOLSAS,0) AS 'bolsas'
+			,COALESCE(a.ART_CODBOLSA,0) AS 'codbolsa'
     FROM    Arti a
             INNER JOIN precios p ON a.art_key = p.pre_codart
     WHERE   a.Art_Key = @Codigo

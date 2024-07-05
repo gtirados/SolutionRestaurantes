@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TabCtl32.Ocx"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "ComDlg32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
-Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDatLst.Ocx"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
+Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDATLST.OCX"
 Begin VB.Form frmProductos 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Información del Producto"
@@ -1391,7 +1391,7 @@ End Sub
 Private Sub cmdQuitarC_Click()
 If Me.lvComposicion.ListItems.count > 0 Then
 If Not Me.lvComposicion.SelectedItem Is Nothing Then
-    Me.lvComposicion.ListItems.Remove Me.lvComposicion.SelectedItem.Index
+    Me.lvComposicion.ListItems.Remove Me.lvComposicion.SelectedItem.index
 End If
 End If
 End Sub
@@ -1399,7 +1399,7 @@ End Sub
 Private Sub cmdQuitarF_Click()
 If Me.lvFormulacion.ListItems.count > 0 Then
 If Not Me.lvFormulacion.SelectedItem Is Nothing Then
-    Me.lvFormulacion.ListItems.Remove Me.lvFormulacion.SelectedItem.Index
+    Me.lvFormulacion.ListItems.Remove Me.lvFormulacion.SelectedItem.index
 End If
 End If
 
@@ -1603,6 +1603,7 @@ Private Sub Form_Load()
         Me.txtPorcion.Text = oRS!preporcion
         Me.txtCosto.Text = oRS!costo
         Me.txtBolsas.Text = oRS!BOLSAS
+        Me.txtCodBolsa.Text = oRS!codbolsa
 
         If oRS!SIT = 0 Then
             Me.chkSituacion.Value = 1
