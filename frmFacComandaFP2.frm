@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
-Object = "{BB35AEF3-E525-4F8B-81F2-511FF805ABB1}#2.1#0"; "scrollerii.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{BB35AEF3-E525-4F8B-81F2-511FF805ABB1}#2.1#0"; "ScrollerII.ocx"
 Begin VB.Form frmFacComandaFP2 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Formas de Pago"
@@ -694,7 +694,7 @@ Private Sub cmdFP_Click(index As Integer)
         Set itemX = Me.lvFP.ListItems.Add(, , Me.lvFP.ListItems.count + 1)
         itemX.SubItems(1) = Me.cmdFP(index).Caption
         itemX.Tag = Split(Me.cmdFP(index).Tag, "|")(0)
-        itemX.SubItems(2) = Trim(frmFacComandaFP3.gREF)
+        itemX.SubItems(2) = "" 'Trim(frmFacComandaFP3.gREF)
         itemX.SubItems(3) = CDec(Me.lblTotalPagar.Caption) - CDec(Me.lblTotalPagos.Caption)
         itemX.SubItems(4) = Split(Me.cmdFP(index).Tag, "|")(1)
         itemX.SubItems(5) = strDato

@@ -84,6 +84,8 @@ AS --Obtener la ultima comanda de acuerdo al valor maximo de ped_numfac
                               + ' min'
                     END AS 'ENVIAR' ,
                     P.PED_FAMILIA2 AS 'FAM'
+					,CASE (SELECT TOP 1 COALESCE(a2.ART_BOLSAS,0) FROM dbo.ARTI a2 WHERE a2.ART_CODCIA = p.ped_codcia AND a2.ART_KEY = p.ped_codart) WHEN 0 THEN 0 ELSE
+					(SELECT TOP 1 COALESCE(a2.ART_BOLSAS,0) * @ICBPER FROM dbo.ARTI a2 WHERE a2.ART_CODCIA = p.ped_codcia AND a2.ART_KEY = p.ped_codart) END AS icbper
             FROM    pedidos p
                     INNER JOIN dbo.PEDIDOS_CABECERA pc ON P.PED_FECHA = PC.FECHA
                                                           AND P.PED_CODCIA = PC.CODCIA

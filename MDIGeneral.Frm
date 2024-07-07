@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{00025600-0000-0000-C000-000000000046}#5.2#0"; "Crystl32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.MDIForm MDIForm1 
    BackColor       =   &H00E0E0E0&
    Caption         =   "Solution-Software de Gestión para Restaurantes"
@@ -124,8 +124,8 @@ Begin VB.MDIForm MDIForm1
       TabIndex        =   0
       Top             =   0
       Visible         =   0   'False
-      Width           =   20340
-      _ExtentX        =   35878
+      Width           =   9480
+      _ExtentX        =   16722
       _ExtentY        =   688
       ButtonWidth     =   661
       ButtonHeight    =   635
@@ -316,9 +316,9 @@ Begin VB.MDIForm MDIForm1
       Height          =   330
       Left            =   0
       TabIndex        =   3
-      Top             =   10500
-      Width           =   20340
-      _ExtentX        =   35878
+      Top             =   6180
+      Width           =   9480
+      _ExtentX        =   16722
       _ExtentY        =   582
       _Version        =   393216
       BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
@@ -354,7 +354,7 @@ Begin VB.MDIForm MDIForm1
          EndProperty
          BeginProperty Panel5 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             AutoSize        =   1
-            Object.Width           =   18530
+            Object.Width           =   3528
             MinWidth        =   3528
          EndProperty
       EndProperty
@@ -2753,7 +2753,7 @@ Select Case Button.key
                 FrmRepo.Txt_key.Text = ""
            ElseIf UCase(Forms(iFormCount).Name) = "FORMGEN" Then
                 FORMGEN.LV_ART.Visible = False
-                FORMGEN.TEXTOVAR.Text = ""
+                FORMGEN.textovar.Text = ""
            End If
         End If
        Next iFormCount
