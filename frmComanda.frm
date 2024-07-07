@@ -1091,6 +1091,7 @@ Private vColor As Integer
 Public vMaxFac As Double
 Public gMozo As Integer
 Public gDefecto As Boolean
+Private vICBPER As Double
  
 Public Function AgregaPlato(vcp As Double, _
                             vc As Double, _
@@ -1262,7 +1263,7 @@ Public Sub CargarComanda(vCodCia As String, vCodMesa As String)
         Me.lblMozo.Caption = Trim(oRsComanda.Fields!mozo)  'Trim(oCmdEjec.Parameters("@Mozo").Value)
         Me.lblCliente.Caption = IIf(IsNull(Trim(oRsComanda!cliente)), "", oRsComanda!cliente)
         Me.lblComensales.Caption = Trim(oRsComanda!Comensales)
-        
+        vICBPER = 0
        ' gMozo = Me.lblMozo.Tag
         '    Me.lblSerie.Tag = oRsComanda!NumFac
         Do While Not oRsComanda.EOF
@@ -1285,6 +1286,7 @@ Public Sub CargarComanda(vCodCia As String, vCodMesa As String)
                 '.SubItems(10) = oRsComanda!PED_NUMFAC
                 .SubItems(12) = oRsComanda!Enviar
                 .SubItems(13) = oRsComanda!fam
+                vICBPER = vICBPER + oRsComanda!icbper
 
                 If oRsComanda!aPRO = "0" Then .Checked = True
             End With
@@ -2363,7 +2365,7 @@ Private Sub cmdEliminar_Click()
         For i = Me.lvPlatos.ListItems.count To 1 Step -1
 
             If Me.lvPlatos.ListItems(i).Selected Then
-                Me.lvPlatos.ListItems.Remove Me.lvPlatos.ListItems(i).Index
+                Me.lvPlatos.ListItems.Remove Me.lvPlatos.ListItems(i).index
             End If
  
         Next
@@ -2427,12 +2429,12 @@ End If
 End If
 End Sub
 
-Private Sub cmdFam_Click(Index As Integer)
+Private Sub cmdFam_Click(index As Integer)
 Me.cmdSubFamAnt.Enabled = False
 Me.cmdSubFamSig.Enabled = False
-vValorActFam = Index
-oRsSubFam.Filter = "CodFam='" & cmdFam(Index).Tag & "'"
-vCodFam = Me.cmdFam(Index).Tag 'Linea Nueva
+vValorActFam = index
+oRsSubFam.Filter = "CodFam='" & cmdFam(index).Tag & "'"
+vCodFam = Me.cmdFam(index).Tag 'Linea Nueva
 If oRsSubFam.RecordCount <> 0 Then
     FiltarSubFamilias oRsSubFam.RecordCount, oRsSubFam
 End If
@@ -2862,11 +2864,11 @@ mozo:
 
 End Sub
 
-Private Sub cmdNum_Click(Index As Integer)
-Me.lblTexto.Caption = Me.lblTexto.Caption & Me.cmdnum(Index).Caption
+Private Sub cmdNum_Click(index As Integer)
+Me.lblTexto.Caption = Me.lblTexto.Caption & Me.cmdNum(index).Caption
 End Sub
 
-Private Sub cmdPlato_Click(Index As Integer)
+Private Sub cmdPlato_Click(index As Integer)
 
     If Not VNuevo Then
         If VerificaMesa Then
@@ -2902,7 +2904,7 @@ Private Sub cmdPlato_Click(Index As Integer)
     oCmdEjec.CommandText = "SpDevuelveInsumosxPlato"
     oCmdEjec.CommandType = adCmdStoredProc
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CodCia", adChar, adParamInput, 2, LK_CODCIA)
-    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CodPlato", adDouble, adParamInput, , CDbl(Me.cmdPlato(Index).Tag))
+    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CodPlato", adDouble, adParamInput, , CDbl(Me.cmdPlato(index).Tag))
     'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@mensaje", adVarChar, adParamOutput, 300, msn)
 
     Dim vstrmin  As String 'variable para capturar los insumos
@@ -2980,12 +2982,12 @@ Private Sub cmdPlato_Click(Index As Integer)
     If VNuevo Then
         If Me.lvPlatos.ListItems.count = 0 Then
             'obteniendo precio
-            oRsPlatos.Filter = "Codigo = '" & Me.cmdPlato(Index).Tag & "'"
+            oRsPlatos.Filter = "Codigo = '" & Me.cmdPlato(index).Tag & "'"
        
-            If AgregaPlato(Me.cmdPlato(Index).Tag, 1, FormatNumber(oRsPlatos!PRECIO, 2), oRsPlatos!PRECIO, "", "", 0, Me.lblCliente.Caption, IIf(Len(Trim(Me.lblComensales.Caption)) = 0, 0, Me.lblComensales.Caption)) Then
+            If AgregaPlato(Me.cmdPlato(index).Tag, 1, FormatNumber(oRsPlatos!PRECIO, 2), oRsPlatos!PRECIO, "", "", 0, Me.lblCliente.Caption, IIf(Len(Trim(Me.lblComensales.Caption)) = 0, 0, Me.lblComensales.Caption)) Then
         
-                With Me.lvPlatos.ListItems.Add(, , Me.cmdPlato(Index).Caption, Me.ilComanda.ListImages.Item(1).key, Me.ilComanda.ListImages.Item(1).key)
-                    .Tag = Me.cmdPlato(Index).Tag
+                With Me.lvPlatos.ListItems.Add(, , Me.cmdPlato(index).Caption, Me.ilComanda.ListImages.Item(1).key, Me.ilComanda.ListImages.Item(1).key)
+                    .Tag = Me.cmdPlato(index).Tag
                     .Checked = True
                     .SubItems(2) = " "
                     .SubItems(3) = FormatNumber(1, 2)
@@ -3031,16 +3033,16 @@ Private Sub cmdPlato_Click(Index As Integer)
 
         Dim DD As Integer
 
-        oRsPlatos.Filter = "Codigo = '" & Me.cmdPlato(Index).Tag & "'"
+        oRsPlatos.Filter = "Codigo = '" & Me.cmdPlato(index).Tag & "'"
 
-        If AgregaPlato(Me.cmdPlato(Index).Tag, 1, FormatNumber(oRsPlatos!PRECIO, 2), oRsPlatos!PRECIO, "", Me.lblSerie.Caption, Me.lblNumero.Caption, Me.lblCliente.Caption, IIf(Len(Trim(Me.lblComensales.Caption)) = 0, 0, frmComanda.lblComensales.Caption), DD) Then
+        If AgregaPlato(Me.cmdPlato(index).Tag, 1, FormatNumber(oRsPlatos!PRECIO, 2), oRsPlatos!PRECIO, "", Me.lblSerie.Caption, Me.lblNumero.Caption, Me.lblCliente.Caption, IIf(Len(Trim(Me.lblComensales.Caption)) = 0, 0, frmComanda.lblComensales.Caption), DD) Then
     
-            With Me.lvPlatos.ListItems.Add(, , Me.cmdPlato(Index).Caption, Me.ilComanda.ListImages.Item(1).key, Me.ilComanda.ListImages.Item(1).key)
-                .Tag = Me.cmdPlato(Index).Tag
+            With Me.lvPlatos.ListItems.Add(, , Me.cmdPlato(index).Caption, Me.ilComanda.ListImages.Item(1).key, Me.ilComanda.ListImages.Item(1).key)
+                .Tag = Me.cmdPlato(index).Tag
                 .Checked = True
                 .SubItems(3) = FormatNumber(1, 2)
                 'obteniendo precio
-                oRsPlatos.Filter = "Codigo = '" & Me.cmdPlato(Index).Tag & "'"
+                oRsPlatos.Filter = "Codigo = '" & Me.cmdPlato(index).Tag & "'"
 
                 If Not oRsPlatos.EOF Then: .SubItems(4) = FormatNumber(oRsPlatos!PRECIO, 2)
                 .SubItems(5) = FormatNumber(val(.SubItems(3)) * val(.SubItems(4)), 2)
@@ -3372,6 +3374,10 @@ Private Sub cmdPreCuenta_Click()
 
                     Case "mesa"
                         crParamDef.AddCurrentValue str(vPlato)
+                        Case "p_icbper"
+                        crParamDef.AddCurrentValue vICBPER
+                        
+
                 End Select
 
             Next
@@ -3414,16 +3420,19 @@ Private Sub cmdPreCuenta_Click()
             oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("CodMesa", adVarChar, adParamInput, 10, vMesa)
             oCmdEjec.Execute
 
-If Not gDefecto Then
-            For i = 1 To frmDisMesas.imgMesa.count - 1
+            If Not gDefecto Then
 
-                If frmDisMesas.lblNomMesa(i).Tag = vMesa Then
-                    frmDisMesas.imgMesa(i).Picture = frmDisMesas.ilMesas.ListImages(2).Picture
-                    frmDisMesas.imgMesa(i).ToolTipText = "Mesa En Cuenta"
-                    frmDisMesas.imgMesa(i).Tag = "E"
-                End If
+                For i = 1 To frmDisMesas.imgMesa.count - 1
 
-            Next
+                    If frmDisMesas.lblNomMesa(i).Tag = vMesa Then
+                        frmDisMesas.imgMesa(i).Picture = frmDisMesas.ilMesas.ListImages(2).Picture
+                        frmDisMesas.imgMesa(i).ToolTipText = "Mesa En Cuenta"
+                        frmDisMesas.imgMesa(i).Tag = "E"
+
+                    End If
+
+                Next
+
             End If
 
             vEstado = "E"
@@ -3449,11 +3458,13 @@ If Not gDefecto Then
         oCmdEjec.Execute
         
         Unload Me    'gts cierra comanda despues de imprimir
+
         If gDefecto Then Unload frmMainMesas
         Exit Sub
 
 printe:
         MostrarErrores Err
+
     End If
 
 End Sub
@@ -3939,12 +3950,12 @@ Else
 End If
 End Sub
 
-Private Sub cmdSubFam_Click(Index As Integer)
+Private Sub cmdSubFam_Click(index As Integer)
     Me.cmdPlatoAnt.Enabled = False
     Me.cmdPlatoSig.Enabled = False
-    vColor = Index
+    vColor = index
     Me.cmdPlatoAnt.Enabled = False
-    oRsPlatos.Filter = "CodFam='" & vCodFam & "' and CodSubFam = '" & Me.cmdSubFam(Index).Tag & "'"
+    oRsPlatos.Filter = "CodFam='" & vCodFam & "' and CodSubFam = '" & Me.cmdSubFam(index).Tag & "'"
 
     For i = 1 To Me.cmdPlato.count - 1
         Unload Me.cmdPlato(i)
@@ -4074,6 +4085,7 @@ End Sub
 
 Private Sub Form_Load()
     'Me.WindowState = 0
+    vICBPER = 0
     InhabilitarCerrar Me
     Me.lblTot.Caption = FormatCurrency("0.00", 2)
     vIniLeft = 30
@@ -4362,7 +4374,7 @@ Public Sub AgregarDesdeBuscador(xIDproducto As Double, _
             If AgregaPlato(xIDproducto, 1, xPrecio, xPrecio, "", "", 0, Me.lblCliente.Caption, IIf(Len(Trim(Me.lblComensales.Caption)) = 0, 0, Me.lblComensales.Caption)) Then
         
                 With Me.lvPlatos.ListItems.Add(, , xProducto, Me.ilComanda.ListImages.Item(1).key, Me.ilComanda.ListImages.Item(1).key)
-                    .Tag = Me.cmdPlato(Index).Tag
+                    .Tag = Me.cmdPlato(index).Tag
                     .Checked = True
                     .SubItems(2) = " "
                     .SubItems(3) = FormatNumber(1, 2)

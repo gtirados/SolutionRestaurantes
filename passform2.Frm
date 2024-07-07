@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
+Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "msmask32.ocx"
 Begin VB.Form PASSFORM 
    BackColor       =   &H00FAEFDA&
    BorderStyle     =   0  'None
@@ -398,7 +398,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Dim i, J As Integer
+Dim i, j As Integer
 Dim PASSW  As String * 10
 Dim VECES As Integer
 Dim LOC_FLAG_OJO As String
@@ -439,103 +439,134 @@ SALE:
 
 End Function
 
-
-
 Private Sub cmdIngresar_Click()
-Dim WRES
-Dim mensa As String
-Dim pub_mensajeText
-Dim PB
-Dim wfecha_bloq As Date
-Dim wserie As Currency
-PB = Chr(10) & Chr(13) & Chr(10) & Chr(13)
-On Error GoTo SALE
 
-If IsDate(fecha_proceso.Text) = False Then
-   MsgBox "Fecha Invalida ...", 48, Pub_Titulo
-   fecha_proceso.SetFocus
-   fecha_proceso.SelStart = 0
-   fecha_proceso.SelLength = Len(fecha_proceso.Text)
-   GoTo fin
-End If
-'If LK_CODUSU = "ADMIN" Then GoTo pasa_todo
-If CDate(fecha_proceso.Text) < 1900 Then
-   MsgBox "Fecha NO Procede ...", 48, Pub_Titulo
-   fecha_proceso.SetFocus
-   fecha_proceso.SelStart = 0
-   fecha_proceso.SelLength = Len(fecha_proceso.Text)
-   GoTo fin
-End If
-PUB_CODCIA = LK_CODCIA
-PUB_CAL_INI = fecha_proceso.Text
-PUB_CAL_FIN = fecha_proceso.Text
-SQ_OPER = 1
-LEER_CAL_LLAVE 1
-If cal_llave.EOF Then
-   MsgBox "Fecha de Proceso Errada ...", 48, Pub_Titulo
-   fecha_proceso.SetFocus
-   fecha_proceso.SelStart = 0
-   fecha_proceso.SelLength = Len(fecha_proceso.Text)
-   GoTo fin
-End If
-If cal_llave!CAL_INDICE <> 1 Then
-   MsgBox "Fecha no Activada ... el Calendario del Sistema No Actualizo !!!", 48, Pub_Titulo
-   fecha_proceso.SetFocus
-   fecha_proceso.SelStart = 0
-   fecha_proceso.SelLength = Len(fecha_proceso.Text)
-   If LK_CODUSU = "ADMIN" Then
-     MsgBox "Usuario Administrador, corregir el calendario del Sistema .", 48
-     GoTo SALTA_TODO
-   End If
-   GoTo fin
-End If
-  ' VER SI LA FECHA NO ES DEL DIA
-SALTA_TODO:
-  pub_mensaje = "¡La fecha de la compañia es diferente que el computador!"
-  pub_mensaje = pub_mensaje & PB & "Fecha de la Compañia       : " & Format(fecha_proceso, "dd mmm yyyy")
-  pub_mensaje = pub_mensaje & Chr(13) & "Fecha de del Computador : " & Format(Date, "dd mmm yyyy")
-  pub_mensaje = pub_mensaje & PB & "¿Desea ingresar al sistema..?"
-  If CDate(fecha_proceso.Text) <> Date Then
-    Pub_Respuesta = MsgBox(pub_mensaje, vbOKCancel + vbInformation, Pub_Titulo)
-    If Pub_Respuesta = vbCancel Then
-       fecha_proceso.SetFocus
-       fecha_proceso.SelStart = 0
-       fecha_proceso.SelLength = Len(fecha_proceso.Text)
-       Exit Sub
+    Dim WRES
+
+    Dim mensa As String
+
+    Dim pub_mensajeText
+
+    Dim PB
+
+    Dim wfecha_bloq As Date
+
+    Dim wserie      As Currency
+
+    PB = Chr(10) & Chr(13) & Chr(10) & Chr(13)
+
+    On Error GoTo SALE
+
+    If IsDate(fecha_proceso.Text) = False Then
+        MsgBox "Fecha Invalida ...", 48, Pub_Titulo
+        fecha_proceso.SetFocus
+        fecha_proceso.SelStart = 0
+        fecha_proceso.SelLength = Len(fecha_proceso.Text)
+        GoTo fin
+
     End If
-  End If
+
+    'If LK_CODUSU = "ADMIN" Then GoTo pasa_todo
+    If CDate(fecha_proceso.Text) < 1900 Then
+        MsgBox "Fecha NO Procede ...", 48, Pub_Titulo
+        fecha_proceso.SetFocus
+        fecha_proceso.SelStart = 0
+        fecha_proceso.SelLength = Len(fecha_proceso.Text)
+        GoTo fin
+
+    End If
+
+    PUB_CODCIA = LK_CODCIA
+    PUB_CAL_INI = fecha_proceso.Text
+    PUB_CAL_FIN = fecha_proceso.Text
+    SQ_OPER = 1
+    LEER_CAL_LLAVE 1
+
+    If cal_llave.EOF Then
+        MsgBox "Fecha de Proceso Errada ...", 48, Pub_Titulo
+        fecha_proceso.SetFocus
+        fecha_proceso.SelStart = 0
+        fecha_proceso.SelLength = Len(fecha_proceso.Text)
+        GoTo fin
+
+    End If
+
+    If cal_llave!CAL_INDICE <> 1 Then
+        MsgBox "Fecha no Activada ... el Calendario del Sistema No Actualizo !!!", 48, Pub_Titulo
+        fecha_proceso.SetFocus
+        fecha_proceso.SelStart = 0
+        fecha_proceso.SelLength = Len(fecha_proceso.Text)
+
+        If LK_CODUSU = "ADMIN" Then
+            MsgBox "Usuario Administrador, corregir el calendario del Sistema .", 48
+            GoTo SALTA_TODO
+
+        End If
+
+        GoTo fin
+
+    End If
+
+    ' VER SI LA FECHA NO ES DEL DIA
+SALTA_TODO:
+    pub_mensaje = "¡La fecha de la compañia es diferente que el computador!"
+    pub_mensaje = pub_mensaje & PB & "Fecha de la Compañia       : " & Format(fecha_proceso, "dd mmm yyyy")
+    pub_mensaje = pub_mensaje & Chr(13) & "Fecha de del Computador : " & Format(Date, "dd mmm yyyy")
+    pub_mensaje = pub_mensaje & PB & "¿Desea ingresar al sistema..?"
+
+    If CDate(fecha_proceso.Text) <> Date Then
+        Pub_Respuesta = MsgBox(pub_mensaje, vbOKCancel + vbInformation, Pub_Titulo)
+
+        If Pub_Respuesta = vbCancel Then
+            fecha_proceso.SetFocus
+            fecha_proceso.SelStart = 0
+            fecha_proceso.SelLength = Len(fecha_proceso.Text)
+            Exit Sub
+
+        End If
+
+    End If
+
 pasa_todo:
-  PASSFORM.Timer1.Enabled = False
-  LK_FECHA_DIA = fecha_proceso.Text
-  'LK_FECHA_AYER = Nulo_Valor0(gen!GEN_FECHA_AYER)
-  If LK_CODUSU = "ADMIN" Or LK_CODUSU = "SUPERVISOR" Then
-   PUB_CLAVE = Trim(Text1.Text)
-  Else
-    usu.Requery
-    Do Until usu.EOF
-      If Trim(usu!USU_KEY) = "SUPERVISOR" Then
-        PUB_CLAVE = Trim(usu!USU_CLAVE)
-        Exit Do
-      End If
-      usu.MoveNext
-    Loop
-  End If
+    PASSFORM.Timer1.Enabled = False
+    LK_FECHA_DIA = fecha_proceso.Text
+
+    'LK_FECHA_AYER = Nulo_Valor0(gen!GEN_FECHA_AYER)
+    If LK_CODUSU = "ADMIN" Or LK_CODUSU = "SUPERVISOR" Then
+        PUB_CLAVE = Trim(Text1.Text)
+    Else
+        usu.Requery
+
+        Do Until usu.EOF
+
+            If Trim(usu!USU_KEY) = "SUPERVISOR" Then
+                PUB_CLAVE = Trim(usu!USU_CLAVE)
+                Exit Do
+
+            End If
+
+            usu.MoveNext
+        Loop
+
+    End If
   
-  Dim wGUARDA As String
-  wGUARDA = Trim(Text2.Text) & CStr(cheguarda.Value)
-  DoEvents
-  Call WRITE1_READ2(1, wGUARDA)
-  momento.Visible = True
-  DoEvents
-  momento.Caption = " O K .  ==  >>  " & momento.Caption
-  PASSFORM.Hide
-  MDIForm1.Show
-Exit Sub
+    Dim wGUARDA As String
+
+    wGUARDA = Trim(Text2.Text) & CStr(cheguarda.Value)
+    DoEvents
+    Call WRITE1_READ2(1, wGUARDA)
+    momento.Visible = True
+    DoEvents
+    momento.Caption = " O K .  ==  >>  " & momento.Caption
+    PASSFORM.Hide
+    MDIForm1.Show
+    Exit Sub
 SALE:
- MsgBox "Reiciar Sistema ..Intente Nuevamente...", 48, Pub_Titulo
-  End
+    MsgBox "Reiciar Sistema ..Intente Nuevamente...", 48, Pub_Titulo
+    End
  
 fin:
+
 End Sub
 
 Private Sub F1_Click()
@@ -829,28 +860,28 @@ Private Sub Timer1_Timer()
 LBLPAS.Visible = Not LBLPAS.Visible
 End Sub
 
-Public Function INGRESO_PASS(TEXTO) As String
+Public Function INGRESO_PASS(Texto) As String
 cade = " ABCDEFGHIJKLMNOPQSRTVWXYZ0123456789"
 SIMB = "ò~!@#$%^&*¤¶§éû¬½¼©¥+ãÃÓ¦¢ƒ×Ø£øÜïëÇ"
-TOT = Len(TEXTO)
+TOT = Len(Texto)
 For i = 1 To TOT
- tem = InStr(1, cade, Mid(UCase(TEXTO), i, 1))
+ tem = InStr(1, cade, Mid(UCase(Texto), i, 1))
  CARAC = Mid(SIMB, tem, 1)
- CADENA = CADENA + CARAC
+ cadena = cadena + CARAC
 Next i
-INGRESO_PASS = CADENA
+INGRESO_PASS = cadena
 End Function
 
-Public Function SALIDA_PASS(TEXTO) As String
+Public Function SALIDA_PASS(Texto) As String
 cade = " ABCDEFGHIJKLMNOPQSRTVWXYZ0123456789"
 SIMB = "ò~!@#$%^&*¤¶§éû¬½¼©¥+ãÃÓ¦¢ƒ×Ø£øÜïëÇ"
-TOT = Len(TEXTO)
+TOT = Len(Texto)
 For i = 1 To TOT
- tem = InStr(1, SIMB, Mid(TEXTO, i, 1))
+ tem = InStr(1, SIMB, Mid(Texto, i, 1))
  CARAC = Mid(cade, tem, 1)
- CADENA = CADENA + CARAC
+ cadena = cadena + CARAC
 Next i
-SALIDA_PASS = CADENA
+SALIDA_PASS = cadena
 End Function
 Public Sub ALFA_NUMERICO(Optional tecla)
 'CONVIERTE TODA A MAYUSCULAS LETRAS

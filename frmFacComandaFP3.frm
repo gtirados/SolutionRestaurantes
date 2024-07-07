@@ -69,7 +69,7 @@ Begin VB.Form frmFacComandaFP3
       EndProperty
       Height          =   390
       Left            =   2280
-      MaxLength       =   4
+      MaxLength       =   40
       TabIndex        =   3
       Top             =   720
       Width           =   2775
@@ -136,7 +136,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Public MuestraReferencia As Boolean
 
-Public gACEPTA As Boolean
+Public gAcepta As Boolean
 Public gMONTO As Double
 Public gREF As String
 Private vPUNTO As Boolean
@@ -144,7 +144,7 @@ Private vPUNTO As Boolean
 Private Sub cmdAceptar_Click()
 
     If IsNumeric(Me.txtMonto.Text) Then
-        gACEPTA = True
+        gAcepta = True
         gMONTO = Me.txtMonto.Text
         gREF = Me.txtReferencia.Text
         Unload Me
@@ -155,7 +155,7 @@ Private Sub cmdAceptar_Click()
 End Sub
 
 Private Sub cmdCancelar_Click()
-gACEPTA = False
+gAcepta = False
 Unload Me
 End Sub
 

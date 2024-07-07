@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
-Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDATLST.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDatLst.Ocx"
 Begin VB.Form frmFacComanda 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Facturar Comanda"
@@ -772,7 +772,7 @@ Private Sub cmdAceptar_Click()
     End If
 
     If Me.DatTiposDoctos.BoundText = "01" Then
-        If Len(Trim(Me.txtRuc.Text)) = 0 Then
+        If Len(Trim(Me.txtruc.Text)) = 0 Then
             MsgBox "Debe ingresar el Ruc para poder generar la Factura", vbInformation, "Error"
 
             Exit Sub
@@ -791,7 +791,7 @@ Private Sub cmdAceptar_Click()
 
     If Not ORSuit.EOF Then
         If ORSuit!Dato = 1 Then
-            If Len(Trim(Me.txtRS.Text)) = 0 Or (Len(Trim(Me.txtDni.Text)) = 0 And Len(Trim(Me.txtRuc.Text)) = 0) Then
+            If Len(Trim(Me.txtRS.Text)) = 0 Or (Len(Trim(Me.txtDni.Text)) = 0 And Len(Trim(Me.txtruc.Text)) = 0) Then
                 MsgBox "El Importe sobrepasa media UIT, debe ingresar el cliente.", vbCritical, Pub_Titulo
 
                 Exit Sub
@@ -958,9 +958,9 @@ Private Sub cmdAceptar_Click()
                 .Parameters.Append .CreateParameter("@XmlDet", adVarChar, adParamInput, 4000, Trim(vXml))
 
                 If Me.DatTiposDoctos.BoundText = "01" Then
-                    .Parameters.Append .CreateParameter("@codcli", adVarChar, adParamInput, 10, Me.txtRuc.Tag)
+                    .Parameters.Append .CreateParameter("@codcli", adVarChar, adParamInput, 10, Me.txtruc.Tag)
                 Else
-                    .Parameters.Append .CreateParameter("@codcli", adVarChar, adParamInput, 10, IIf(Len(Trim(Me.txtRuc.Tag)) = 0, 1, Me.txtRuc.Tag))
+                    .Parameters.Append .CreateParameter("@codcli", adVarChar, adParamInput, 10, IIf(Len(Trim(Me.txtruc.Tag)) = 0, 1, Me.txtruc.Tag))
 
                 End If
 
@@ -968,12 +968,10 @@ Private Sub cmdAceptar_Click()
                 .Parameters.Append .CreateParameter("@totalfac", adDouble, adParamInput, , Me.lblImporte.Caption)
 
                 If oRSfp.RecordCount <> 0 Then oRSfp.MoveFirst
-                '.Parameters.Append .CreateParameter("@sec", adInteger, adParamInput, , Me.dcboPago.BoundText)
                 .Parameters.Append .CreateParameter("@sec", adInteger, adParamInput, , oRSfp!idformapago)
                 .Parameters.Append .CreateParameter("@moneda", adChar, adParamInput, 1, "S")
                 .Parameters.Append .CreateParameter("@diascre", adInteger, adParamInput, , 0)
                 .Parameters.Append .CreateParameter("@farjabas", adTinyInt, adParamInput, , IIf(Me.chkConsumo.Value = 1, 1, 0))
-                '.Parameters.Append .CreateParameter("@dscto", adDouble, adParamInput, , IIf(Len(Trim(Me.lblDscto.Caption)) = 0, 0, Me.lblDscto.Caption))
                 .Parameters.Append .CreateParameter("@dscto", adDouble, adParamInput, , gDESCUENTO)
                 .Parameters.Append .CreateParameter("@CODIGODOCTO", adChar, adParamInput, 2, Me.DatTiposDoctos.BoundText)
                 .Parameters.Append .CreateParameter("@Xmlpag", adVarChar, adParamInput, 4000, xFP)
@@ -1004,10 +1002,10 @@ Private Sub cmdAceptar_Click()
                     'MsgBox "Datos Almacenados correctamente", vbInformation, Pub_Titulo
 
                     'Imprimir Left(Me.DatTiposDoctos.Text, 1), Me.chkConsumo.Value
-                    CreaCodigoQR "6", Me.DatTiposDoctos.BoundText, Me.lblSerie.Caption, Me.txtNro.Text, LK_FECHA_DIA, CStr(Me.lblIgv.Caption), Me.lblImporte.Caption, Me.txtRuc.Text, Me.txtDni.Text
+                    CreaCodigoQR "6", Me.DatTiposDoctos.BoundText, Me.lblSerie.Caption, Me.txtNro.Text, LK_FECHA_DIA, CStr(Me.lblIgv.Caption), Me.lblImporte.Caption, Me.txtruc.Text, Me.txtDni.Text
 
                     If xARCENCONTRADO Then
-                        ImprimirDocumentoVenta Me.DatTiposDoctos.BoundText, Me.DatTiposDoctos.Text, Me.chkConsumo.Value, Me.lblSerie.Caption, Me.txtNro.Text, Me.lblImporte.Caption, Me.lblvvta.Caption, Me.lblIgv.Caption, Me.txtDireccion.Text, Me.txtRuc.Text, Me.txtRS.Text, Me.txtDni.Text, Me.DatEmpresas.BoundText, IIf(Len(Trim(Me.lblicbper.Caption)) = 0, 0, Me.lblicbper.Caption), Me.chkprom.Value
+                        ImprimirDocumentoVenta Me.DatTiposDoctos.BoundText, Me.DatTiposDoctos.Text, Me.chkConsumo.Value, Me.lblSerie.Caption, Me.txtNro.Text, Me.lblImporte.Caption, Me.lblvvta.Caption, Me.lblIgv.Caption, Me.txtDireccion.Text, Me.txtruc.Text, Me.txtRS.Text, Me.txtDni.Text, Me.DatEmpresas.BoundText, IIf(Len(Trim(Me.lblicbper.Caption)) = 0, 0, Me.lblicbper.Caption), Me.chkprom.Value
 
                     End If
                     
@@ -1190,7 +1188,7 @@ Private Sub cmdSunat_Click()
             xEsRuc = False
         End If
 
-        xvRUC = Me.txtRuc.Text
+        xvRUC = Me.txtruc.Text
     End If
 
     xTOk = Leer_Ini(App.Path & "\config.ini", "TOKEN", "")
@@ -1217,13 +1215,13 @@ Private Sub cmdSunat_Click()
     '    Me.lblEstado.Caption = p.Item("estado")
     '    Me.lblcondicion.Caption = p.Item("condicion")
     
-    If Len(Trim(Me.txtRuc.Text)) = 0 Then
+    If Len(Trim(Me.txtruc.Text)) = 0 Then
         If IsNumeric(Me.txtRS.Text) Then
             If Len(Trim(Me.txtRS.Text)) = 11 Or Len(Trim(Me.txtRS.Text)) = 8 Then
                 If Texto = "[]" Then
                     MousePointer = vbDefault
                     MsgBox ("No se obtuvo resultados")
-                    Me.txtRuc.Text = ""
+                    Me.txtruc.Text = ""
                     Me.txtRS.Text = ""
                     Me.txtDireccion.Text = ""
 
@@ -1234,7 +1232,7 @@ Private Sub cmdSunat_Click()
                 If Len(Trim(Texto)) = 0 Then
                     MousePointer = vbDefault
                     MsgBox ("No se obtuvo resultados")
-                    Me.txtRuc.Text = ""
+                    Me.txtruc.Text = ""
                     Me.txtRS.Text = ""
                     Me.txtDireccion.Text = ""
 
@@ -1245,10 +1243,10 @@ Private Sub cmdSunat_Click()
                 If xEsRuc Then
                     Me.txtDireccion.Text = IIf(IsNull(p.Item("direccion")), "", p.Item("direccion"))
                     Me.txtRS.Text = p.Item("razonSocial")
-                    Me.txtRuc.Text = p.Item("ruc")
+                    Me.txtruc.Text = p.Item("ruc")
                     Me.txtDni.Text = ""
                 Else
-                    Me.txtRuc.Text = ""
+                    Me.txtruc.Text = ""
                     Me.txtDireccion.Text = ""
                     Me.txtDni.Text = p.Item("dni")
                     Me.txtRS.Text = p.Item("nombres") & " " & p.Item("apellidoPaterno") & " " & p.Item("apellidoMaterno")
@@ -1261,12 +1259,12 @@ Private Sub cmdSunat_Click()
     
                 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@RAZONSOCIAL", adVarChar, adParamInput, 200, Left(Trim(Me.txtRS.Text), 200))
                 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@DIRECCION", adVarChar, adParamInput, 200, Left(Trim(Me.txtDireccion.Text), 200))
-                oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@RUC", adVarChar, adParamInput, 11, Me.txtRuc.Text)
+                oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@RUC", adVarChar, adParamInput, 11, Me.txtruc.Text)
                 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@DNI", adChar, adParamInput, 8, Me.txtDni.Text)
                 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@IDCLIENTE", adBigInt, adParamInput, , 0)
                 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@salida", adBigInt, adParamOutput, , 0)
                 oCmdEjec.Execute
-                Me.txtRuc.Tag = oCmdEjec.Parameters("@salida").Value
+                Me.txtruc.Tag = oCmdEjec.Parameters("@salida").Value
             
             Else
                 MsgBox "El ruc debe tener 11 caracteres", vbCritical, Pub_Titulo
@@ -1281,7 +1279,7 @@ Private Sub cmdSunat_Click()
         If Texto = "[]" Then
             MousePointer = vbDefault
             MsgBox ("No se obtuvo resultados")
-            Me.txtRuc.Text = ""
+            Me.txtruc.Text = ""
             Me.txtRS.Text = ""
             Me.txtDireccion.Text = ""
 
@@ -1292,7 +1290,7 @@ Private Sub cmdSunat_Click()
         If Len(Trim(Texto)) = 0 Then
             MousePointer = vbDefault
             MsgBox ("No se obtuvo resultados")
-            Me.txtRuc.Text = ""
+            Me.txtruc.Text = ""
             Me.txtRS.Text = ""
             Me.txtDireccion.Text = ""
 
@@ -1305,9 +1303,9 @@ Private Sub cmdSunat_Click()
             'Me.txtDireccion.Text = p.Item("direccion")
             Me.txtDireccion.Text = IIf(IsNull(p.Item("direccion")), "", p.Item("direccion"))
             Me.txtRS.Text = p.Item("razonSocial")
-            Me.txtRuc.Text = p.Item("ruc")
+            Me.txtruc.Text = p.Item("ruc")
         Else
-            Me.txtRuc.Text = ""
+            Me.txtruc.Text = ""
             Me.txtDireccion.Text = ""
             Me.txtDni.Text = p.Item("dni")
             Me.txtRS.Text = p.Item("nombres") & " " & p.Item("apellidoPaterno") & " " & p.Item("apellidoMaterno")
@@ -1322,9 +1320,9 @@ Private Sub cmdSunat_Click()
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@RAZONSOCIAL", adVarChar, adParamInput, 200, Left(Trim(Me.txtRS.Text), 200))
         'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@DIRECCION", adVarChar, adParamInput, 50, Left(Trim(Me.txtDireccion.Text), 50))
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@DIRECCION", adVarChar, adParamInput, 200, Left(Trim(Me.txtDireccion.Text), 200))
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@RUC", adVarChar, adParamInput, 11, Me.txtRuc.Text)
+        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@RUC", adVarChar, adParamInput, 11, Me.txtruc.Text)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@DNI", adChar, adParamInput, 8, Me.txtDni.Text)
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@IDCLIENTE", adBigInt, adParamInput, 10, Me.txtRuc.Tag)
+        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@IDCLIENTE", adBigInt, adParamInput, 10, Me.txtruc.Tag)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@salida", adBigInt, adParamOutput, , 0)
         oCmdEjec.Execute
     End If
@@ -1547,7 +1545,7 @@ Private Sub Form_Load()
         itemX.SubItems(5) = oRsPago!CantTotal
         itemX.SubItems(6) = oRsPago!faltante
         itemX.SubItems(7) = FormatNumber(oRsPago!Importe, 2)
-        itemX.SubItems(8) = oRsPago!SEC
+        itemX.SubItems(8) = oRsPago!Sec
         itemX.SubItems(9) = oRsPago!aPRO
         itemX.SubItems(10) = oRsPago!aten
         itemX.SubItems(11) = oRsPago!uni
@@ -2258,7 +2256,7 @@ Private Sub txtRS_KeyDown(KeyCode As Integer, Shift As Integer)
     If KeyCode = 27 Then
         Me.ListView1.Visible = False
         Me.txtRS.Text = ""
-        Me.txtRuc.Text = ""
+        Me.txtruc.Text = ""
         Me.txtDireccion.Text = ""
     End If
 
@@ -2312,12 +2310,12 @@ Private Sub txtRS_KeyPress(KeyAscii As Integer)
         
         Else
             
-            Me.txtRuc.Text = Me.ListView1.ListItems(loc_key).SubItems(2)
+            Me.txtruc.Text = Me.ListView1.ListItems(loc_key).SubItems(2)
             Me.txtDireccion.Text = Me.ListView1.ListItems(loc_key).SubItems(3)
             Me.txtRS.Text = Me.ListView1.ListItems(loc_key).SubItems(1)
             Me.ListView1.Visible = False
             Me.txtDni.Text = Me.ListView1.ListItems(loc_key).Tag
-            Me.txtRuc.Tag = Me.ListView1.ListItems(loc_key)
+            Me.txtruc.Tag = Me.ListView1.ListItems(loc_key)
             Me.lvDetalle.SetFocus
         End If
     End If
@@ -2327,16 +2325,16 @@ End Sub
 Private Sub txtRuc_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then
 'Me.ListView1.Visible = True
-If Len(Trim(Me.txtRuc.Text)) <> 0 Then
+If Len(Trim(Me.txtruc.Text)) <> 0 Then
 For i = 1 To Me.ListView1.ListItems.count
-    If Trim(Me.txtRuc.Text) = Trim(Me.ListView1.ListItems(i).SubItems(2)) Then
+    If Trim(Me.txtruc.Text) = Trim(Me.ListView1.ListItems(i).SubItems(2)) Then
         'Me.ListView1.ListItems(i).Selected = True
         buscars = False
         loc_key = i
         Me.ListView1.ListItems(i).EnsureVisible
         Me.txtRS.Text = Me.ListView1.ListItems(i).SubItems(1)
         Me.txtDireccion.Text = Me.ListView1.ListItems(i).SubItems(3)
-        Me.txtRuc.Tag = Me.ListView1.ListItems(i)
+        Me.txtruc.Tag = Me.ListView1.ListItems(i)
         Exit For
     Else
        ' Me.ListView1.ListItems(i).Selected = False
@@ -2346,7 +2344,7 @@ For i = 1 To Me.ListView1.ListItems.count
 Next
 Else
 Me.ListView1.Visible = False
-Me.txtRuc.Text = ""
+Me.txtruc.Text = ""
 Me.txtDireccion.Text = ""
 Me.txtRS.Text = ""
 End If
