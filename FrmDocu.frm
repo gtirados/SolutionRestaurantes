@@ -1654,7 +1654,7 @@ Set far_r = PSFAR.OpenResultset(rdOpenKeyset, rdConcurReadOnly)
 
 LIMPIA_DOCU
 grid_fac2.rows = 2
-txtNumfac.Text = ""
+txtNumFac.Text = ""
 txtSerie.Text = ""
 'SQ_OPER = 1
 'PUB_CODCIA = LK_CODCIA
@@ -1663,7 +1663,7 @@ txtSerie.Text = ""
 '  Exit Sub
 'End If
 txtSerie.Locked = False
-lblsaldo.Caption = "Saldo Actual "
+lblSaldo.Caption = "Saldo Actual "
 lbldomicilio.Caption = "Domicilio :"
 lbldocu(1).Visible = True
 lbldocu(3).Visible = True
@@ -1789,11 +1789,11 @@ End If
 pu_codcia = LK_CODCIA
 LEER_FAR_CONSUL
 If Not far_consul.EOF Then
- txtNumfac.Text = far_consul!far_numfac
+ txtNumFac.Text = far_consul!far_numfac
 Else
- txtNumfac.Text = "0"
+ txtNumFac.Text = "0"
 End If
-Azul txtNumfac, txtNumfac
+Azul txtNumFac, txtNumFac
 
 If Trim(d_fecha.Caption) = "" Then txtnumfac_KeyPress 13
 
@@ -1817,8 +1817,8 @@ End If
 'End If
 If LOC_TIPMOV <> 3 Then pu_cp = " "
 If Left(cmbFBG.Text, 1) = "P" And PUB_TIPMOV <> 10 Then
- txtNumfac.Text = Nulo_Valor0(par_llave!par_planilla)
- txtNumfac.SetFocus
+ txtNumFac.Text = Nulo_Valor0(par_llave!par_planilla)
+ txtNumFac.SetFocus
  txtnumfac_KeyPress 13
  Exit Sub
 End If
@@ -1843,8 +1843,8 @@ If LOC_TIPMOV = 30 Then
  End If
  pu_cp = "P"
  txtSerie.Text = wser
- txtNumfac.Text = wnumfac
- txtNumfac.SetFocus
+ txtNumFac.Text = wnumfac
+ txtNumFac.SetFocus
  txtnumfac_KeyPress 13
  Exit Sub
 End If
@@ -1935,11 +1935,11 @@ PU_NUMSER = val(txtSerie.Text)
 pu_codcia = LK_CODCIA
 LEER_FAR_CONSUL
 If Not far_consul.EOF Then
- txtNumfac.Text = far_consul!far_numfac
+ txtNumFac.Text = far_consul!far_numfac
 Else
- txtNumfac.Text = "0"
+ txtNumFac.Text = "0"
 End If
-txtNumfac.SetFocus
+txtNumFac.SetFocus
 txtnumfac_KeyPress 13
 If LK_EMP = "HER" And val(txtSerie.Text) = 0 And LOC_TIPMOV = 10 Then
    txtSerie.Locked = False
@@ -1951,18 +1951,18 @@ End Sub
 Private Sub cmdAnterior_Click()
 Dim tempo
 If LOC_TIPMOV = 0 Then Exit Sub
-tempo = val(txtNumfac.Text)
+tempo = val(txtNumFac.Text)
 If LOC_TIPMOV = 10 Then
  If Trim(txtSerie.Text) = "" Then
   Exit Sub
  End If
 End If
-If val(txtNumfac.Text) <= 0 Then
+If val(txtNumFac.Text) <= 0 Then
  LIMPIA_DOCU
  grid_fac2.Clear
  Exit Sub
 End If
-txtNumfac.Text = val(txtNumfac.Text) - 1
+txtNumFac.Text = val(txtNumFac.Text) - 1
 If LOC_TIPMOV = 96 Or LOC_TIPMOV = 30 Then ' PLANILLA
  txtnumfac_KeyPress 13
  Exit Sub
@@ -1979,10 +1979,10 @@ If wflag_docu = "A" Then
   'Beep
 Else
   d_mensaje.Visible = False
-  CmdAnterior.Enabled = True
+  cmdAnterior.Enabled = True
 End If
-Azul txtNumfac, txtNumfac
-LOC_NUMFAC_FIN = val(txtNumfac.Text)
+Azul txtNumFac, txtNumFac
+LOC_NUMFAC_FIN = val(txtNumFac.Text)
 
 End Sub
 
@@ -1996,7 +1996,7 @@ Private Sub cmdCommand1_Click()
 '       End If
        On Error GoTo Exporta
         If LOC_TIPMOV = 10 Or LOC_TIPMOV = 97 Or LOC_TIPMOV = 98 Then
-            CrearArchivoPlano2 Left(cmbFBG.Text, 1), Me.txtSerie.Text, Me.txtNumfac.Text
+            CrearArchivoPlano2 Left(cmbFBG.Text, 1), Me.txtSerie.Text, Me.txtNumFac.Text
         End If
         MsgBox "Archivos generados correctamente.", vbInformation, Pub_Titulo
        Exit Sub
@@ -2060,7 +2060,7 @@ PB.Value = PB.Value + 1
 GoSub WEXCEL
 PB.Value = PB.Value + 1
 pub_cadena = ""
-xl.Cells(4, 1) = "PLANILLA : " & Trim(txtSerie.Text) & " - " & Trim(txtNumfac.Text)
+xl.Cells(4, 1) = "PLANILLA : " & Trim(txtSerie.Text) & " - " & Trim(txtNumFac.Text)
 xl.Cells(3, 1) = "'" & Format(LK_FECHA_DIA, "dd/mm/yyyy")
 xl.Cells(1, 1) = Trim(Mid(MDIForm1.stb_EB.Panels("cia"), 4, Len(MDIForm1.stb_EB.Panels("cia"))))
 xl.Cells(2, 1) = "PLANILLA DE COBRANZA"
@@ -2159,7 +2159,7 @@ Else
    rmoneda = "S"
 End If
 
-PU_NUMFAC = val((frmdocu.txtNumfac.Text))
+PU_NUMFAC = val((frmdocu.txtNumFac.Text))
 frmdocu.Reportes.Formulas(1) = "SON_EFECTIVO=  'SON: " & CONVER_LETRAS(PUB_NETO, rmoneda) & "'"
 frmdocu.Reportes.WindowTitle = "ORDEN DE COMPRA  :" & Format(PU_NUMSER, "000") & " - " & Format(PU_NUMFAC, "0000000")
 frmdocu.Reportes.ReportFileName = wRuta + "ORDEN.RPT"
@@ -2179,9 +2179,9 @@ End Sub
 
 Private Sub cmdserie_Click()
 Dim valor
-valor = InputBox("Ingrese hasta que numero de " & Trim(cmbFBG.Text) & " Desea Mostrar para la Impresión. Segun serie : " & txtSerie.Text & " - ", "Inpresión en Serie . . . ", Trim(txtNumfac.Text))
+valor = InputBox("Ingrese hasta que numero de " & Trim(cmbFBG.Text) & " Desea Mostrar para la Impresión. Segun serie : " & txtSerie.Text & " - ", "Inpresión en Serie . . . ", Trim(txtNumFac.Text))
 If valor = "" Then Exit Sub
-If val(valor) < val(txtNumfac.Text) Then
+If val(valor) < val(txtNumFac.Text) Then
   MsgBox "No Procede... No puede ser menor que el Nº inicial ", 48, Pub_Titulo
   Exit Sub
 End If
@@ -2194,16 +2194,16 @@ End Sub
 Private Sub cmdSiguiente_Click()
 Dim tempo
 If LOC_TIPMOV = 0 Then Exit Sub
-tempo = val(txtNumfac.Text)
+tempo = val(txtNumFac.Text)
 If LOC_TIPMOV = 10 Then
  If Trim(txtSerie.Text) = "" Then
   Exit Sub
  End If
 End If
-If val(txtNumfac.Text) < 0 Then
+If val(txtNumFac.Text) < 0 Then
   Exit Sub
 End If
-txtNumfac.Text = val(txtNumfac.Text) + 1
+txtNumFac.Text = val(txtNumFac.Text) + 1
 If LOC_TIPMOV = 96 Or LOC_TIPMOV = 30 Then ' PLANILLA
  txtnumfac_KeyPress 13
  Exit Sub
@@ -2219,8 +2219,8 @@ Else
   d_mensaje.Visible = False
   cmdSiguiente.Enabled = True
 End If
-Azul txtNumfac, txtNumfac
-LOC_NUMFAC_FIN = val(txtNumfac.Text)
+Azul txtNumFac, txtNumFac
+LOC_NUMFAC_FIN = val(txtNumFac.Text)
 End Sub
 
 Private Sub d_descto_DblClick()
@@ -2273,7 +2273,7 @@ FARUSU(0) = LK_CODCIA
 FARUSU(1) = LOC_TIPMOV
 FARUSU(2) = d_fecha.Caption
 FARUSU(3) = txtSerie.Text
-FARUSU(4) = txtNumfac.Text
+FARUSU(4) = txtNumFac.Text
 far_codusu.Requery
 fila = 1
 Do Until far_codusu.EOF
@@ -2365,7 +2365,7 @@ FARUSU(0) = LK_CODCIA
 FARUSU(1) = LOC_TIPMOV
 FARUSU(2) = d_fecha.Caption
 FARUSU(3) = txtSerie.Text
-FARUSU(4) = txtNumfac.Text
+FARUSU(4) = txtNumFac.Text
 far_codusu.Requery
 fila = 1
 Do Until far_codusu.EOF
@@ -2419,7 +2419,7 @@ ALLUSU(0) = LK_CODCIA
 ALLUSU(1) = LOC_TIPMOV
 ALLUSU(2) = d_fecha.Caption
 ALLUSU(3) = txtSerie.Text
-ALLUSU(4) = txtNumfac.Text
+ALLUSU(4) = txtNumFac.Text
 
 all_codusu.Requery
 Do Until all_codusu.EOF
@@ -2442,7 +2442,7 @@ FARUSU(0) = LK_CODCIA
 FARUSU(1) = LOC_TIPMOV
 FARUSU(2) = d_fecha.Caption
 FARUSU(3) = txtSerie.Text
-FARUSU(4) = txtNumfac.Text
+FARUSU(4) = txtNumFac.Text
 
 far_codusu.Requery
 Do Until far_codusu.EOF
@@ -2476,7 +2476,7 @@ ALLUSU(0) = LK_CODCIA
 ALLUSU(1) = LOC_TIPMOV
 ALLUSU(2) = d_fecha.Caption
 ALLUSU(3) = txtSerie.Text
-ALLUSU(4) = txtNumfac.Text
+ALLUSU(4) = txtNumFac.Text
 all_codusu.Requery
 Do Until all_codusu.EOF
  all_codusu.Edit
@@ -2497,7 +2497,7 @@ FARUSU(0) = LK_CODCIA
 FARUSU(1) = LOC_TIPMOV
 FARUSU(2) = d_fecha.Caption
 FARUSU(3) = txtSerie.Text
-FARUSU(4) = txtNumfac.Text
+FARUSU(4) = txtNumFac.Text
 far_codusu.Requery
 Do Until far_codusu.EOF
  far_codusu.Edit
@@ -2647,10 +2647,10 @@ Public Sub LLENA_CONSULTA()
     WS_FLETE = 0
     ws_serie = 0
     ws_serie = val(txtSerie.Text)
-    CmdAnterior.Enabled = False
+    cmdAnterior.Enabled = False
     'DoEvents
     cmdSiguiente.Enabled = False
-    cmdImp.Enabled = False
+    cmdimp.Enabled = False
     'DoEvents
     cherela.Visible = False
     tguia.Visible = False
@@ -2706,11 +2706,11 @@ Public Sub LLENA_CONSULTA()
                 PSFAR.rdoParameters(0) = LOC_TIPMOV
                 PSFAR.rdoParameters(1) = LK_CODCIA
                 PSFAR.rdoParameters(2) = txtSerie.Text
-                PSFAR.rdoParameters(3) = val(txtNumfac.Text)
+                PSFAR.rdoParameters(3) = val(txtNumFac.Text)
             Else
                 PSFAR.rdoParameters(0) = LOC_TIPMOV
                 PSFAR.rdoParameters(1) = LK_CODCIA
-                PSFAR.rdoParameters(2) = txtNumfac.Text
+                PSFAR.rdoParameters(2) = txtNumFac.Text
             End If
 
         Else
@@ -2733,16 +2733,16 @@ Public Sub LLENA_CONSULTA()
     If LOC_TIPMOV = 20 And Left(cmbFBG.Text, 1) <> "K" Then
     Else
         PSFAR.rdoParameters(1) = LK_CODCIA
-        PSFAR.rdoParameters(4) = val(txtNumfac.Text)
+        PSFAR.rdoParameters(4) = val(txtNumFac.Text)
     End If
 
     far_r.Requery
 
     If far_r.EOF Then
         wflag_docu = "A"
-        CmdAnterior.Enabled = True
+        cmdAnterior.Enabled = True
         cmdSiguiente.Enabled = True
-        cmdImp.Enabled = True
+        cmdimp.Enabled = True
 
         Exit Sub
 
@@ -2750,9 +2750,9 @@ Public Sub LLENA_CONSULTA()
 
         If LK_FLAG_SOS = "A" And far_r!FAR_FLAG_SO <> "A" Then
             wflag_docu = "A"
-            CmdAnterior.Enabled = True
+            cmdAnterior.Enabled = True
             cmdSiguiente.Enabled = True
-            cmdImp.Enabled = True
+            cmdimp.Enabled = True
 
             Exit Sub
 
@@ -2825,7 +2825,7 @@ muestra:
 
     If LOC_TIPMOV = 93 Or LOC_TIPMOV = 5 Or LOC_TIPMOV = 6 Or LOC_TIPMOV = 100 Or LOC_TIPMOV = 101 Then
         lbldomicilio.Caption = "Destino :"
-        lbldireccion.Caption = "Concepto :"
+        lblDireccion.Caption = "Concepto :"
         'QUITADO 30/11/2001
         d_dire.Caption = Trim(far_r!far_concepto)
         d_domicilio.Caption = Trim(far_r!far_subtra)
@@ -2839,7 +2839,7 @@ muestra:
         End If
 
     Else
-        lbldireccion.Caption = "Dirección Entrega:"
+        lblDireccion.Caption = "Dirección Entrega:"
         lbldomicilio.Caption = "Domicilio:"
  
     End If
@@ -2870,13 +2870,13 @@ muestra:
             pu_cp = Right(cmbFBG.Text, 1)
         End If
 
-        lblsaldo.Visible = True
+        lblSaldo.Visible = True
         d_saldo.Visible = True
         d_moneda.Visible = True
     ElseIf LOC_TIPMOV = 20 Or LOC_TIPMOV = 99 Or LOC_TIPMOV = 3 Then
         l_fecha_compra.Visible = True
         d_fecha_compra.Visible = True
-        lblsaldo.Visible = True
+        lblSaldo.Visible = True
         d_saldo.Visible = True
  
         d_moneda.Visible = True
@@ -3006,9 +3006,9 @@ muestra:
 
     If Left(cmbFBG.Text, 1) = "F" Then
         d_ruc.Caption = Trim(Nulo_Valors(cli_llave!cli_ruc_esposo))
-        LBLRUC.Visible = True
+        lblRUC.Visible = True
     Else
-        LBLRUC.Visible = False
+        lblRUC.Visible = False
         d_ruc.Caption = ""
     End If
 
@@ -3352,9 +3352,10 @@ pasa:
         WS_BRUTO = far_r!FAR_BRUTO
         WS_DESCTO = far_r!FAR_TOT_DESCTO
         WS_IMPTO = far_r!far_IMPTO
-        WS_GASTOS = far_r!FAR_TOT_FLETE
+        'WS_GASTOS = far_r!FAR_TOT_FLETE
+        WS_GASTOS = Round((far_r!FAR_SUBTOTAL - far_r!FAR_BRUTO - far_r!far_IMPTO - far_r!far_ICBPER), 2) 'SERVICIO GTS
         '  If LK_EMP = "HER" And far_r!FAR_TOT_FLETE <> 0 Then
-        WS_FLETE = Nulo_Valor0(far_r!FAR_ICBPER)
+        WS_FLETE = Nulo_Valor0(far_r!far_ICBPER)   'ICBPER GTS
         WFECHA_COMPRA = far_r!FAR_fecha_compra
         wnumfac_c = Nulo_Valor0(far_r!FAR_NUMFAC_C)
 
@@ -3407,13 +3408,13 @@ NADA:
         End If
     End If
 
-    CmdAnterior.Enabled = True
+    cmdAnterior.Enabled = True
     cmdSiguiente.Enabled = True
-    cmdImp.Enabled = True
+    cmdimp.Enabled = True
     PB.Visible = False
 
     If cherela.Visible And LK_EMP <> "HER" Then cherela_Click
-    LOC_NUMFAC_FIN = val(txtNumfac.Text)
+    LOC_NUMFAC_FIN = val(txtNumFac.Text)
 
     If LK_CODUSU = "ADMIN" And (LOC_TIPMOV = 6 Or LOC_TIPMOV = 5) Then
         ' MsgBox "CAntidad :  " & conteo_cantidad, 48, Pub_Titulo
@@ -3532,27 +3533,27 @@ If Trim(TIPMOV.Text) = "" Then
  LOC_TIPMOV = 0
 Else
  LOC_TIPMOV = val(Trim(Right(TIPMOV.Text, 4)))
- cmdImp.Enabled = False
+ cmdimp.Enabled = False
  lblpersona.Visible = True
  d_Codclie.Visible = True
- LBLRUC.Visible = True
+ lblRUC.Visible = True
  'lblven.Visible = True
  d_codven.Visible = True
  d_condicion.Visible = True
  lblcondicion.Visible = True
- lbldireccion.Visible = True
+ lblDireccion.Visible = True
  If LOC_TIPMOV = 101 Or LOC_TIPMOV = 93 Or LOC_TIPMOV = 20 Or LOC_TIPMOV = 5 Or LOC_TIPMOV = 6 Or LOC_TIPMOV = 10 Or LOC_TIPMOV = 97 Or LOC_TIPMOV = 98 Then
-   cmdImp.Enabled = True
+   cmdimp.Enabled = True
  ElseIf LOC_TIPMOV = 96 Then
-   cmdImp.Enabled = True
+   cmdimp.Enabled = True
    lblpersona.Visible = False
    d_Codclie.Visible = False
-   LBLRUC.Visible = False
+   lblRUC.Visible = False
 '   lblven.Visible = False
    d_codven.Visible = False
    d_condicion.Visible = False
    lblcondicion.Visible = False
-   lbldireccion.Visible = False
+   lblDireccion.Visible = False
  End If
  If temporal = "X" Then
   Exit Sub
@@ -3561,7 +3562,7 @@ Else
  If LOC_TIPMOV = 10 Or LOC_TIPMOV = 97 Or LOC_TIPMOV = 98 Then
   lblflete.Caption = "ICBPER"
   stbEtiqueta.Panels(5).Text = "ICBPER"
-  stbEtiqueta.Panels(3).Text = "Servicios"
+  stbEtiqueta.Panels(2).Text = "Servicios"
   lblNumfac.Caption = "Nº de Doc."
   lblpersona.Caption = "Cliente :"
 '  lblven.Visible = True
@@ -3599,7 +3600,7 @@ Else
   lblflete.Caption = "Flete"
   stbEtiqueta.Panels(5).Text = "Flete"
   cmbFBG.AddItem "K = Kardex"
-  If LOC_TIPMOV = 30 Then cmdImp.Enabled = True
+  If LOC_TIPMOV = 30 Then cmdimp.Enabled = True
  ElseIf LOC_TIPMOV = 96 Then
   lblNumfac.Caption = "Panilla"
   lblflete.Caption = ""
@@ -3609,7 +3610,7 @@ Else
  If LOC_TIPMOV = 102 Then
  Else
   d_codven.Visible = False
-  LBLRUC.Visible = False
+  lblRUC.Visible = False
   d_Codclie.Visible = False
   lblpersona.Caption = ""
  End If
@@ -3684,7 +3685,7 @@ End If
 End Sub
 
 Private Sub txtNumfac_GotFocus()
-temporal = txtNumfac.Text
+temporal = txtNumFac.Text
 End Sub
 
 Private Sub txtnumfac_KeyPress(KeyAscii As Integer)
@@ -3695,7 +3696,7 @@ If KeyAscii = 13 Then
   If val(txtSerie.Text) <= 0 Then
    'Exit Sub
   End If
-  If val(txtNumfac.Text) <= 0 Then
+  If val(txtNumFac.Text) <= 0 Then
    LIMPIA_DOCU
    grid_fac2.Clear
    Exit Sub
@@ -3718,11 +3719,11 @@ If KeyAscii = 13 Then
     loc_flag_espera = ""
   End If
   If Trim(wflag_docu) = "" Then
-    temporal = txtNumfac.Text
+    temporal = txtNumFac.Text
   Else
     txtSerie.Text = tempo_serie
-    txtNumfac.Text = temporal
-    Azul txtNumfac, txtNumfac
+    txtNumFac.Text = temporal
+    Azul txtNumFac, txtNumFac
   End If
 End If
 Exit Sub
@@ -3745,7 +3746,7 @@ PS_REP01(1) = 0
 Set llave_rep01 = PS_REP01.OpenResultset(rdOpenKeyset, rdConcurReadOnly)
 
 PS_REP01(0) = LK_CODCIA
-PS_REP01(1) = val(txtNumfac.Text)
+PS_REP01(1) = val(txtNumFac.Text)
 llave_rep01.Requery
 d_mensaje.Visible = False
 If llave_rep01.EOF = True Then
@@ -3828,7 +3829,7 @@ If Not ven_llave.EOF Then d_domicilio.Caption = Format(wven, "00") + "  " + Trim
 
 lblcheque.Visible = True
 lblEfectivo.Visible = True
-CmdAnterior.Enabled = True
+cmdAnterior.Enabled = True
 cmdSiguiente.Enabled = True
 PB.Visible = False
 TRANS.Visible = False
@@ -3857,7 +3858,7 @@ Set llave_rep01 = PS_REP01.OpenResultset(rdOpenKeyset, rdConcurReadOnly)
 
 PS_REP01(0) = LK_CODCIA
 PS_REP01(1) = txtSerie.Text
-PS_REP01(2) = val(txtNumfac.Text)
+PS_REP01(2) = val(txtNumFac.Text)
 
 llave_rep01.Requery
 d_mensaje.Visible = False
@@ -3949,7 +3950,7 @@ Loop
    d_impto.Caption = WS_IMPTO
    d_gastos.Caption = WS_GASTOS
    d_neto.Caption = Format(WS_BRUTO + WS_IMPTO - WS_DESCTO + WS_GASTOS, "0.000")
-   CmdAnterior.Enabled = True
+   cmdAnterior.Enabled = True
    cmdSiguiente.Enabled = True
    PB.Visible = False
 Exit Sub
@@ -4319,8 +4320,8 @@ Dim ArchivoCab  As Object
             c = 1
             sCadena = ""
             Do While Not orsPAG.EOF
-                xFormaPago = orsPAG!formaPAGO
-                sCadena = sCadena & orsPAG!formaPAGO & "|" & orsPAG!pendientepago & "|" & orsPAG!TIPMONEDA & "|"
+                xFormaPago = orsPAG!formapago
+                sCadena = sCadena & orsPAG!formapago & "|" & orsPAG!pendientepago & "|" & orsPAG!TIPMONEDA & "|"
                 If c < orsPAG.RecordCount Then
                     sCadena = sCadena & vbCrLf
                 End If
@@ -4415,8 +4416,8 @@ End Sub
 Private Sub txtSerie_KeyPress(KeyAscii As Integer)
 SOLO_ENTERO KeyAscii
 If KeyAscii = 13 Then
- If txtNumfac.Enabled Then
-  txtNumfac.SetFocus
+ If txtNumFac.Enabled Then
+  txtNumFac.SetFocus
  End If
 End If
 End Sub
@@ -4456,6 +4457,8 @@ If LOC_TIPMOV = 3 Or LOC_TIPMOV = 100 Or LOC_TIPMOV = 101 Or LOC_TIPMOV = 10 The
     If LK_FLAG_FACTURACION = "A" Then
         PUB_CODVEN = 1
     ElseIf LK_FLAG_FACTURACION = "V" Then
+        PUB_CODVEN = 1
+    ElseIf LK_FLAG_FACTURACION = "U" Then
         PUB_CODVEN = 1
     End If
     LEER_PAR_LLAVE
@@ -4497,7 +4500,7 @@ End If
     PUB_NETO = val(frmdocu.d_neto.Caption)
     PUB_FECHA = frmdocu.d_fecha.Caption
     PU_NUMSER = val((frmdocu.txtSerie.Text))
-    PU_NUMFAC = val((frmdocu.txtNumfac.Text))
+    PU_NUMFAC = val((frmdocu.txtNumFac.Text))
     If LK_EMP = "PIU" Then
        frmdocu.Reportes.Formulas(1) = "SON=  ' " & CONVER_LETRAS(PUB_NETO, WMONEDA) & "'"
     Else

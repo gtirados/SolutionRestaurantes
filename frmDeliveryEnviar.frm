@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
-Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDatLst.Ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
+Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDATLST.OCX"
 Begin VB.Form frmDeliveryEnviar 
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "Generar Comprobante"
@@ -24,6 +24,15 @@ Begin VB.Form frmDeliveryEnviar
    ScaleWidth      =   6840
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.TextBox txtcopias 
+      Height          =   285
+      Left            =   3000
+      TabIndex        =   39
+      Text            =   "1"
+      Top             =   5040
+      Visible         =   0   'False
+      Width           =   495
+   End
    Begin VB.CheckBox chkprom 
       Caption         =   "Imprime Promocion"
       Height          =   255
@@ -664,7 +673,7 @@ Private Sub CrearArchivoPlano(cTipoDocto As String, cSerie As String, cNumero As
     c = 1
     sCadena = ""
     Do While Not orsLey.EOF
-        sCadena = sCadena & orsLey!cod & "|" & Trim(CONVER_LETRAS(Me.lblTotal2.Caption, "S")) & "|"
+        sCadena = sCadena & orsLey!cod & "|" & Trim(CONVER_LETRAS(Me.lbltotal2.Caption, "S")) & "|"
         If c < orsLey.RecordCount Then
             sCadena = sCadena & vbCrLf
         End If
@@ -685,8 +694,8 @@ Private Sub CrearArchivoPlano(cTipoDocto As String, cSerie As String, cNumero As
             c = 1
             sCadena = ""
             Do While Not orsPAG.EOF
-                xFormaPago = orsPAG!formaPAGO
-                sCadena = sCadena & orsPAG!formaPAGO & "|" & orsPAG!pendientepago & "|" & orsPAG!TIPMONEDA & "|"
+                xFormaPago = orsPAG!formapago
+                sCadena = sCadena & orsPAG!formapago & "|" & orsPAG!pendientepago & "|" & orsPAG!TIPMONEDA & "|"
                 If c < orsPAG.RecordCount Then
                     sCadena = sCadena & vbCrLf
                 End If
@@ -785,17 +794,17 @@ Private Sub Imprimir(TipoDoc As String, Esconsumo As Boolean)
             RutaReporte = "C:\Admin\Nordi\BolCon.rpt"
         ElseIf TipoDoc = "FACTURA" Then
             RutaReporte = "C:\Admin\Nordi\FacCon.rpt"
-            vSubTotal = Round((Me.lblTotal2.Caption / ((100 + LK_IGV) / 100)), 2)
+            vSubTotal = Round((Me.lbltotal2.Caption / ((100 + LK_IGV) / 100)), 2)
             'vSubTotal = Round((Me.lblImporte.Caption / ((100 + LK_IGV + 5) / 100)), 2)
             'vrec = Round(vSubTotal * 0.05, 2)
-            vIgv = Me.lblTotal2.Caption - vSubTotal
+            vIgv = Me.lbltotal2.Caption - vSubTotal
             'vIgv = Me.lblImporte.Caption - vSubTotal - vrec
         ElseIf TipoDoc = "NOTA DE PEDIDO" Then
             RutaReporte = "C:\Admin\Nordi\FacDet.rpt"
-            vSubTotal = Round((Me.lblTotal2.Caption / ((100 + LK_IGV) / 100)), 2)
+            vSubTotal = Round((Me.lbltotal2.Caption / ((100 + LK_IGV) / 100)), 2)
             'vSubTotal = Round((Me.lblImporte.Caption / ((100 + LK_IGV + 5) / 100)), 2)
             'vrec = Round(vSubTotal * 0.05, 2)
-            vIgv = Me.lblTotal2.Caption - vSubTotal
+            vIgv = Me.lbltotal2.Caption - vSubTotal
             'vIgv = Me.lblImporte.Caption - vSubTotal - vrec
         End If
 
@@ -805,17 +814,17 @@ Private Sub Imprimir(TipoDoc As String, Esconsumo As Boolean)
             RutaReporte = "C:\Admin\Nordi\BolDet.rpt"
         ElseIf TipoDoc = "FACTURA" Then
             RutaReporte = "C:\Admin\Nordi\FacDet.rpt"
-            vSubTotal = Round((Me.lblTotal2.Caption / ((100 + LK_IGV) / 100)), 2)
+            vSubTotal = Round((Me.lbltotal2.Caption / ((100 + LK_IGV) / 100)), 2)
             'vSubTotal = Round((Me.lblImporte.Caption / ((100 + LK_IGV + 5) / 100)), 2)
             'vrec = Round(vSubTotal * 0.05, 2)
-            vIgv = Me.lblTotal2.Caption - vSubTotal
+            vIgv = Me.lbltotal2.Caption - vSubTotal
             'vIgv = Me.lblImporte.Caption - vSubTotal - vrec
         ElseIf TipoDoc = "NOTA DE PEDIDO" Then
             RutaReporte = "C:\Admin\Nordi\FacDet.rpt"
-            vSubTotal = Round((Me.lblTotal2.Caption / ((100 + LK_IGV) / 100)), 2)
+            vSubTotal = Round((Me.lbltotal2.Caption / ((100 + LK_IGV) / 100)), 2)
             'vSubTotal = Round((Me.lblImporte.Caption / ((100 + LK_IGV + 5) / 100)), 2)
             'vrec = Round(vSubTotal * 0.05, 2)
-            vIgv = Me.lblTotal2.Caption - vSubTotal
+            vIgv = Me.lbltotal2.Caption - vSubTotal
             'vIgv = Me.lblImporte.Caption - vSubTotal - vrec
         End If
     End If
@@ -844,10 +853,10 @@ Private Sub Imprimir(TipoDoc As String, Esconsumo As Boolean)
                 crParamDef.AddCurrentValue LK_FECHA_DIA
 
             Case "Son"
-                crParamDef.AddCurrentValue CONVER_LETRAS(Me.lblTotal2.Caption, "S")
+                crParamDef.AddCurrentValue CONVER_LETRAS(Me.lbltotal2.Caption, "S")
 
             Case "total"
-                crParamDef.AddCurrentValue Me.lblTotal2.Caption
+                crParamDef.AddCurrentValue Me.lbltotal2.Caption
 
             Case "subtotal"
                 crParamDef.AddCurrentValue CStr(vSubTotal)
@@ -856,7 +865,7 @@ Private Sub Imprimir(TipoDoc As String, Esconsumo As Boolean)
                 crParamDef.AddCurrentValue CStr(vIgv)
 
             Case "SerFac"
-                crParamDef.AddCurrentValue Me.lblserie.Caption
+                crParamDef.AddCurrentValue Me.lblSerie.Caption
 
             Case "NumFac"
                 crParamDef.AddCurrentValue Me.txtNumero.Text
@@ -889,7 +898,7 @@ Private Sub Imprimir(TipoDoc As String, Esconsumo As Boolean)
 
     oCmdEjec.CommandText = "SpPrintFacturacion"
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CodCia", adChar, adParamInput, 2, LK_CODCIA)
-    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@Serie", adChar, adParamInput, 3, Me.lblserie.Caption)
+    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@Serie", adChar, adParamInput, 3, Me.lblSerie.Caption)
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@nro", adInteger, adParamInput, , Me.txtNumero.Text)
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@fbg", adChar, adParamInput, 1, Left(Me.DatTiposDoctos.Text, 1)) ' IIf(Me.ComDocto.ListIndex = 0, "F", IIf(Me.ComDocto.ListIndex = 1, "B", "")))
     'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@NroCom", adInteger, adParamInput, , vNroCom)
@@ -1018,7 +1027,7 @@ Private Sub cmdAceptar_Click()
 
     Dim ORSuit As ADODB.Recordset
 
-    Set ORSuit = oCmdEjec.Execute(, Me.lblTotal2.Caption)
+    Set ORSuit = oCmdEjec.Execute(, Me.lbltotal2.Caption)
 
     If Not ORSuit.EOF Then
         If ORSuit!Dato = 1 Then
@@ -1088,19 +1097,19 @@ Private Sub cmdAceptar_Click()
         oCmdEjec.CommandType = adCmdStoredProc
     
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@codcia", adChar, adParamInput, 2, LK_CODCIA)
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numser", adVarChar, adParamInput, 3, frmDeliveryApp.lblserie.Caption)
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numfac", adBigInt, adParamInput, , frmDeliveryApp.lblnumero.Caption)
+        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numser", adVarChar, adParamInput, 3, frmDeliveryApp.lblSerie.Caption)
+        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numfac", adBigInt, adParamInput, , frmDeliveryApp.lblNumero.Caption)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FECHA", adDBTimeStamp, adParamInput, , LK_FECHA_DIA)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@PAGO", adDouble, adParamInput, , Me.txtAbono.Text)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@DIRECCION", adVarChar, adParamInput, 150, Me.DatDireccion.Text)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@USUARIO", adVarChar, adParamInput, 20, LK_CODUSU)
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@SERDOC", adVarChar, adParamInput, 3, Trim(Me.lblserie.Caption))
+        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@SERDOC", adVarChar, adParamInput, 3, Trim(Me.lblSerie.Caption))
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@NRODOC", adBigInt, adParamInput, , Me.txtNumero.Text)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FBG", adChar, adParamInput, 1, Left(Me.DatTiposDoctos.Text, 1)) ' IIf(Me.ComDocto.ListIndex = 0, "F", IIf(Me.ComDocto.ListIndex = 1, "B", "P")))
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODCLI", adInteger, adParamInput, , Trim(Me.lblcodclie.Caption))
         'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODCLI", adInteger, adParamInput, , Trim(Me.txtRuc.Tag))
         'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODCLI", adInteger, adParamInput, , frmDeliveryApp.lblCliente.Caption)
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@totalfac", adDouble, adParamInput, , Me.lblTotal2.Tag)
+        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@totalfac", adDouble, adParamInput, , Me.lbltotal2.Tag)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@farjabas", adTinyInt, adParamInput, , IIf(Me.chkConsumo.Value = 1, 1, 0))
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@IDREPARTIDOR", adBigInt, adParamInput, , CDbl(Me.DatRepartidor.BoundText))
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODIGODOCTO", adChar, adParamInput, 2, Me.DatTiposDoctos.BoundText)
@@ -1117,22 +1126,22 @@ Private Sub cmdAceptar_Click()
         xEXITO = oCmdEjec.Parameters("@EXITO").Value
         
         Dim xxIgv As String
-        xxIgv = val(Me.lblTotal2.Caption) - Round((val(Me.lblTotal2.Caption) / val((LK_IGV / 100) + 1)), 2)
+        xxIgv = val(Me.lbltotal2.Caption) - Round((val(Me.lbltotal2.Caption) / val((LK_IGV / 100) + 1)), 2)
 
         If Len(Trim(xEXITO)) = 0 Then
             vGraba = True
             'MsgBox "Datos almacenados Correctamente.", vbInformation, Pub_Titulo
-            CreaCodigoQR "6", Me.DatTiposDoctos.BoundText, Me.lblserie.Caption, Me.txtNumero.Text, LK_FECHA_DIA, xxIgv, Me.lblTotal2.Caption, Me.txtRuc.Text, Me.txtDni.Text
+            CreaCodigoQR "6", Me.DatTiposDoctos.BoundText, Me.lblSerie.Caption, Me.txtNumero.Text, LK_FECHA_DIA, xxIgv, Me.lbltotal2.Caption, Me.txtRuc.Text, Me.txtDni.Text
             'Imprimir Left(Me.DatTiposDoctos.Text, 1), Me.chkConsumo.Value
             If xARCENCONTRADO Then
-                ImprimirDocumentoVenta Me.DatTiposDoctos.BoundText, Me.DatTiposDoctos.Text, Me.chkConsumo.Value, Me.lblserie.Caption, Me.txtNumero.Text, Me.lblTotal2.Caption, 0, 0, Me.txtDireccion.Text, Me.txtRuc.Text, Me.txtCliente.Text, Me.txtDni.Text, LK_CODCIA, Me.lblicbper.Caption, Me.chkprom.Value
+                ImprimirDocumentoVenta Me.DatTiposDoctos.BoundText, Me.DatTiposDoctos.Text, Me.chkConsumo.Value, Me.lblSerie.Caption, Me.txtNumero.Text, Me.lbltotal2.Caption, 0, 0, Me.txtDireccion.Text, Me.txtRuc.Text, Me.txtCliente.Text, Me.txtDni.Text, LK_CODCIA, Me.lblicbper.Caption, Me.chkprom.Value, txtcopias.Text
             End If
              
            ' If Me.DatTiposDoctos.BoundText = "01" Then
             If LK_PASA_BOLETAS = "A" And (Me.DatTiposDoctos.BoundText = "01" Or Me.DatTiposDoctos.BoundText = "03") Then
-                 CrearArchivoPlano Left(Me.DatTiposDoctos.Text, 1), Me.lblserie.Caption, Me.txtNumero.Text
+                 CrearArchivoPlano Left(Me.DatTiposDoctos.Text, 1), Me.lblSerie.Caption, Me.txtNumero.Text
             ElseIf Me.DatTiposDoctos.BoundText = "01" Then
-            CrearArchivoPlano Left(Me.DatTiposDoctos.Text, 1), Me.lblserie.Caption, Me.txtNumero.Text
+            CrearArchivoPlano Left(Me.DatTiposDoctos.Text, 1), Me.lblSerie.Caption, Me.txtNumero.Text
             End If
             Unload Me
         Else
@@ -1272,7 +1281,7 @@ Private Sub DatTiposDoctos_Click(Area As Integer)
     xSerie = oCmdEjec.Parameters("@SERIE").Value
     'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@PASA", adBoolean, adParamOutput, , 1)
 
-    Me.lblserie.Caption = xSerie
+    Me.lblSerie.Caption = xSerie
     Me.txtNumero.Text = oCmdEjec.Parameters("@MAXIMO").Value
 
     ORStd.Filter = "CODIGO='" & Me.DatTiposDoctos.BoundText & "'"
@@ -1305,7 +1314,7 @@ LimpiaParametros oCmdEjec
     xSerie = oCmdEjec.Parameters("@SERIE").Value
     'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@PASA", adBoolean, adParamOutput, , 1)
 
-    Me.lblserie.Caption = xSerie
+    Me.lblSerie.Caption = xSerie
     Me.txtNumero.Text = oCmdEjec.Parameters("@MAXIMO").Value
 
     ORStd.Filter = "CODIGO='" & Me.DatTiposDoctos.BoundText & "'"
@@ -1338,7 +1347,7 @@ LimpiaParametros oCmdEjec
     xSerie = oCmdEjec.Parameters("@SERIE").Value
     'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@PASA", adBoolean, adParamOutput, , 1)
 
-    Me.lblserie.Caption = xSerie
+    Me.lblSerie.Caption = xSerie
     Me.txtNumero.Text = oCmdEjec.Parameters("@MAXIMO").Value
 
     ORStd.Filter = "CODIGO='" & Me.DatTiposDoctos.BoundText & "'"
@@ -1375,7 +1384,7 @@ Private Sub Form_Load()
     ConfiguraLV
     Me.txtCliente.Text = Trim(frmDeliveryApp.txtCliente.Text)
     Me.txtDireccion.Text = Trim(frmDeliveryApp.DatDireccion.Text)
-    Me.txtRuc.Text = Trim(frmDeliveryApp.lblruc.Caption)
+    Me.txtRuc.Text = Trim(frmDeliveryApp.lblRUC.Caption)
     Me.txtDni.Text = Trim(frmDeliveryApp.lblDNI.Caption)
     Me.lblcodclie.Caption = Trim(frmDeliveryApp.lblCliente.Caption)
     Me.lblicbper.Caption = Format(frmDeliveryApp.lblicbper.Caption, "#####0.#0")
@@ -1415,7 +1424,7 @@ Private Sub Form_Load()
         xSerie = oCmdEjec.Parameters("@SERIE").Value
         'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@PASA", adBoolean, adParamOutput, , 1)
 
-        Me.lblserie.Caption = xSerie
+        Me.lblSerie.Caption = xSerie
         Me.txtNumero.Text = oCmdEjec.Parameters("@MAXIMO").Value
         
         ORStd.Filter = "CODIGO='" & Me.DatTiposDoctos.BoundText & "'"
@@ -1449,13 +1458,13 @@ Private Sub Form_Load()
     Me.lblMovilidad.Caption = Format(gMOVILIDAD, "#####0.00")
     
     If pINCMOV Then
-        Me.lblTotal2.Tag = gTOTAL + gMOVILIDAD - gDESCUENTO ' + Me.lblicbper.Caption
+        Me.lbltotal2.Tag = gTOTAL + gMOVILIDAD - gDESCUENTO ' + Me.lblicbper.Caption
         'Me.lblTotal2.Caption = "S/. " + Format(Me.lblTotal2.Tag, "#####0.00")
-        Me.lblTotal2.Caption = Format(Me.lblTotal2.Tag, "#####0.#0")
+        Me.lbltotal2.Caption = Format(Me.lbltotal2.Tag, "#####0.#0")
     Else
-        Me.lblTotal2.Tag = gTOTAL - gDESCUENTO ' + Me.lblicbper.Caption
+        Me.lbltotal2.Tag = gTOTAL - gDESCUENTO ' + Me.lblicbper.Caption
         'Me.lblTotal2.Caption = "S/. " + Format(Me.lblTotal2.Tag, "#####0.00")
-        Me.lblTotal2.Caption = Format(Me.lblTotal2.Tag, "#####0.#0")
+        Me.lbltotal2.Caption = Format(Me.lbltotal2.Tag, "#####0.#0")
    
     End If
    
@@ -1466,8 +1475,8 @@ Private Sub Form_Load()
     Dim orsP As ADODB.Recordset
 
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@codcia", adChar, adParamInput, 2, LK_CODCIA)
-    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numser", adVarChar, adParamInput, 3, frmDeliveryApp.lblserie.Caption)
-    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numfac", adBigInt, adParamInput, , frmDeliveryApp.lblnumero.Caption)
+    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numser", adVarChar, adParamInput, 3, frmDeliveryApp.lblSerie.Caption)
+    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numfac", adBigInt, adParamInput, , frmDeliveryApp.lblNumero.Caption)
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FECHA", adDBTimeStamp, adParamInput, , LK_FECHA_DIA)
     Set orsP = oCmdEjec.Execute
 

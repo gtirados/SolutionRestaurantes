@@ -67,8 +67,8 @@ Begin VB.Form frmProductos
       TabCaption(1)   =   "Formulación de Insumos y/o Materia Prima"
       TabPicture(1)   =   "frmProductos.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "Frame1"
-      Tab(1).Control(1)=   "Frame2"
+      Tab(1).Control(0)=   "Frame2"
+      Tab(1).Control(1)=   "Frame1"
       Tab(1).ControlCount=   2
       Begin VB.Frame Frame1 
          Caption         =   "REGISTRO DE INFORMACIÓN"
@@ -213,6 +213,7 @@ Begin VB.Form frmProductos
             Left            =   6000
             TabIndex        =   80
             Top             =   3600
+            Visible         =   0   'False
             Width           =   975
          End
          Begin VB.TextBox txtBolsas 
@@ -222,6 +223,7 @@ Begin VB.Form frmProductos
             TabIndex        =   79
             Text            =   "0"
             Top             =   3600
+            Visible         =   0   'False
             Width           =   975
          End
          Begin VB.TextBox txtCosto 
@@ -244,6 +246,7 @@ Begin VB.Form frmProductos
             Left            =   7680
             TabIndex        =   70
             Top             =   600
+            Visible         =   0   'False
             Width           =   975
          End
          Begin MSDataListLib.DataCombo DatUM 
@@ -274,6 +277,7 @@ Begin VB.Form frmProductos
             Left            =   8160
             TabIndex        =   67
             Top             =   3600
+            Visible         =   0   'False
             Width           =   1815
          End
          Begin VB.CommandButton cmdImagenDEL 
@@ -332,6 +336,7 @@ Begin VB.Form frmProductos
             Left            =   240
             TabIndex        =   57
             Top             =   3600
+            Visible         =   0   'False
             Width           =   1815
          End
          Begin VB.CheckBox chkSituacion 
@@ -498,6 +503,7 @@ Begin VB.Form frmProductos
             Left            =   4680
             TabIndex        =   81
             Top             =   3645
+            Visible         =   0   'False
             Width           =   1200
          End
          Begin VB.Label Label1 
@@ -509,6 +515,7 @@ Begin VB.Form frmProductos
             Left            =   2160
             TabIndex        =   78
             Top             =   3645
+            Visible         =   0   'False
             Width           =   780
          End
          Begin VB.Label Label5 
@@ -1391,7 +1398,7 @@ End Sub
 Private Sub cmdQuitarC_Click()
 If Me.lvComposicion.ListItems.count > 0 Then
 If Not Me.lvComposicion.SelectedItem Is Nothing Then
-    Me.lvComposicion.ListItems.Remove Me.lvComposicion.SelectedItem.index
+    Me.lvComposicion.ListItems.Remove Me.lvComposicion.SelectedItem.Index
 End If
 End If
 End Sub
@@ -1399,7 +1406,7 @@ End Sub
 Private Sub cmdQuitarF_Click()
 If Me.lvFormulacion.ListItems.count > 0 Then
 If Not Me.lvFormulacion.SelectedItem Is Nothing Then
-    Me.lvFormulacion.ListItems.Remove Me.lvFormulacion.SelectedItem.index
+    Me.lvFormulacion.ListItems.Remove Me.lvFormulacion.SelectedItem.Index
 End If
 End If
 

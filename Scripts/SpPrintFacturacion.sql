@@ -12,7 +12,9 @@ END;
 GO
 /*
 SpPrintFacturacion '01','3',9,'B'
-SpPrintFacturacion '01','3',1,'F'
+exec SpPrintFacturacion '01','3  ',5,'B'
+select * from facart where far_numfac = 3
+select * from allog w
 */
 CREATE PROC [dbo].[SpPrintFacturacion]
     @Codcia CHAR(2),
@@ -85,14 +87,23 @@ SELECT CASE
                  AND qr.NSERIE = f.FAR_NUMSER
        ) AS 'codigoqr',
        f.FAR_NUMFAC_C AS 'COMANDA',
-       (
+             (
            SELECT TOP 1
                   SUM(a2.ALL_SERVICIO)
            FROM dbo.ALLOG a2
            WHERE a2.ALL_CODCIA = f.FAR_CODCIA
                  AND RTRIM(LTRIM(a2.ALL_NUMSER)) = RTRIM(LTRIM(f.FAR_NUMSER))
                  AND a2.ALL_NUMFAC = f.FAR_NUMFAC
-       ) AS 'servicio'
+                 and a2.ALL_FBG = f.FAR_FBG
+       ) AS 'servicio',
+       (
+           SELECT TOP 1
+                  a2.ALL_SUBTRA
+           FROM dbo.ALLOG a2
+           WHERE a2.ALL_CODCIA = f.FAR_CODCIA
+                 AND RTRIM(LTRIM(a2.ALL_NUMSER)) = RTRIM(LTRIM(f.FAR_NUMSER))
+                 AND a2.ALL_NUMFAC = f.FAR_NUMFAC and a2.ALL_FBG = f.FAR_FBG
+       ) AS 'FPAGO'
 FROM FACART f
     INNER JOIN ARTI a
         ON f.FAR_CODART = a.ART_KEY
