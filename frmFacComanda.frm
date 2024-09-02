@@ -1,6 +1,7 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
-Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDatLst.Ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
+Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDATLST.OCX"
 Begin VB.Form frmFacComanda 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Facturar Comanda"
@@ -312,6 +313,36 @@ Begin VB.Form frmFacComanda
       TabIndex        =   3
       Top             =   5760
       Width           =   9735
+      Begin MSComCtl2.UpDown udCopias 
+         Height          =   285
+         Left            =   2175
+         TabIndex        =   47
+         Top             =   1800
+         Width           =   240
+         _ExtentX        =   423
+         _ExtentY        =   503
+         _Version        =   393216
+         Value           =   1
+         BuddyControl    =   "txtCopias"
+         BuddyDispid     =   196630
+         OrigLeft        =   3240
+         OrigTop         =   1680
+         OrigRight       =   3480
+         OrigBottom      =   2055
+         Min             =   1
+         SyncBuddy       =   -1  'True
+         BuddyProperty   =   65547
+         Enabled         =   -1  'True
+      End
+      Begin VB.TextBox txtCopias 
+         Alignment       =   1  'Right Justify
+         Height          =   285
+         Left            =   1680
+         TabIndex        =   46
+         Text            =   "1"
+         Top             =   1800
+         Width           =   495
+      End
       Begin VB.CheckBox chkServicio 
          Height          =   255
          Left            =   7320
@@ -344,6 +375,15 @@ Begin VB.Form frmFacComanda
          Top             =   720
          Visible         =   0   'False
          Width           =   1095
+      End
+      Begin VB.Label Label4 
+         AutoSize        =   -1  'True
+         Caption         =   "Nro de Copias:"
+         Height          =   195
+         Left            =   360
+         TabIndex        =   45
+         Top             =   1800
+         Width           =   1290
       End
       Begin VB.Label lblServicio 
          Alignment       =   1  'Right Justify
@@ -639,7 +679,7 @@ End Sub
 
 
 
-Private Sub cboMoneda_KeyPress(index As Integer, KeyAscii As Integer)
+Private Sub cboMoneda_KeyPress(Index As Integer, KeyAscii As Integer)
 If LK_TIPO_CAMBIO = 0 Then
     MsgBox "ingresar tipo de cambio"
 End If
@@ -680,12 +720,25 @@ CalcularImporte
 End Sub
 
 Private Sub chkServicio_Click()
+If lblicbper.Caption <> 0 Then Exit Sub
 CalcularImporte
 End Sub
 
 Private Sub cmdAceptar_Click()
     'ImprimirDocumentoVenta "01", "Factura", True, "1", 27427495, "126.5", "caleta", "123", "tirado" ' Me.DatTiposDoctos.BoundText, Me.DatTiposDoctos.Text, Me.chkConsumo.Value, Me.lblserie.Caption, Me.txtNro.Text, Me.lblImporte.Caption, Me.txtDireccion.Text, Me.txtRuc.Text, Me.txtcli.Text
     'Exit Sub
+    
+    If Len(Trim(Me.txtcopias.Text)) = 0 Then
+        MsgBox "Debe ingresar el nro de copias a imprimir.", vbInformation, Pub_Titulo
+        Me.txtcopias.SetFocus
+        Exit Sub
+    End If
+    
+    If val(Me.txtcopias.Text) <= 0 Then
+    ' MsgBox "Nro de copias incorrecto.", vbInformation, Pub_Titulo
+     '   Me.txtcopias.SetFocus
+     '   Exit Sub
+    End If
 
     If Me.DatTiposDoctos.BoundText = "" Then ' .ListIndex = -1 Then
         MsgBox "Debe elegir el Tipo de documento.", vbCritical, Pub_Titulo
@@ -772,7 +825,7 @@ Private Sub cmdAceptar_Click()
     End If
 
     If Me.DatTiposDoctos.BoundText = "01" Then
-        If Len(Trim(Me.txtruc.Text)) = 0 Then
+        If Len(Trim(Me.txtRuc.Text)) = 0 Then
             MsgBox "Debe ingresar el Ruc para poder generar la Factura", vbInformation, "Error"
 
             Exit Sub
@@ -791,7 +844,7 @@ Private Sub cmdAceptar_Click()
 
     If Not ORSuit.EOF Then
         If ORSuit!Dato = 1 Then
-            If Len(Trim(Me.txtRS.Text)) = 0 Or (Len(Trim(Me.txtDni.Text)) = 0 And Len(Trim(Me.txtruc.Text)) = 0) Then
+            If Len(Trim(Me.txtRS.Text)) = 0 Or (Len(Trim(Me.txtDni.Text)) = 0 And Len(Trim(Me.txtRuc.Text)) = 0) Then
                 MsgBox "El Importe sobrepasa media UIT, debe ingresar el cliente.", vbCritical, Pub_Titulo
 
                 Exit Sub
@@ -879,7 +932,7 @@ Private Sub cmdAceptar_Click()
         Do While Not oRSfp.EOF
             xFP = xFP & "<d "
             xFP = xFP & "idfp=""" & Trim(str(oRSfp!idformapago)) & """ "
-            xFP = xFP & "fp=""" & Trim(oRSfp!formaPAGO) & """ "
+            xFP = xFP & "fp=""" & Trim(oRSfp!formapago) & """ "
             xFP = xFP & "mon=""" & "S" & """ "
             xFP = xFP & "monto=""" & Trim(str(oRSfp!monto)) & """ "
             xFP = xFP & "ref=""" & Trim(oRSfp!referencia) & """ "
@@ -958,9 +1011,9 @@ Private Sub cmdAceptar_Click()
                 .Parameters.Append .CreateParameter("@XmlDet", adVarChar, adParamInput, 4000, Trim(vXml))
 
                 If Me.DatTiposDoctos.BoundText = "01" Then
-                    .Parameters.Append .CreateParameter("@codcli", adVarChar, adParamInput, 10, Me.txtruc.Tag)
+                    .Parameters.Append .CreateParameter("@codcli", adVarChar, adParamInput, 10, Me.txtRuc.Tag)
                 Else
-                    .Parameters.Append .CreateParameter("@codcli", adVarChar, adParamInput, 10, IIf(Len(Trim(Me.txtruc.Tag)) = 0, 1, Me.txtruc.Tag))
+                    .Parameters.Append .CreateParameter("@codcli", adVarChar, adParamInput, 10, IIf(Len(Trim(Me.txtRuc.Tag)) = 0, 1, Me.txtRuc.Tag))
 
                 End If
 
@@ -1002,21 +1055,22 @@ Private Sub cmdAceptar_Click()
                     'MsgBox "Datos Almacenados correctamente", vbInformation, Pub_Titulo
 
                     'Imprimir Left(Me.DatTiposDoctos.Text, 1), Me.chkConsumo.Value
-                    CreaCodigoQR "6", Me.DatTiposDoctos.BoundText, Me.lblSerie.Caption, Me.txtNro.Text, LK_FECHA_DIA, CStr(Me.lblIgv.Caption), Me.lblImporte.Caption, Me.txtruc.Text, Me.txtDni.Text
+                    CreaCodigoQR "6", Me.DatTiposDoctos.BoundText, Me.lblSerie.Caption, Me.txtNro.Text, LK_FECHA_DIA, CStr(Me.lblIgv.Caption), Me.lblImporte.Caption, Me.txtRuc.Text, Me.txtDni.Text
 
                     If xARCENCONTRADO Then
-                        ImprimirDocumentoVenta Me.DatTiposDoctos.BoundText, Me.DatTiposDoctos.Text, Me.chkConsumo.Value, Me.lblSerie.Caption, Me.txtNro.Text, Me.lblImporte.Caption, Me.lblvvta.Caption, Me.lblIgv.Caption, Me.txtDireccion.Text, Me.txtruc.Text, Me.txtRS.Text, Me.txtDni.Text, Me.DatEmpresas.BoundText, IIf(Len(Trim(Me.lblicbper.Caption)) = 0, 0, Me.lblicbper.Caption), Me.chkprom.Value
+                        
+                        ImprimirDocumentoVenta Me.DatTiposDoctos.BoundText, Me.DatTiposDoctos.Text, Me.chkConsumo.Value, Me.lblSerie.Caption, Me.txtNro.Text, Me.lblImporte.Caption, Me.lblvvta.Caption, Me.lblIgv.Caption, Me.txtDireccion.Text, Me.txtRuc.Text, Me.txtRS.Text, Me.txtDni.Text, Me.DatEmpresas.BoundText, IIf(Len(Trim(Me.lblicbper.Caption)) = 0, 0, Me.lblicbper.Caption), Me.chkprom.Value, Me.txtcopias.Text
 
                     End If
                     
                     'If Me.DatTiposDoctos.BoundText = "01" Or Me.DatTiposDoctos.BoundText = "03" Then
                     ' If Me.DatTiposDoctos.BoundText = "01" Then
-                    If LK_PASA_BOLETAS = "A" And (Me.DatTiposDoctos.BoundText = "01" Or Me.DatTiposDoctos.BoundText = "03") Then
-                        CrearArchivoPlano Left(Me.DatTiposDoctos.Text, 1), Me.lblSerie.Caption, Me.txtNro.Text
-                    ElseIf Me.DatTiposDoctos.BoundText = "01" Then
-                        CrearArchivoPlano Left(Me.DatTiposDoctos.Text, 1), Me.lblSerie.Caption, Me.txtNro.Text
+                   ' If LK_PASA_BOLETAS = "A" And (Me.DatTiposDoctos.BoundText = "01" Or Me.DatTiposDoctos.BoundText = "03") Then
+                    '    CrearArchivoPlano Left(Me.DatTiposDoctos.Text, 1), Me.lblSerie.Caption, Me.txtNro.Text
+                    'ElseIf Me.DatTiposDoctos.BoundText = "01" Then
+                     '   CrearArchivoPlano Left(Me.DatTiposDoctos.Text, 1), Me.lblSerie.Caption, Me.txtNro.Text
 
-                    End If
+                    'End If
 
                     ' End If
 
@@ -1083,7 +1137,7 @@ If oRSfp.RecordCount = 0 Then
         Do While Not oRSfp.EOF
             xFP = xFP & "<d "
             xFP = xFP & "idfp=""" & Trim(str(oRSfp!idformapago)) & """ "
-            xFP = xFP & "fp=""" & Trim(oRSfp!formaPAGO) & """ "
+            xFP = xFP & "fp=""" & Trim(oRSfp!formapago) & """ "
             xFP = xFP & "mon=""" & Trim(oRSfp!moneda) & """ "
             xFP = xFP & "monto=""" & Trim(str(oRSfp!monto)) & """ "
             xFP = xFP & "/>"
@@ -1188,7 +1242,7 @@ Private Sub cmdSunat_Click()
             xEsRuc = False
         End If
 
-        xvRUC = Me.txtruc.Text
+        xvRUC = Me.txtRuc.Text
     End If
 
     xTOk = Leer_Ini(App.Path & "\config.ini", "TOKEN", "")
@@ -1215,13 +1269,13 @@ Private Sub cmdSunat_Click()
     '    Me.lblEstado.Caption = p.Item("estado")
     '    Me.lblcondicion.Caption = p.Item("condicion")
     
-    If Len(Trim(Me.txtruc.Text)) = 0 Then
+    If Len(Trim(Me.txtRuc.Text)) = 0 Then
         If IsNumeric(Me.txtRS.Text) Then
             If Len(Trim(Me.txtRS.Text)) = 11 Or Len(Trim(Me.txtRS.Text)) = 8 Then
                 If Texto = "[]" Then
                     MousePointer = vbDefault
                     MsgBox ("No se obtuvo resultados")
-                    Me.txtruc.Text = ""
+                    Me.txtRuc.Text = ""
                     Me.txtRS.Text = ""
                     Me.txtDireccion.Text = ""
 
@@ -1232,7 +1286,7 @@ Private Sub cmdSunat_Click()
                 If Len(Trim(Texto)) = 0 Then
                     MousePointer = vbDefault
                     MsgBox ("No se obtuvo resultados")
-                    Me.txtruc.Text = ""
+                    Me.txtRuc.Text = ""
                     Me.txtRS.Text = ""
                     Me.txtDireccion.Text = ""
 
@@ -1243,10 +1297,10 @@ Private Sub cmdSunat_Click()
                 If xEsRuc Then
                     Me.txtDireccion.Text = IIf(IsNull(p.Item("direccion")), "", p.Item("direccion"))
                     Me.txtRS.Text = p.Item("razonSocial")
-                    Me.txtruc.Text = p.Item("ruc")
+                    Me.txtRuc.Text = p.Item("ruc")
                     Me.txtDni.Text = ""
                 Else
-                    Me.txtruc.Text = ""
+                    Me.txtRuc.Text = ""
                     Me.txtDireccion.Text = ""
                     Me.txtDni.Text = p.Item("dni")
                     Me.txtRS.Text = p.Item("nombres") & " " & p.Item("apellidoPaterno") & " " & p.Item("apellidoMaterno")
@@ -1259,12 +1313,12 @@ Private Sub cmdSunat_Click()
     
                 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@RAZONSOCIAL", adVarChar, adParamInput, 200, Left(Trim(Me.txtRS.Text), 200))
                 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@DIRECCION", adVarChar, adParamInput, 200, Left(Trim(Me.txtDireccion.Text), 200))
-                oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@RUC", adVarChar, adParamInput, 11, Me.txtruc.Text)
+                oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@RUC", adVarChar, adParamInput, 11, Me.txtRuc.Text)
                 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@DNI", adChar, adParamInput, 8, Me.txtDni.Text)
                 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@IDCLIENTE", adBigInt, adParamInput, , 0)
                 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@salida", adBigInt, adParamOutput, , 0)
                 oCmdEjec.Execute
-                Me.txtruc.Tag = oCmdEjec.Parameters("@salida").Value
+                Me.txtRuc.Tag = oCmdEjec.Parameters("@salida").Value
             
             Else
                 MsgBox "El ruc debe tener 11 caracteres", vbCritical, Pub_Titulo
@@ -1279,7 +1333,7 @@ Private Sub cmdSunat_Click()
         If Texto = "[]" Then
             MousePointer = vbDefault
             MsgBox ("No se obtuvo resultados")
-            Me.txtruc.Text = ""
+            Me.txtRuc.Text = ""
             Me.txtRS.Text = ""
             Me.txtDireccion.Text = ""
 
@@ -1290,7 +1344,7 @@ Private Sub cmdSunat_Click()
         If Len(Trim(Texto)) = 0 Then
             MousePointer = vbDefault
             MsgBox ("No se obtuvo resultados")
-            Me.txtruc.Text = ""
+            Me.txtRuc.Text = ""
             Me.txtRS.Text = ""
             Me.txtDireccion.Text = ""
 
@@ -1303,9 +1357,9 @@ Private Sub cmdSunat_Click()
             'Me.txtDireccion.Text = p.Item("direccion")
             Me.txtDireccion.Text = IIf(IsNull(p.Item("direccion")), "", p.Item("direccion"))
             Me.txtRS.Text = p.Item("razonSocial")
-            Me.txtruc.Text = p.Item("ruc")
+            Me.txtRuc.Text = p.Item("ruc")
         Else
-            Me.txtruc.Text = ""
+            Me.txtRuc.Text = ""
             Me.txtDireccion.Text = ""
             Me.txtDni.Text = p.Item("dni")
             Me.txtRS.Text = p.Item("nombres") & " " & p.Item("apellidoPaterno") & " " & p.Item("apellidoMaterno")
@@ -1320,9 +1374,9 @@ Private Sub cmdSunat_Click()
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@RAZONSOCIAL", adVarChar, adParamInput, 200, Left(Trim(Me.txtRS.Text), 200))
         'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@DIRECCION", adVarChar, adParamInput, 50, Left(Trim(Me.txtDireccion.Text), 50))
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@DIRECCION", adVarChar, adParamInput, 200, Left(Trim(Me.txtDireccion.Text), 200))
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@RUC", adVarChar, adParamInput, 11, Me.txtruc.Text)
+        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@RUC", adVarChar, adParamInput, 11, Me.txtRuc.Text)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@DNI", adChar, adParamInput, 8, Me.txtDni.Text)
-        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@IDCLIENTE", adBigInt, adParamInput, 10, Me.txtruc.Tag)
+        oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@IDCLIENTE", adBigInt, adParamInput, 10, Me.txtRuc.Tag)
         oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@salida", adBigInt, adParamOutput, , 0)
         oCmdEjec.Execute
     End If
@@ -1545,7 +1599,7 @@ Private Sub Form_Load()
         itemX.SubItems(5) = oRsPago!CantTotal
         itemX.SubItems(6) = oRsPago!faltante
         itemX.SubItems(7) = FormatNumber(oRsPago!Importe, 2)
-        itemX.SubItems(8) = oRsPago!Sec
+        itemX.SubItems(8) = oRsPago!SEC
         itemX.SubItems(9) = oRsPago!aPRO
         itemX.SubItems(10) = oRsPago!aten
         itemX.SubItems(11) = oRsPago!uni
@@ -1592,7 +1646,7 @@ Private Sub Form_Load()
     
     oRSfp.AddNew
     oRSfp!idformapago = 1
-    oRSfp!formaPAGO = "CONTADO"
+    oRSfp!formapago = "CONTADO"
     oRSfp!referencia = ""
     oRSfp!monto = Me.lblImporte.Caption
     oRSfp!tipo = "E"
@@ -1890,8 +1944,8 @@ Private Sub CrearArchivoPlano(cTipoDocto As String, cSerie As String, cNumero As
             c = 1
             sCadena = ""
             Do While Not orsPAG.EOF
-                xFormaPago = orsPAG!formaPAGO
-                sCadena = sCadena & orsPAG!formaPAGO & "|" & orsPAG!pendientepago & "|" & orsPAG!TIPMONEDA & "|"
+                xFormaPago = orsPAG!formapago
+                sCadena = sCadena & orsPAG!formapago & "|" & orsPAG!pendientepago & "|" & orsPAG!TIPMONEDA & "|"
                 If c < orsPAG.RecordCount Then
                     sCadena = sCadena & vbCrLf
                 End If
@@ -2026,17 +2080,17 @@ Private Sub CalcularImporte()
     End If
     
     If Me.chkServicio.Value Then
-        Me.lblvvta.Caption = FormatNumber(Round((val(Me.lblImporte.Caption) - val(Me.lblicbper.Caption)) / val(((vIgv + xServicio) / 100) + 1), 2), 2)
-        Me.lblServicio.Caption = FormatNumber(Round(val(Me.lblvvta.Caption) * vServicio, 2), 2)
-        Me.lblIgv.Caption = FormatNumber(Round(val(Me.lblImporte.Caption) - val(Me.lblvvta.Caption) - val(Me.lblicbper.Caption) - val(Me.lblServicio.Caption), 2), 2)
-        Me.lblImporte.Caption = FormatNumber(val(Me.lblvvta.Caption) + val(Me.lblIgv.Caption) + val(Me.lblServicio.Caption) + val(lblicbper.Caption), 2)
+        Me.lblvvta.Caption = FormatNumber(Round((val(Replace(Me.lblImporte.Caption, ",", "")) - val(Replace(Me.lblicbper.Caption, ",", ""))) / val(((vIgv + xServicio) / 100) + 1), 2), 2)
+        Me.lblServicio.Caption = FormatNumber(Round(val(Replace(Me.lblvvta.Caption, ",", "")) * vServicio, 2), 2)
+        Me.lblIgv.Caption = FormatNumber(Round(val(Replace(Me.lblImporte.Caption, ",", "")) - val(Replace(Me.lblvvta.Caption, ",", "")) - val(Replace(Me.lblicbper.Caption, ",", "")) - val(Replace(Me.lblServicio.Caption, ",", "")), 2), 2)
+        Me.lblImporte.Caption = FormatNumber(val(Replace(Me.lblvvta.Caption, ",", "")) + val(Replace(Me.lblIgv.Caption, ",", "")) + val(Replace(Me.lblServicio.Caption, ",", "")) + val(Replace(lblicbper.Caption, ",", "")), 2)
     Else
         vServicio = 0
         xServicio = 0
-        Me.lblvvta.Caption = FormatNumber(Round((val(Me.lblImporte.Caption) - val(Me.lblicbper.Caption)) / val(((vIgv + xServicio) / 100) + 1), 2), 2)
-        Me.lblServicio.Caption = FormatNumber(Round(val(Me.lblvvta.Caption) * vServicio, 2), 2)
-        Me.lblIgv.Caption = FormatNumber(Round(val(Me.lblImporte.Caption) - val(Me.lblvvta.Caption) - val(Me.lblicbper.Caption) - val(Me.lblServicio.Caption), 2), 2)
-        Me.lblImporte.Caption = FormatNumber(val(Me.lblvvta.Caption) + val(Me.lblIgv.Caption) + val(Me.lblServicio.Caption) + val(lblicbper.Caption), 2)
+        Me.lblvvta.Caption = FormatNumber(Round((val(Replace(Me.lblImporte.Caption, ",", "")) - val(Replace(Me.lblicbper.Caption, ",", ""))) / val(((vIgv + xServicio) / 100) + 1), 2), 2)
+        Me.lblServicio.Caption = FormatNumber(Round(val(Replace(Me.lblvvta.Caption, ",", "")) * vServicio, 2), 2)
+        Me.lblIgv.Caption = FormatNumber(Round(val(Replace(Me.lblImporte.Caption, ",", "")) - val(Replace(Me.lblvvta.Caption, ",", "")) - val(Replace(Me.lblicbper.Caption, ",", "")) - val(Replace(Me.lblServicio.Caption, ",", "")), 2), 2)
+        Me.lblImporte.Caption = FormatNumber(val(Replace(Me.lblvvta.Caption, ",", "")) + val(Replace(Me.lblIgv.Caption, ",", "")) + val(Replace(Me.lblServicio.Caption, ",", "")) + val(Replace(lblicbper.Caption, ",", "")), 2)
 
     End If
 
@@ -2051,14 +2105,14 @@ End Sub
 
 
 Private Sub lvDetalle_DblClick()
-frmFaccomandaOtroPlato.Show vbModal
+'frmFaccomandaOtroPlato.Show vbModal
 End Sub
 
 Private Sub lvDetalle_KeyDown(KeyCode As Integer, Shift As Integer)
 
     If KeyCode = vbKeyDelete Then
         If Not Me.lvDetalle.SelectedItem Is Nothing Then
-            Me.lvDetalle.ListItems.Remove Me.lvDetalle.SelectedItem.index
+            Me.lvDetalle.ListItems.Remove Me.lvDetalle.SelectedItem.Index
             CalcularImporte
             sumatoria
       
@@ -2076,7 +2130,7 @@ Private Sub lvDetalle_KeyDown(KeyCode As Integer, Shift As Integer)
             
             oRSfp.AddNew
             oRSfp!idformapago = 1
-            oRSfp!formaPAGO = "CONTADO"
+            oRSfp!formapago = "CONTADO"
             oRSfp!referencia = ""
             oRSfp!tipo = "E"
             oRSfp!monto = Me.lblImporte.Caption
@@ -2111,8 +2165,9 @@ Private Sub sumatoria()
         vimp = vimp + Me.lvDetalle.ListItems(i).SubItems(7)
     Next
     Me.lblServicio.Caption = "0.00"
-    Me.lblImporte.Caption = Format(vTOTAL + vICBPER, "########0.#0") ' Format(val(Me.lblvvta.Caption) + val(Me.lblIgv.Caption) + val(Me.lblicbper.Caption), "########0.#0")
-    'Me.lblImporte.Caption = Format(vimp, "########0.#0") 'FormatNumber(vimp, 2)
+   ' Me.lblImporte.Caption = Format(vTOTAL + vICBPER, "########0.#0")
+    Me.lblImporte.Caption = Format(vimp + vICBPER, "########0.#0") 'revisar gts
+   ' Me.lblImporte.Caption = Format(vimp, "########0.#0") 'FormatNumber(vimp, 2)
     Me.lblvvta.Caption = Round((vimp) / ((vIgv / 100) + 1), 2)
     Me.lblIgv.Caption = Round(Me.lblvvta.Caption * (vIgv / 100), 2)
     
@@ -2123,6 +2178,7 @@ End Sub
 Private Sub lvDetalle_KeyPress(KeyAscii As Integer)
 
     If KeyAscii = vbKeyReturn Then
+    If Me.lblicbper.Caption <> 0 Then Exit Sub
         frmAsigCantFac.txtCantidad.Text = Me.lvDetalle.SelectedItem.SubItems(5)
         frmAsigCantFac.Show vbModal
 
@@ -2151,7 +2207,7 @@ Private Sub lvDetalle_KeyPress(KeyAscii As Integer)
             
     oRSfp.AddNew
     oRSfp!idformapago = 1
-    oRSfp!formaPAGO = "CONTADO"
+    oRSfp!formapago = "CONTADO"
     oRSfp!referencia = ""
     oRSfp!monto = Me.lblImporte.Caption
     oRSfp!tipo = "E"
@@ -2161,6 +2217,10 @@ Private Sub lvDetalle_KeyPress(KeyAscii As Integer)
 
     End If
 
+End Sub
+
+Private Sub txtCopias_KeyPress(KeyAscii As Integer)
+If SoloNumeros(KeyAscii) Then KeyAscii = 0
 End Sub
 
 Private Sub txtDni_KeyPress(KeyAscii As Integer)
@@ -2256,7 +2316,7 @@ Private Sub txtRS_KeyDown(KeyCode As Integer, Shift As Integer)
     If KeyCode = 27 Then
         Me.ListView1.Visible = False
         Me.txtRS.Text = ""
-        Me.txtruc.Text = ""
+        Me.txtRuc.Text = ""
         Me.txtDireccion.Text = ""
     End If
 
@@ -2310,12 +2370,12 @@ Private Sub txtRS_KeyPress(KeyAscii As Integer)
         
         Else
             
-            Me.txtruc.Text = Me.ListView1.ListItems(loc_key).SubItems(2)
+            Me.txtRuc.Text = Me.ListView1.ListItems(loc_key).SubItems(2)
             Me.txtDireccion.Text = Me.ListView1.ListItems(loc_key).SubItems(3)
             Me.txtRS.Text = Me.ListView1.ListItems(loc_key).SubItems(1)
             Me.ListView1.Visible = False
             Me.txtDni.Text = Me.ListView1.ListItems(loc_key).Tag
-            Me.txtruc.Tag = Me.ListView1.ListItems(loc_key)
+            Me.txtRuc.Tag = Me.ListView1.ListItems(loc_key)
             Me.lvDetalle.SetFocus
         End If
     End If
@@ -2325,16 +2385,16 @@ End Sub
 Private Sub txtRuc_KeyPress(KeyAscii As Integer)
 If KeyAscii = vbKeyReturn Then
 'Me.ListView1.Visible = True
-If Len(Trim(Me.txtruc.Text)) <> 0 Then
+If Len(Trim(Me.txtRuc.Text)) <> 0 Then
 For i = 1 To Me.ListView1.ListItems.count
-    If Trim(Me.txtruc.Text) = Trim(Me.ListView1.ListItems(i).SubItems(2)) Then
+    If Trim(Me.txtRuc.Text) = Trim(Me.ListView1.ListItems(i).SubItems(2)) Then
         'Me.ListView1.ListItems(i).Selected = True
         buscars = False
         loc_key = i
         Me.ListView1.ListItems(i).EnsureVisible
         Me.txtRS.Text = Me.ListView1.ListItems(i).SubItems(1)
         Me.txtDireccion.Text = Me.ListView1.ListItems(i).SubItems(3)
-        Me.txtruc.Tag = Me.ListView1.ListItems(i)
+        Me.txtRuc.Tag = Me.ListView1.ListItems(i)
         Exit For
     Else
        ' Me.ListView1.ListItems(i).Selected = False
@@ -2344,7 +2404,7 @@ For i = 1 To Me.ListView1.ListItems.count
 Next
 Else
 Me.ListView1.Visible = False
-Me.txtruc.Text = ""
+Me.txtRuc.Text = ""
 Me.txtDireccion.Text = ""
 Me.txtRS.Text = ""
 End If

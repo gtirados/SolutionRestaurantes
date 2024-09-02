@@ -224,11 +224,12 @@ oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CodCia", adChar, adParamIn
 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@SERIE", adVarChar, adParamInput, 3, Trim(Me.lblSerie.Caption))
 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@NUMERO", adInteger, adParamInput, , Me.lblNumero.Caption)
 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FBG", adChar, adParamInput, 1, Trim(Me.lblFBG.Caption))
-oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FECHA", adDBTimeStamp, adParamInput, , LK_FECHA_DIA)
+oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FECHA", adDBTimeStamp, adParamInput, , Me.lblFecha.Caption)
 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@NUMOPER", adInteger, adParamInput, , Me.lblNumOper.Caption)
 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@IDFORMAPAGO", adInteger, adParamInput, , Me.DatFormaPago.BoundText)
 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FORMAPAGO", adVarChar, adParamInput, 30, Me.DatFormaPago.Text)
 oCmdEjec.Execute
+MsgBox "Cambio realizado correctamente.", vbInformation, Pub_Titulo
 gAcepta = True
 Unload Me
 Exit Sub

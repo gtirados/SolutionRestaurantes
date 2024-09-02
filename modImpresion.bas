@@ -14,7 +14,8 @@ Public Sub ImprimirDocumentoVenta(xCodTipoDocto As String, _
                                   xdni As String, _
                                   xCia As String, _
                                   xICBPER As Double, _
-                                  xEsprom As Boolean)
+                                  xEsprom As Boolean, _
+                                  xNroCopias As Integer)
 
     'RECUPERANDO EL NOMBRE DEL ARCHIVO
     LimpiaParametros oCmdEjec
@@ -148,14 +149,16 @@ Public Sub ImprimirDocumentoVenta(xCodTipoDocto As String, _
     '        MsgBox Printers(i).DeviceName
     '    Next
     If Not rsd.EOF Then
-
+        If MsgBox("¿Desea imprimir?", vbQuestion + vbYesNo, Pub_Titulo) = vbYes Then
         VReporte.DataBase.SetDataSource rsd, 3, 1 'lleno el objeto reporte
         'VReporte.SelectPrinter Printer.DriverName, "\\laptop\doPDF v6", Printer.Port
         
-        VReporte.PrintOut False, 1, , 1, 1
+        VReporte.PrintOut False, xNroCopias, , 1, 1
         frmVisor.cr.ReportSource = VReporte
         'frmVisor.cr.ViewReport
         'frmVisor.Show vbModal
+        Else
+        End If
     
     End If
     

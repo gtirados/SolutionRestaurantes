@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{00025600-0000-0000-C000-000000000046}#5.2#0"; "Crystl32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
 Begin VB.MDIForm MDIForm1 
    BackColor       =   &H00E0E0E0&
    Caption         =   "Solution-Software de Gestión para Restaurantes"
@@ -1555,14 +1555,14 @@ If WF_REINICIAR <> 2 Then
 End If
 WF_REINICIAR = 0
 End Sub
-Private Sub menuAlm_Click(index As Integer)
+Private Sub menuAlm_Click(Index As Integer)
 On Error GoTo SALE
-If Trim(menuAlm(index).Caption) = "" Then
+If Trim(menuAlm(Index).Caption) = "" Then
  Exit Sub
 End If
 Screen.MousePointer = 0
 
-pu_codtra = val(Left(menuAlm(index).Caption, 4))
+pu_codtra = val(Left(menuAlm(Index).Caption, 4))
 SQ_OPER = 3
 LEER_TRA_LLAVE
 If Trim(retra_llave(7)) = "FRMIMP2" Then
@@ -1600,10 +1600,10 @@ End Sub
 'MsgBox "Vía Rápida Perú S.A.C. - www.viarapidaperu.com. Cel.949433704 RPM *366258 ", vbInformation, "www.viarapidaperu.com"
 'End Sub
 
-Private Sub menuCia_Click(index As Integer)
+Private Sub menuCia_Click(Index As Integer)
 Dim iFormCount As Integer
 On Error GoTo sigue
-If Left(MDIForm1.menuCia(index).Caption, 1) = "*" Then
+If Left(MDIForm1.menuCia(Index).Caption, 1) = "*" Then
   Exit Sub
 End If
 Screen.MousePointer = 11
@@ -1617,14 +1617,14 @@ End If
 For fila = 0 To 20
   MDIForm1.menuCia(fila).Checked = False
 Next fila
-MDIForm1.menuCia(index).Checked = True
+MDIForm1.menuCia(Index).Checked = True
 'MDIForm1.StatusBar1.Panels(7).Text = MDIForm1.menuCia(Index).Caption
 ''MDIForm1.stb_EB.Panels("cia") = Trim(MDIForm1.menuCia(Index).Caption)
 ''MDIForm1.lblciagen.Caption = Trim(MDIForm1.menuCia(Index).Caption)
 
-MDIForm1.stb_EB.Panels("cia").Text = Trim$(MDIForm1.menuCia(index).Caption)
+MDIForm1.stb_EB.Panels("cia").Text = Trim$(MDIForm1.menuCia(Index).Caption)
 
-ACTUALIZA_CIA Left(MDIForm1.menuCia(index).Caption, 2)
+ACTUALIZA_CIA Left(MDIForm1.menuCia(Index).Caption, 2)
 CONTA = 0
 PUB_TIPREG = 45
 PUB_CODCIA = LK_CODCIA
@@ -1644,14 +1644,14 @@ Exit Sub
 sigue:
 Resume Next
 End Sub
-Private Sub menuComp_Click(index As Integer)
+Private Sub menuComp_Click(Index As Integer)
 On Error GoTo SALE
-If Trim(Menucomp(index).Caption) = "" Then
+If Trim(Menucomp(Index).Caption) = "" Then
  Exit Sub
 End If
 Screen.MousePointer = 0
 
-pu_codtra = val(Left(Menucomp(index).Caption, 4))
+pu_codtra = val(Left(Menucomp(Index).Caption, 4))
 SQ_OPER = 3
 LEER_TRA_LLAVE
 If Trim(retra_llave(7)) = "FRMIMP2" Then
@@ -1684,14 +1684,14 @@ SALE:
  Screen.MousePointer = 0
 End Sub
 
-Private Sub MenuContab_Click(index As Integer)
+Private Sub MenuContab_Click(Index As Integer)
 On Error GoTo SALE
-If Trim(MenuContab(index).Caption) = "" Then
+If Trim(MenuContab(Index).Caption) = "" Then
  Exit Sub
 End If
 Screen.MousePointer = 0
 
-pu_codtra = val(Left(MenuContab(index).Caption, 4))
+pu_codtra = val(Left(MenuContab(Index).Caption, 4))
 SQ_OPER = 3
 LEER_TRA_LLAVE
 If Trim(retra_llave(7)) = "FRMIMP2" Then
@@ -1742,15 +1742,15 @@ frm_cheques.Show
 
 End Sub
 
-Private Sub menudis1_Click(index As Integer)
+Private Sub menudis1_Click(Index As Integer)
 On Error GoTo SALE
-If Trim(menudis1(index).Caption) = "" Then
+If Trim(menudis1(Index).Caption) = "" Then
  Exit Sub
 End If
 Screen.MousePointer = 0
 
 SQ_OPER = 3
-pu_codtra = val(Left(menudis1(index).Caption, 4))
+pu_codtra = val(Left(menudis1(Index).Caption, 4))
 LEER_TRA_LLAVE
 If Trim(retra_llave(7)) = "FRMIMP2" Then
  Load FrmImp2
@@ -1783,15 +1783,15 @@ SALE:
 
 End Sub
 
-Private Sub menudis2_Click(index As Integer)
+Private Sub menudis2_Click(Index As Integer)
 On Error GoTo SALE
-If Trim(menudis2(index).Caption) = "" Then
+If Trim(menudis2(Index).Caption) = "" Then
  Exit Sub
 End If
 Screen.MousePointer = 0
 
 SQ_OPER = 3
-pu_codtra = val(Left(menudis2(index).Caption, 4))
+pu_codtra = val(Left(menudis2(Index).Caption, 4))
 LEER_TRA_LLAVE
 If Trim(retra_llave(7)) = "FRMIMP2" Then
  Load FrmImp2
@@ -1824,15 +1824,15 @@ SALE:
 
 End Sub
 
-Private Sub menudis3_Click(index As Integer)
+Private Sub menudis3_Click(Index As Integer)
 On Error GoTo SALE
-If Trim(menudis3(index).Caption) = "" Then
+If Trim(menudis3(Index).Caption) = "" Then
  Exit Sub
 End If
 Screen.MousePointer = 0
 
 SQ_OPER = 3
-pu_codtra = val(Left(menudis3(index).Caption, 4))
+pu_codtra = val(Left(menudis3(Index).Caption, 4))
 LEER_TRA_LLAVE
 If Trim(retra_llave(7)) = "FRMIMP2" Then
  Load FrmImp2
@@ -1872,13 +1872,13 @@ KARDEX.Show
 Screen.MousePointer = 0
 End Sub
 
-Private Sub menuMoli_Click(index As Integer)
-If Trim(menuMoli(index).Caption) = "" Then
+Private Sub menuMoli_Click(Index As Integer)
+If Trim(menuMoli(Index).Caption) = "" Then
  Exit Sub
 End If
 Screen.MousePointer = 0
 
-pu_codtra = val(Left(menuMoli(index).Caption, 4))
+pu_codtra = val(Left(menuMoli(Index).Caption, 4))
 SQ_OPER = 3
 LEER_TRA_LLAVE
 If Trim(retra_llave(7)) = "FRMIMP2" Then
@@ -1954,15 +1954,15 @@ End If
 no_existe2:
 End Sub
 
-Private Sub menuVent_Click(index As Integer)
+Private Sub menuVent_Click(Index As Integer)
 On Error GoTo SALE
-If Trim(menuVent(index).Caption) = "" Then
+If Trim(menuVent(Index).Caption) = "" Then
  Exit Sub
 End If
 Screen.MousePointer = 0
 
 SQ_OPER = 3
-pu_codtra = val(Left(menuVent(index).Caption, 4))
+pu_codtra = val(Left(menuVent(Index).Caption, 4))
 LEER_TRA_LLAVE
 If Trim(retra_llave(7)) = "FRMIMP2" Then
  Load FrmImp2
@@ -2001,8 +2001,8 @@ Private Sub stb_EB_PanelClick(ByVal Panel As MSComctlLib.Panel)
  End Select
 End Sub
 
-Private Sub submenugrifo_Click(index As Integer)
-Select Case index
+Private Sub submenugrifo_Click(Index As Integer)
+Select Case Index
 Case 0
     'Screen.MousePointer = 11
     'PUB_TIPREG = 2102
@@ -2041,11 +2041,11 @@ End Select
 
 End Sub
 
-Private Sub SubmenuTit1_Click(index As Integer)
+Private Sub SubmenuTit1_Click(Index As Integer)
 Dim h, wBAN As Integer
 Dim iFormCount As Integer
 On Error GoTo SALE
-Select Case index
+Select Case Index
     Case 0
         Screen.MousePointer = 11
         frmListaProd.Show
@@ -2210,9 +2210,9 @@ End If
 
 End Sub
 
-Private Sub SubmenuTit2_Click(index As Integer)
+Private Sub SubmenuTit2_Click(Index As Integer)
 On Error GoTo SALE
-Select Case index
+Select Case Index
     Case 0
         Screen.MousePointer = 11
         Load FORMGEN
@@ -2280,9 +2280,9 @@ End If
 End Sub
 
 
-Private Sub SubmenuTit6_Click(index As Integer)
+Private Sub SubmenuTit6_Click(Index As Integer)
 On Error GoTo SALE
-Select Case index
+Select Case Index
     Case 0
         Screen.MousePointer = 11
         Load KARDEX
@@ -2358,9 +2358,9 @@ If Err.Number = 424 Then
 End If
 
 End Sub
-Private Sub Submenuayuda_Click(index As Integer)
+Private Sub Submenuayuda_Click(Index As Integer)
 On Error GoTo SALE
-Select Case index
+Select Case Index
     Case 0
         Screen.MousePointer = 11
         'frmConversion.Show
@@ -2425,9 +2425,9 @@ If Err.Number = 424 Then
 End If
 
 End Sub
-Private Sub SubmenuTit5_Click(index As Integer)
+Private Sub SubmenuTit5_Click(Index As Integer)
 On Error GoTo SALE
-Select Case index
+Select Case Index
 '    Case 0
 '       Call Shell("C:\MSSQL\BINN\SQLEW.EXE", 3) ' Ejecuta SQL
 '    Case 1
@@ -2501,9 +2501,9 @@ If Err.Number = 424 Then
  MsgBox "No tiene Acceso ", 48, Pub_Titulo
 End If
 End Sub
-Private Sub SubmenuTit3_Click(index As Integer)
+Private Sub SubmenuTit3_Click(Index As Integer)
 On Error GoTo SALE
-Select Case index
+Select Case Index
     Case 0
         Screen.MousePointer = 11
         frmPorDespachar.Show
@@ -2545,8 +2545,8 @@ End If
 
 End Sub
 
-Private Sub submenutit7_Click(index As Integer)
-  Select Case index
+Private Sub submenutit7_Click(Index As Integer)
+  Select Case Index
     Case 0
        Screen.MousePointer = 11
 '       Load frmContratosList
@@ -2753,7 +2753,7 @@ Select Case Button.key
                 FrmRepo.Txt_key.Text = ""
            ElseIf UCase(Forms(iFormCount).Name) = "FORMGEN" Then
                 FORMGEN.LV_ART.Visible = False
-                FORMGEN.textovar.Text = ""
+                FORMGEN.TEXTOVAR.Text = ""
            End If
         End If
        Next iFormCount

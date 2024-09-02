@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
 Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDATLST.OCX"
 Begin VB.Form frmChangeFormasPago 
    BorderStyle     =   1  'Fixed Single
@@ -185,7 +185,23 @@ End Sub
 
 Private Sub cmdChange_Click()
 If Me.lvListado.ListItems.count = 0 Then Exit Sub
-frmChangeFormasPagoEDIT.lblSerie.Caption = Me.lvListado.SelectedItem.Text
+
+LimpiaParametros oCmdEjec
+oCmdEjec.CommandText = "[dbo].[USP_FORMASPAGO_VALIDA]"
+oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CODCIA", adChar, adParamInput, 2, LK_CODCIA)
+oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@Tipodocto", adChar, adParamInput, 1, Me.lvListado.SelectedItem.SubItems(5))
+oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@serie", adVarChar, adParamInput, 3, Trim(Me.lvListado.SelectedItem.Text))
+oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@numero", adBigInt, adParamInput, , Me.lvListado.SelectedItem.SubItems(1))
+
+Dim orsmdu As ADODB.Recordset
+
+Set orsmdu = oCmdEjec.Execute
+
+If Not orsmdu.EOF Then
+    If orsmdu!masdeuno Then
+        MsgBox "No procede si tiene mas de 1 forma de pago", vbCritical, Pub_Titulo
+    Else
+    frmChangeFormasPagoEDIT.lblSerie.Caption = Me.lvListado.SelectedItem.Text
 frmChangeFormasPagoEDIT.lblNumero.Caption = Me.lvListado.SelectedItem.SubItems(1)
 frmChangeFormasPagoEDIT.lblFecha.Caption = Me.lvListado.SelectedItem.SubItems(2)
 frmChangeFormasPagoEDIT.lblFormaPago.Caption = Me.lvListado.SelectedItem.SubItems(3)
@@ -193,7 +209,12 @@ frmChangeFormasPagoEDIT.lblNumOper.Caption = Me.lvListado.SelectedItem.Tag
 frmChangeFormasPagoEDIT.lblFBG.Caption = Me.lvListado.SelectedItem.SubItems(5)
 frmChangeFormasPagoEDIT.lblImporte.Caption = Me.lvListado.SelectedItem.SubItems(4)
 frmChangeFormasPagoEDIT.Show vbModal
-If frmChangeFormasPagoEDIT.gACEPTA Then cmdBuscar_Click
+If frmChangeFormasPagoEDIT.gAcepta Then cmdBuscar_Click
+    End If
+End If
+
+
+
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)

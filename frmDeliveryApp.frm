@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
-Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDatLst.Ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
+Object = "{F0D2F211-CCB0-11D0-A316-00AA00688B10}#1.0#0"; "MSDATLST.OCX"
 Begin VB.Form frmDeliveryApp 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Delivery"
@@ -1220,7 +1220,7 @@ Private Sub elimina()
         Unload Me
     
     Else
-        Me.lvPlatos.ListItems.Remove Me.lvPlatos.SelectedItem.index
+        Me.lvPlatos.ListItems.Remove Me.lvPlatos.SelectedItem.Index
         Me.lblTot.Caption = FormatCurrency(sumatoria, 2)
         Me.lblItems.Caption = "Items: " & Me.lvPlatos.ListItems.count
         
@@ -1334,7 +1334,7 @@ Private Sub extorna(cIDmotivo As Integer, cMOTIVO As String, cUSUARIO As String)
 
         Unload Me
     Else
-        Me.lvPlatos.ListItems.Remove Me.lvPlatos.SelectedItem.index
+        Me.lvPlatos.ListItems.Remove Me.lvPlatos.SelectedItem.Index
         Me.lblTot.Caption = FormatCurrency(sumatoria, 2)
         Me.lblItems.Caption = "Items: " & Me.lvPlatos.ListItems.count
         
@@ -1432,7 +1432,7 @@ Public Sub CargarComanda(vCodCia As String, vnumser As String, vNumFac As Double
                 .SubItems(3) = Format(oRsComanda!Cantidad, "#####0.#0")
                 .SubItems(4) = Format(oRsComanda!PRECIO, "#####0.#0")
                 .SubItems(5) = Format(oRsComanda!Importe, "#####0.#0")
-                .SubItems(6) = oRsComanda!Sec
+                .SubItems(6) = oRsComanda!SEC
                 .SubItems(7) = oRsComanda!aten
                 '.SubItems(7) = oRsComanda!NumFac
                 .SubItems(8) = oRsComanda.Fields!PED_NUMFAC
@@ -1456,16 +1456,16 @@ Public Sub CargarComanda(vCodCia As String, vnumser As String, vNumFac As Double
         Me.lblicbperORI.Caption = cICBPEr
         If Not VNuevo Then
 
-            Dim orsP As ADODB.Recordset
+            Dim oRSp As ADODB.Recordset
 
-            Set orsP = oRsComanda.NextRecordset
-            Me.lblCliente.Caption = orsP!IDECLIENTE
-            Me.txtCliente.Text = Trim(orsP!cliente)
-            Me.lblRUC.Caption = orsP!RUC
-            Me.lblDNI.Caption = orsP!DNI
+            Set oRSp = oRsComanda.NextRecordset
+            Me.lblCliente.Caption = oRSp!IDECLIENTE
+            Me.txtCliente.Text = Trim(oRSp!cliente)
+            Me.lblRUC.Caption = oRSp!RUC
+            Me.lblDNI.Caption = oRSp!DNI
             'OBS
-            Me.txtObs.Text = orsP!OBS
-            Me.chkRecojo.Value = orsP!RECOJO
+            Me.txtObs.Text = oRSp!OBS
+            Me.chkRecojo.Value = oRSp!RECOJO
             
             LimpiaParametros oCmdEjec
             oCmdEjec.CommandText = "SP_DELIVERY_CLIENTE_DIRECCIONES"
@@ -1492,7 +1492,7 @@ Public Sub CargarComanda(vCodCia As String, vnumser As String, vNumFac As Double
             Me.DatZona.BoundText = -1
             
             'Me.DatDireccion.BoundText = orsP!IDZ
-            Me.DatDireccion.BoundText = orsP!IDDIR
+            Me.DatDireccion.BoundText = oRSp!IDDIR
         End If
     End If
 
@@ -2945,8 +2945,8 @@ Private Sub cmdLimpiar_Click()
 Me.lblTexto.Caption = ""
 End Sub
 
-Private Sub cmdNum_Click(index As Integer)
-Me.lblTexto.Caption = Me.lblTexto.Caption & Me.cmdnum(index).Caption
+Private Sub cmdNum_Click(Index As Integer)
+Me.lblTexto.Caption = Me.lblTexto.Caption & Me.cmdnum(Index).Caption
 End Sub
 
 Private Sub cmdPagar_Click()
@@ -2977,7 +2977,7 @@ Private Sub cmdPagar_Click()
 
 End Sub
 
-Private Sub cmdPlato_Click(index As Integer)
+Private Sub cmdPlato_Click(Index As Integer)
 
     If Len(Trim(Me.lblCliente.Caption)) = 0 Then
         MsgBox "Debe ingresar el Cliente.", vbInformation, Pub_Titulo
@@ -2995,7 +2995,7 @@ Private Sub cmdPlato_Click(index As Integer)
     oCmdEjec.CommandText = "SpDevuelveInsumosxPlato"
     oCmdEjec.CommandType = adCmdStoredProc
     oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CodCia", adChar, adParamInput, 2, LK_CODCIA)
-    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CodPlato", adDouble, adParamInput, , CDbl(Me.cmdPlato(index).Tag))
+    oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CodPlato", adDouble, adParamInput, , CDbl(Me.cmdPlato(Index).Tag))
     'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@mensaje", adVarChar, adParamOutput, 300, msn)
 
     Dim vstrmin  As String 'variable para capturar los insumos
@@ -3067,12 +3067,12 @@ Private Sub cmdPlato_Click(index As Integer)
     If VNuevo Then
         If Me.lvPlatos.ListItems.count = 0 Then
             'obteniendo precio
-            oRsPlatos.Filter = "Codigo = '" & Me.cmdPlato(index).Tag & "'"
+            oRsPlatos.Filter = "Codigo = '" & Me.cmdPlato(Index).Tag & "'"
        
-            If AgregaPlato(Me.cmdPlato(index).Tag, 1, FormatNumber(oRsPlatos!PRECIO, 2), oRsPlatos!PRECIO, "", "", 0, Me.lblCliente.Caption, 0) Then
+            If AgregaPlato(Me.cmdPlato(Index).Tag, 1, FormatNumber(oRsPlatos!PRECIO, 2), oRsPlatos!PRECIO, "", "", 0, Me.lblCliente.Caption, 0) Then
         
-                With Me.lvPlatos.ListItems.Add(, , Me.cmdPlato(index).Caption, Me.ilPedido.ListImages.Item(1).key, Me.ilPedido.ListImages.Item(1).key)
-                    .Tag = Me.cmdPlato(index).Tag
+                With Me.lvPlatos.ListItems.Add(, , Me.cmdPlato(Index).Caption, Me.ilPedido.ListImages.Item(1).key, Me.ilPedido.ListImages.Item(1).key)
+                    .Tag = Me.cmdPlato(Index).Tag
                     .Checked = True
                     .SubItems(2) = " "
                     .SubItems(3) = FormatNumber(1, 2)
@@ -3093,7 +3093,7 @@ Private Sub cmdPlato_Click(index As Integer)
                 Me.cmdClienteEdit.Visible = True
                 Me.FraCliente.Enabled = False
                 
-                adicionarBolsa Me.cmdPlato(index).Tag, Me.lblSerie.Caption, Me.lblNumero.Caption, Me.lblCliente.Caption
+                adicionarBolsa Me.cmdPlato(Index).Tag, Me.lblSerie.Caption, Me.lblNumero.Caption, Me.lblCliente.Caption
                 
                 CargarComanda LK_CODCIA, Me.lblSerie.Caption, Me.lblNumero.Caption
                 'Me.DatZona.BoundText = Me.DatDireccion.BoundText
@@ -3105,16 +3105,16 @@ Private Sub cmdPlato_Click(index As Integer)
 
         Dim DD As Integer
 
-        oRsPlatos.Filter = "Codigo = '" & Me.cmdPlato(index).Tag & "'"
+        oRsPlatos.Filter = "Codigo = '" & Me.cmdPlato(Index).Tag & "'"
 
-        If AgregaPlato(Me.cmdPlato(index).Tag, 1, FormatNumber(oRsPlatos!PRECIO, 2), oRsPlatos!PRECIO, "", Me.lblSerie.Caption, Me.lblNumero.Caption, Me.lblCliente.Caption, 0, DD) Then
+        If AgregaPlato(Me.cmdPlato(Index).Tag, 1, FormatNumber(oRsPlatos!PRECIO, 2), oRsPlatos!PRECIO, "", Me.lblSerie.Caption, Me.lblNumero.Caption, Me.lblCliente.Caption, 0, DD) Then
     
-            With Me.lvPlatos.ListItems.Add(, , Me.cmdPlato(index).Caption, Me.ilPedido.ListImages.Item(1).key, Me.ilPedido.ListImages.Item(1).key)
-                .Tag = Me.cmdPlato(index).Tag
+            With Me.lvPlatos.ListItems.Add(, , Me.cmdPlato(Index).Caption, Me.ilPedido.ListImages.Item(1).key, Me.ilPedido.ListImages.Item(1).key)
+                .Tag = Me.cmdPlato(Index).Tag
                 .Checked = True
                 .SubItems(3) = FormatNumber(1, 2)
                 'obteniendo precio
-                oRsPlatos.Filter = "Codigo = '" & Me.cmdPlato(index).Tag & "'"
+                oRsPlatos.Filter = "Codigo = '" & Me.cmdPlato(Index).Tag & "'"
 
                 If Not oRsPlatos.EOF Then: .SubItems(4) = FormatNumber(oRsPlatos!PRECIO, 2)
                 .SubItems(5) = FormatNumber(val(.SubItems(3)) * val(.SubItems(4)), 2)
@@ -3127,7 +3127,7 @@ Private Sub cmdPlato_Click(index As Integer)
             oRsPlatos.Filter = ""
             oRsPlatos.MoveFirst
             
-            adicionarBolsa Me.cmdPlato(index).Tag, Me.lblSerie.Caption, Me.lblNumero.Caption, Me.lblCliente.Caption
+            adicionarBolsa Me.cmdPlato(Index).Tag, Me.lblSerie.Caption, Me.lblNumero.Caption, Me.lblCliente.Caption
             
             CargarComanda LK_CODCIA, Me.lblSerie.Caption, Me.lblNumero.Caption
             'Me.DatZona.BoundText = Me.DatDireccion.BoundText
@@ -3440,12 +3440,12 @@ Private Sub cmdRepartidor_Click()
     frmDeliveryCambiaRepartidor.Show vbModal
 End Sub
 
-Private Sub cmdSubFam_Click(index As Integer)
+Private Sub cmdSubFam_Click(Index As Integer)
 Me.cmdPlatoAnt.Enabled = False
 Me.cmdPlatoSig.Enabled = False
-vColor = index
+vColor = Index
 Me.cmdPlatoAnt.Enabled = False
-oRsPlatos.Filter = "CodFam='" & vCodFam & "' and CodSubFam = '" & Me.cmdSubFam(index).Tag & "'"
+oRsPlatos.Filter = "CodFam='" & vCodFam & "' and CodSubFam = '" & Me.cmdSubFam(Index).Tag & "'"
    For i = 1 To Me.cmdPlato.count - 1
         Unload Me.cmdPlato(i)
     Next
@@ -3455,12 +3455,12 @@ oRsSubFam.Filter = ""
 oRsSubFam.MoveFirst
 End Sub
 
-Private Sub cmdFam_Click(index As Integer)
+Private Sub cmdFam_Click(Index As Integer)
     Me.cmdSubFamAnt.Enabled = False
     Me.cmdSubFamSig.Enabled = False
-    vValorActFam = index
-    oRsSubFam.Filter = "CodFam='" & cmdFam(index).Tag & "'"
-    vCodFam = Me.cmdFam(index).Tag 'Linea Nueva
+    vValorActFam = Index
+    oRsSubFam.Filter = "CodFam='" & cmdFam(Index).Tag & "'"
+    vCodFam = Me.cmdFam(Index).Tag 'Linea Nueva
 
     If oRsSubFam.RecordCount <> 0 Then
         FiltarSubFamilias oRsSubFam.RecordCount, oRsSubFam
@@ -3667,7 +3667,7 @@ Private Sub Form_Load()
     
     oRSfp.AddNew
     oRSfp!idformapago = 1
-    oRSfp!formaPAGO = "CONTADO"
+    oRSfp!formapago = "CONTADO"
     oRSfp!referencia = ""
     If Len(Trim(Me.lblTot.Caption)) = 0 Then
         oRSfp!monto = 0
@@ -3780,8 +3780,8 @@ End Sub
 
 
 
-Private Sub optFiltro_Click(index As Integer)
-vFiltro = index
+Private Sub optFiltro_Click(Index As Integer)
+vFiltro = Index
 If gEstaCargando Then Exit Sub
 Me.txtCliente.SetFocus
 Me.txtCliente.SelStart = 0
@@ -3945,7 +3945,7 @@ Private Sub txtCliente_KeyPress(KeyAscii As Integer)
             Dim ORSpp As ADODB.Recordset
             Set ORSpp = oCmdEjec.Execute '(, Array(LK_CODCIA, Me.lvCliente.SelectedItem.Tag, LK_FECHA_DIA))
             If Not ORSpp.EOF Then
-                If CBool(ORSpp!pendiente) Then
+                If CBool(ORSpp!PENDIENTE) Then
                     If MsgBox("EL CLIENTE TIENE PEDIDOS ANTERIORES. ¿DESEA CONTINUAR?", vbQuestion + vbYesNo, Pub_Titulo) = vbNo Then
                     Me.lblCliente.Caption = ""
                     Me.lblDNI.Caption = ""
@@ -4193,7 +4193,7 @@ Public Sub AgregarDesdeBuscador(xIDproducto As Double, _
             If AgregaPlato(xIDproducto, 1, xPrecio, xPrecio, "", "", 0, Me.lblCliente.Caption, 0) Then
         
                 With Me.lvPlatos.ListItems.Add(, , xIDproducto, Me.ilPedido.ListImages.Item(1).key, Me.ilPedido.ListImages.Item(1).key)
-                    .Tag = Me.cmdPlato(index).Tag
+                    .Tag = Me.cmdPlato(Index).Tag
                     .Checked = True
                     .SubItems(2) = " "
                     .SubItems(3) = FormatNumber(1, 2)
@@ -4223,7 +4223,7 @@ Public Sub AgregarDesdeBuscador(xIDproducto As Double, _
         If AgregaPlato(xIDproducto, 1, FormatNumber(xPrecio, 2), xPrecio, "", Me.lblSerie.Caption, Me.lblNumero.Caption, Me.lblCliente.Caption, 0, DD) Then
     
             With Me.lvPlatos.ListItems.Add(, , xProducto, Me.ilPedido.ListImages.Item(1).key, Me.ilPedido.ListImages.Item(1).key)
-                .Tag = Me.cmdPlato(index).Tag
+                .Tag = Me.cmdPlato(Index).Tag
                 .Checked = True
                 .SubItems(3) = FormatNumber(1, 2)
                 'obteniendo precio
@@ -4405,7 +4405,7 @@ Public Sub AgregarDesdeBuscador1(xIDproducto As Double, _
     oCmdEjec.Execute
     
         With Me.lvPlatos.ListItems.Add(, , xProducto, Me.ilPedido.ListImages.Item(1).key, Me.ilPedido.ListImages.Item(1).key)
-            .Tag = Me.cmdPlato(index).Tag
+            .Tag = Me.cmdPlato(Index).Tag
             .Checked = True
             .SubItems(3) = FormatNumber(xCANT, 2)
             'obteniendo precio
@@ -4578,7 +4578,7 @@ Private Sub txtUrb_KeyPress(KeyAscii As Integer)
 
 End Sub
 
-Private Sub adicionarBolsa(cIDarticulo As Integer, cSerie As String, cNumero As Double, cCliente As String)
+Private Sub adicionarBolsa(cIDarticulo As Double, cSerie As String, cNumero As Double, cCliente As String)
 
     Dim oRSbolsa As ADODB.Recordset
 
