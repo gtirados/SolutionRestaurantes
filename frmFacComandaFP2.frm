@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
-Object = "{BB35AEF3-E525-4F8B-81F2-511FF805ABB1}#2.1#0"; "ScrollerII.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "Mscomctl.ocx"
+Object = "{BB35AEF3-E525-4F8B-81F2-511FF805ABB1}#2.1#0"; "scrollerii.ocx"
 Begin VB.Form frmFacComandaFP2 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Formas de Pago"
@@ -589,7 +589,7 @@ Private Sub cmdAceptar_Click()
 
                 oRSfp.AddNew
                 oRSfp!idformapago = DD.Tag
-                oRSfp!formaPAGO = DD.SubItems(1) ' Me.lblFormaPago(DD).Caption
+                oRSfp!formapago = DD.SubItems(1) ' Me.lblFormaPago(DD).Caption
                 oRSfp!referencia = DD.SubItems(2) 'IIf(Me.cbomoneda(DD).ListIndex = 0, "S", "D")
                 oRSfp!monto = DD.SubItems(3)
                 oRSfp!tipo = DD.SubItems(4)
@@ -644,7 +644,7 @@ Private Sub cmdAceptar_Click()
 
             oRSfp.AddNew
             oRSfp!idformapago = DD.Tag
-            oRSfp!formaPAGO = DD.SubItems(1) ' Me.lblFormaPago(DD).Caption
+            oRSfp!formapago = DD.SubItems(1) ' Me.lblFormaPago(DD).Caption
             oRSfp!referencia = DD.SubItems(2) 'IIf(Me.cbomoneda(DD).ListIndex = 0, "S", "D")
             oRSfp!monto = DD.SubItems(3)
             oRSfp!tipo = DD.SubItems(4)
@@ -664,7 +664,7 @@ Private Sub cmdCancelar_Click()
 Unload Me
 End Sub
 
-Private Sub cmdFP_Click(index As Integer)
+Private Sub cmdFP_Click(Index As Integer)
 
     '    frmFacComandaFP3.MuestraReferencia = True
     '
@@ -680,7 +680,7 @@ Private Sub cmdFP_Click(index As Integer)
 
         Dim itemX As Object
         
-         esCredito = Split(Me.cmdFP(index).Tag, "|")(2)
+         esCredito = Split(Me.cmdFP(Index).Tag, "|")(2)
         If esCredito Then
             frmFacComandaFP2credito.Show vbModal
             If frmFacComandaFP2credito.gAcepta Then
@@ -692,11 +692,11 @@ Private Sub cmdFP_Click(index As Integer)
         End If
 
         Set itemX = Me.lvFP.ListItems.Add(, , Me.lvFP.ListItems.count + 1)
-        itemX.SubItems(1) = Me.cmdFP(index).Caption
-        itemX.Tag = Split(Me.cmdFP(index).Tag, "|")(0)
+        itemX.SubItems(1) = Me.cmdFP(Index).Caption
+        itemX.Tag = Split(Me.cmdFP(Index).Tag, "|")(0)
         itemX.SubItems(2) = "" 'Trim(frmFacComandaFP3.gREF)
         itemX.SubItems(3) = CDec(Me.lblTotalPagar.Caption) - CDec(Me.lblTotalPagos.Caption)
-        itemX.SubItems(4) = Split(Me.cmdFP(index).Tag, "|")(1)
+        itemX.SubItems(4) = Split(Me.cmdFP(Index).Tag, "|")(1)
         itemX.SubItems(5) = strDato
        
 
@@ -768,7 +768,7 @@ End Sub
 
 Private Sub Command1_Click()
 If Me.lvFP.ListItems.count = 0 Then Exit Sub
- Me.lvFP.ListItems.Remove Me.lvFP.SelectedItem.index
+ Me.lvFP.ListItems.Remove Me.lvFP.SelectedItem.Index
  CalcularTotales
 End Sub
 
@@ -818,7 +818,7 @@ Private Sub Form_Load()
         vTop = vTop + Me.cmdFP(f).Height + 50
         
         Me.cmdFP(f).Visible = True
-        Me.cmdFP(f).Caption = oRStp!formaPAGO
+        Me.cmdFP(f).Caption = oRStp!formapago
         Me.cmdFP(f).Tag = oRStp!Codigo & "|" & oRStp!tipo & "|" & oRStp!CRE
      
         oRStp.MoveNext
@@ -832,10 +832,10 @@ Private Sub Form_Load()
             If oRSfp.RecordCount <> 0 Then
                 oRSfp.MoveFirst
 
-                Do While Not oRSfp.EOF
-                    oRSfp.Delete adAffectCurrent
-                    oRSfp.MoveNext
-                Loop
+'                Do While Not oRSfp.EOF
+'                    oRSfp.Delete adAffectCurrent
+'                    oRSfp.MoveNext
+'                Loop
 
             End If
         End If
@@ -876,7 +876,7 @@ Private Sub Form_Load()
         If ORSpr.RecordCount = 0 Then
             oRSfp.AddNew
             oRSfp!idformapago = 1
-            oRSfp!formaPAGO = "CONTADO"
+            oRSfp!formapago = "CONTADO"
             oRSfp!referencia = ""
             oRSfp!monto = CDec(frmDeliveryApp.lblTot.Caption) + IIf(pINCMOV, CDec(Me.lblMovilidad.Caption), 0) + frmDeliveryApp.lblicbper.Caption
             oRSfp!tipo = "E"
@@ -889,7 +889,7 @@ Private Sub Form_Load()
             Do While Not ORSpr.EOF
                 oRSfp.AddNew
                 oRSfp!idformapago = ORSpr!idfp
-                oRSfp!formaPAGO = Trim(ORSpr!fp) ' Me.lblFormaPago(DD).Caption
+                oRSfp!formapago = Trim(ORSpr!fp) ' Me.lblFormaPago(DD).Caption
                 oRSfp!referencia = "" 'DD.SubItems(2) 'IIf(Me.cbomoneda(DD).ListIndex = 0, "S", "D")
                 oRSfp!monto = ORSpr!monto + val(frmDeliveryApp.lblicbper.Caption)
                 oRSfp!tipo = ORSpr!tipo ' "E" 'DD.SubItems(4)
@@ -916,10 +916,12 @@ Private Sub Form_Load()
         Me.txtPagaCon.Text = 0 'oRSfp!pagacon
         Me.lblVuelto.Caption = 0 ' oRSfp!VUELTO
         
+        'prEguntaR si orsfp tiene regiStros o no
         
+        If oRSfp.RecordCount = 0 Then
          oRSfp.AddNew
             oRSfp!idformapago = 1
-            oRSfp!formaPAGO = "CONTADO"
+            oRSfp!formapago = "CONTADO"
             oRSfp!referencia = ""
             If gDELIVERY Then
             oRSfp!monto = CDec(frmDeliveryApp.lblTot.Caption) + frmDeliveryApp.lblicbper.Caption
@@ -932,11 +934,12 @@ Private Sub Form_Load()
             oRSfp!VUELTO = 0
             oRSfp!diascredito = 0
             oRSfp.Update
+            End If
      
         Do While Not oRSfp.EOF
            
             Set itemX = Me.lvFP.ListItems.Add(, , Me.lvFP.ListItems.count + 1)
-            itemX.SubItems(1) = oRSfp!formaPAGO
+            itemX.SubItems(1) = oRSfp!formapago
             itemX.SubItems(2) = oRSfp!referencia
             itemX.SubItems(3) = oRSfp!monto
             itemX.SubItems(4) = oRSfp!tipo

@@ -30,14 +30,6 @@ Begin VB.Form frmChangeFormasPagoEDIT
       TabIndex        =   9
       Top             =   0
       Width           =   3135
-      Begin VB.CommandButton cmdChange 
-         Caption         =   "Realizar Cambio"
-         Height          =   480
-         Left            =   240
-         TabIndex        =   12
-         Top             =   1560
-         Width           =   2655
-      End
       Begin MSDataListLib.DataCombo DatFormaPago 
          Height          =   315
          Left            =   360
@@ -49,6 +41,23 @@ Begin VB.Form frmChangeFormasPagoEDIT
          _Version        =   393216
          Style           =   2
          Text            =   "FormaPago"
+      End
+      Begin VB.CommandButton cmdChange 
+         Caption         =   "Realizar Cambio"
+         Height          =   480
+         Left            =   240
+         TabIndex        =   12
+         Top             =   1560
+         Width           =   2655
+      End
+      Begin VB.Label lblCorrelativo 
+         Caption         =   "Label7"
+         Height          =   255
+         Left            =   600
+         TabIndex        =   17
+         Top             =   2520
+         Visible         =   0   'False
+         Width           =   1455
       End
       Begin VB.Label lblFBG 
          AutoSize        =   -1  'True
@@ -224,10 +233,12 @@ oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@CodCia", adChar, adParamIn
 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@SERIE", adVarChar, adParamInput, 3, Trim(Me.lblSerie.Caption))
 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@NUMERO", adInteger, adParamInput, , Me.lblNumero.Caption)
 oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FBG", adChar, adParamInput, 1, Trim(Me.lblFBG.Caption))
-oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FECHA", adDBTimeStamp, adParamInput, , Me.lblFecha.Caption)
-oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@NUMOPER", adInteger, adParamInput, , Me.lblNumOper.Caption)
-oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@IDFORMAPAGO", adInteger, adParamInput, , Me.DatFormaPago.BoundText)
-oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FORMAPAGO", adVarChar, adParamInput, 30, Me.DatFormaPago.Text)
+'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FECHA", adDBTimeStamp, adParamInput, , Me.lblFecha.Caption)
+'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@NUMOPER", adInteger, adParamInput, , Me.lblNumOper.Caption)
+oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@IDFORMAPAGO", adInteger, adParamInput, , Me.lblNumOper.Caption)
+'oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@FORMAPAGO", adVarChar, adParamInput, 30, Me.DatFormaPago.Text)
+oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@IDFORMAPAGONEW", adInteger, adParamInput, , Me.DatFormaPago.BoundText)
+oCmdEjec.Parameters.Append oCmdEjec.CreateParameter("@correlativo", adInteger, adParamInput, , Me.lblCorrelativo.Caption)
 oCmdEjec.Execute
 MsgBox "Cambio realizado correctamente.", vbInformation, Pub_Titulo
 gAcepta = True
